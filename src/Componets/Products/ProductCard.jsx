@@ -20,22 +20,22 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <h3 className="truncate text-[1.1rem] font-extrabold leading-tight text-[#282321]" title={product.product_name}>{product.product_name}</h3>
+        <h3 className="truncate text-[1.1rem] font-extrabold leading-tight text-[#c2410c]" title={product.product_name}>{product.product_name}</h3>
 
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="rounded-md border border-[#f2dfd0] bg-[#fff8f2] p-2.5">
-            <div className="mb-1 flex items-center gap-1.5 text-[#b90c19]">
+            <div className="mb-1 flex items-center gap-1.5 text-[#f00943]">
               <PackageCheck size={14} aria-hidden="true" />
               <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.08em]">Pack size</span>
             </div>
-            <strong className="block text-sm font-extrabold text-[#b90c19]">{product.quantity}</strong>
+            <strong className="block text-sm font-extrabold text-[#c2410c]">{product.quantity}</strong>
           </div>
           <div className="rounded-md border border-[#f2dfd0] bg-[#fff8f2] p-2.5">
-            <div className="mb-1 flex items-center gap-1.5 text-[#b90c19]">
+            <div className="mb-1 flex items-center gap-1.5 text-[#d60e1e]">
               <Boxes size={14} aria-hidden="true" />
               <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.08em]">Min. order</span>
             </div>
-            <strong className="block text-sm font-extrabold text-[#b90c19]">{product.min_order_no} {product.unit}</strong>
+            <strong className="block text-sm font-extrabold text-[#c2410c]">{product.min_order_no} {product.unit}</strong>
           </div>
         </div>
 
