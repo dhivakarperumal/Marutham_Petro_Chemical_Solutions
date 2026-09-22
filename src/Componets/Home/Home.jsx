@@ -1,12 +1,12 @@
 import { React } from "react";
-
+import Hero from "./Hero"
 
 const Home = () => {
  
 
   return (
     <>
-    <h1>hello world</h1>
+    <Hero />
     </>
   );
 };

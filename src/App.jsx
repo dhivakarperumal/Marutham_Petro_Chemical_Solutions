@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./CommonComponents/Navbar";
 import Footer from "./CommonComponents/Footer";
+import Home from "./Componets/Home/Home";
 
 import ScrollToTop from "./CommonComponents/ScrollToTop";
 // import FloatingSupport from "./CommonComponents/FloatingSupport";
@@ -24,9 +25,8 @@ function App() {
       </div>
       <div className="print:hidden">
         <ScrollToTop />
-       
       </div>
-     
+   
       <Outlet />
       <Toaster
         position="top-right"
