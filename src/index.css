@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+
+
+:root {
+	--primary-red: #D60E1E;
+	--primary-orange: #E96512;
+	--secondary-orange: #E35B1D;
+	--background: #FEFEFE;
+	--text-dark: #1F1F1F;
+	 font-family: "Roboto Condensed", sans-serif;
+}
+
+body {
+	background: var(--background);
+	color: var(--text-dark);
+}
