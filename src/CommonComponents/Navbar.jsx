@@ -43,8 +43,8 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="relative z-50">
-      <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm">
+    <header className="sticky top-0 z-50">
+      <nav className="relative w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm">
         <div className="mx-auto flex max-w-[1380px] items-center justify-between px-4 py-3 md:px-8">
           {/* Logo */}
           <div className="flex items-center">
