@@ -8,6 +8,8 @@ import App from './App.jsx'
 import Home from './Componets/Home/Home.jsx'
 import About from './Componets/About/About.jsx'
 import Contact from './Componets/Contact/Contact.jsx'
+import Products from './Componets/Products/Products.jsx'
+import BrandDetails from './Componets/Brands/BrandDetails.jsx'
 
 function AppRoot() {
   useEffect(() => {
@@ -27,6 +29,8 @@ function AppRoot() {
           <Route path="home" element={<Navigate to="/" replace />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="products" element={<Products />} />
+          <Route path="brands/:brandSlug" element={<BrandDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

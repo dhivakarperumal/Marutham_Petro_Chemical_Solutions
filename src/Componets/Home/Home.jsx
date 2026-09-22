@@ -1,5 +1,5 @@
-import { React } from "react";
-import Hero from "./Hero"
+import Hero from "./Hero";
+import Products from "../Products/Products";
 
 const Home = () => {
  
@@ -7,6 +7,7 @@ const Home = () => {
   return (
     <>
     <Hero />
+    <Products />
     </>
   );
 };
