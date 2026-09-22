@@ -13,6 +13,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Gallery', path: '/gallery' },
     { name: 'Contact Us', path: '/contact' },
   ];
 
@@ -29,7 +30,7 @@ const Navbar = () => {
 
           {/* Navigation Links (Desktop) */}
           <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]">
-            {navLinks.map((link) => {
+            {navLinks.slice(0, 3).map((link) => {
               const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
               return (
                 <Link
@@ -61,6 +62,22 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+          {navLinks.slice(3).map((link) => {
+            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
+            return (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={`pb-1 border-b-2 transition-colors ${
+                  isActive 
+                    ? 'text-[#f0301a] border-[#f0301a]' 
+                    : 'border-transparent hover:text-[#f0301a]'
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
           </div>
 
           {/* Action Buttons & Mobile Menu Toggle */}
@@ -96,42 +113,42 @@ const Navbar = () => {
           </div>
         </div>
 
-        {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col py-4 px-6 space-y-4">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
-              return (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors py-2 border-b border-gray-50 ${
-                    isActive ? 'text-[#f0301a]' : 'text-[#4a5568] hover:text-[#f0301a]'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-            <div className="border-b border-gray-50 pb-2">
-              <p className="py-2 text-lg font-medium text-[#4a5568]">Brands</p>
-              <div className="ml-3 flex flex-col gap-2 border-l-2 border-[#f0301a] pl-4">
-                {brandData.map((brand) => (
-                  <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsMobileMenuOpen(false)} className="py-1 text-base font-medium text-[#4a5568] hover:text-[#f0301a]">{brand.name}</Link>
-                ))}
-              </div>
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col py-4 px-6 space-y-4">
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
+            return (
+              <Link
+                key={link.name}
+                to={link.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-lg font-medium transition-colors py-2 border-b border-gray-50 ${
+                  isActive ? 'text-[#f0301a]' : 'text-[#4a5568] hover:text-[#f0301a]'
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+          <div className="border-b border-gray-50 pb-2">
+            <p className="py-2 text-lg font-medium text-[#4a5568]">Brands</p>
+            <div className="ml-3 flex flex-col gap-2 border-l-2 border-[#f0301a] pl-4">
+              {brandData.map((brand) => (
+                <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsMobileMenuOpen(false)} className="py-1 text-base font-medium text-[#4a5568] hover:text-[#f0301a]">{brand.name}</Link>
+              ))}
             </div>
-            
-            <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
-              Get a Quote
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
           </div>
-        )}
-      </nav>
-    </header>
+          
+          <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
+            Get a Quote
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      )}
+    </nav>
   );
 };
 
