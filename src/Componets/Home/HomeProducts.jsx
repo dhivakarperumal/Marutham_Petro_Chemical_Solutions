@@ -40,9 +40,9 @@ const HomeProducts = () => {
             <h2 id="home-products-title" className="text-[clamp(2.3rem,4vw,4.2rem)] font-extrabold leading-none tracking-[-0.04em] text-[#282321]">
               Solutions for every <span className="text-[#d60e1e]">finish.</span>
             </h2>
-            <p className="mt-4 max-w-[560px] text-base leading-7 text-[#766e68]">
+            {/* <p className="mt-4 max-w-[560px] text-base leading-7 text-[#766e68]">
               Professional thinner solutions in practical pack sizes for painting, coating, maintenance, and industrial work.
-            </p>
+            </p> */}
           </div>
           <a href="/products" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#d60e1e] transition hover:text-[#b90c19]">
             View all products <ArrowRight size={17} aria-hidden="true" />
