@@ -1,0 +1,168 @@
+[
+  {
+    "product_id": "THINNER-001",
+    "code": "MAR-THN",
+    "name": "Marutham Thinner",
+    "brand": "Marutham",
+    "category": "Enamel Thinner",
+    "image": "/images/gallery/img_1.png",
+    "description": "Marutham Thinner Enamel Thinner is a high-quality solution designed for diluting enamel paints, cleaning brushes, and removing unwanted paint splashes effectively. Crafted to deliver exceptional performance, Marutham Thinner ensures that your enamel applications achieve a smooth, uniform finish, enhancing the longevity and appearance of your paint jobs.",
+    "applications": [
+      "Diluting enamel paints",
+      "Cleaning paint brushes",
+      "Removing unwanted paint splashes",
+      "Improving paint consistency",
+      "Achieving a smooth and uniform finish"
+    ],
+    "available_sizes": [
+      "450ml",
+      "900ml",
+      "1800ml",
+      "2700ml",
+      "4500ml"
+    ],
+    "safety_precautions": [
+      {
+        "title": "Non-Toxic Formula",
+        "description": "Formulated to minimize harmful fumes and toxic chemicals, promoting safer use."
+      },
+      {
+        "title": "Child-Safe Containers",
+        "description": "Securely sealed, durable cans reduce the risk of accidental spillage."
+      },
+      {
+        "title": "Usage Guidelines",
+        "description": "Always ensure ventilation while using the thinner. Avoid direct contact with skin and eyes, and use protective gloves and eyewear for additional safety."
+      },
+      {
+        "title": "Fire Safety",
+        "description": "Store the product in a cool, dry place away from heat and open flames, as it is a flammable substance"
+      }
+    ]
+  },
+  {
+    "product_id": "THINNER-002",
+    "code": "ZEB-THN",
+    "name": "Zebra Thinner",
+    "brand": "Zebra",
+    "category": "Paint Thinner",
+    "image": "/images/gallery/img_2.png",
+    "description": "Zebra Thinner is a premium-quality paint thinner designed to deliver excellent performance and safety. Available in various can sizes of 4500ML, 2700ML, 1800ML, 900ML, and 450ML, Zebra Thinner is perfect for a range of applications, whether for professional or personal use. With its efficient formulation, Zebra Thinner effectively thins enamel, making it easier to apply and achieve a smooth, even finish. It is compatible with various paint types and works to clean brushes and surfaces, maintaining high-quality results without leaving residues.",
+    "applications": [
+      "Thinning enamel paints",
+      "Improving paint application",
+      "Cleaning paint brushes",
+      "Cleaning compatible surfaces",
+      "Supporting smooth and even finishes"
+    ],
+    "available_sizes": [
+      "450ml",
+      "900ml",
+      "1800ml",
+      "2700ml",
+      "4500ml"
+    ],
+    "safety_precautions": [
+      {
+        "title": "Low-Odor Composition",
+        "description": "Formulated with a low-odor composition to help minimize exposure to strong fumes during use."
+      },
+      {
+        "title": "Enhanced Evaporation Control",
+        "description": "Zebra Thinner is formulated with a focus on user safety. It features a low-odor composition and comes with enhanced evaporation control, minimizing exposure to harmful fumes"
+      },
+      {
+        "title": "Ventilation",
+        "description": "Always use Zebra Thinner in a well-ventilated area and follow recommended safety guidelines."
+      },
+      {
+        "title": "Fire Safety",
+        "description": "Keep the product away from open flames, sparks, and direct heat sources because the product is flammable."
+      }
+    ]
+  },
+  {
+    "product_id": "THINNER-003",
+    "code": "EAG-SOL",
+    "name": "Eagle Solvent Thinner",
+    "brand": "Eagle",
+    "category": "Solvent Thinner",
+    "image": "/images/gallery/img_3.png",
+    "description": "Eagle Solvent Thinner is a high-quality, versatile product designed for multiple industrial and domestic applications. Known for its consistent and effective thinning properties, it is ideal for use with a variety of paints and coatings, such as oil-based paints, enamels, and primers. Available in convenient can sizes of 4500ML, 2700ML, 1800ML, 900ML, and 450ML, Eagle Solvent Thinner provides users with flexibility and choice, making it a trusted option for painters and DIY enthusiasts alike.",
+    "applications": [
+      "Thinning oil-based paints",
+      "Thinning enamel paints",
+      "Thinning compatible primers",
+      "Industrial coating applications",
+      "Domestic painting applications",
+      "Professional painting and DIY projects"
+    ],
+    "available_sizes": [
+      "450ml",
+      "900ml",
+      "1800ml",
+      "2700ml",
+      "4500ml"
+    ],
+    "safety_precautions": [
+      {
+        "title": "Reduced Harmful Emissions",
+        "description": "Eagle Solvent Thinner is designed with a focus on user safety and environmental care, setting it apart from standard thinners available in the market."
+      },
+      {
+        "title": "Reduced Toxicity",
+        "description": "Engineered with a focus on reducing toxicity compared with standard thinner formulations."
+      },
+      {
+        "title": "Proper Ventilation",
+        "description": "Engineered to minimize harmful emissions and reduce toxicity levels, Eagle Solvent Thinner is a safer alternative for professionals and DIY users alike. Here’s what makes it uniquely safe."
+      }
+    ]
+  },
+  {
+    "product_id": "THINNER-004",
+    "code": "MAR-NCT",
+    "name": "Marudham NC Thinner",
+    "brand": "Marutham",
+    "category": "NC Thinner",
+    "image": "/images/gallery/img_4.png",
+    "description": "Marutham NC Thinner is a premium-quality, high-performance thinner specially formulated to deliver superior results when used with enamel and other nitrocellulose (NC) paints. Whether for industrial, commercial, or personal projects, Marutham NC Thinner is trusted for its efficiency, versatility, and quick-drying properties. Available in multiple convenient sizes — 4500ML, 2700ML, 1800ML, 900ML, and 450ML — Marutham NC Thinner is suitable for various needs and applications.",
+    "applications": [
+      "NC paint applications",
+      "Compatible enamel paint applications",
+      "Industrial painting",
+      "Commercial painting",
+      "Personal painting projects",
+      "Quick-drying coating applications"
+    ],
+    "available_sizes": [
+      "450ml",
+      "900ml",
+      "1800ml",
+      "2700ml",
+      "4500ml"
+    ],
+    "safety_precautions": [
+      {
+        "title": "Low Toxicity",
+        "description": "Unlike some traditional thinners that release harmful fumes or chemicals, Marutham NC Thinner is designed to minimize toxicity. This makes it a safer choice for indoor use and for workers who are exposed to thinners for prolonged periods"
+      },
+      {
+        "title": "Reduced Irritation",
+        "description": "The formulation of Marutham NC Thinner is optimized to reduce skin and eye irritation. When used according to instructions, it poses less risk of causing adverse reactions compared to other harsher thinners."
+      },
+      {
+        "title": "Low Flammability",
+        "description": "While all thinners should be handled with caution, Marutham NC Thinner has a reduced flammability compared to some of the other high-risk alternatives, making it safer to store and use in your workspace."
+      },
+      {
+        "title": "Stable Chemical Composition",
+        "description": "Marutham NC Thinner has a stable chemical composition that reduces the risks of reactions with other substances, which is common with other thinner products."
+      },
+      {
+        "title": "Meets Safety Standards",
+        "description": "Manufactured under stringent safety guidelines, Marutham NC Thinner complies with various safety regulations, ensuring that users experience minimal risk while handling it."
+      }
+    ]
+  }
+]
