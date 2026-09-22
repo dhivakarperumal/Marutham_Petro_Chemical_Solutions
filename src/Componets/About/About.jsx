@@ -225,46 +225,6 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="140">
-        <div className="rounded-[28px] bg-[#f3f1ef] p-6 md:p-8">
-          <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
-            <div className="pr-0 lg:pr-4">
-              <p className="text-[12px] font-bold uppercase tracking-[0.26em] text-[#fb5921]">Why Choose Us</p>
-              <h2 className="mt-3 text-4xl font-black leading-tight text-[#1f2937] md:text-5xl">
-                More Than Just<br />
-                a <span className="text-[#fb5921]">Thinner Supplier</span>
-              </h2>
-              <p className="mt-5 max-w-lg text-lg leading-8 text-[#4b5563]">
-                We are not just suppliers, we are your partners in creating better, brighter and longer-lasting finishes.
-                Our products are designed to deliver excellent performance, consistency and value for every project.
-              </p>
-              <button className="mt-6 inline-flex items-center gap-3 rounded-[12px] bg-[#fb5921] px-6 py-3 text-base font-bold text-white shadow-[0_12px_22px_rgba(251,89,33,0.3)] transition hover:bg-[#e84d1d]">
-                Why Us <FaArrowRight />
-              </button>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                { icon: <FaFlask className="text-2xl text-white" />, bg: "bg-[#fb5921]", title: "High-Quality Raw Materials", text: "Carefully sourced for consistent purity." },
-                { icon: <FaShieldVirus className="text-2xl text-white" />, bg: "bg-[#f34031]", title: "Strict Quality Control", text: "Tested at every stage for reliable performance." },
-                { icon: <FaHandshake className="text-2xl text-white" />, bg: "bg-[#2ec58d]", title: "Timely Supply", text: "Ensuring your projects never stop." },
-                { icon: <FaIndustry className="text-2xl text-white" />, bg: "bg-[#3fb1e3]", title: "Wide Range of Solutions", text: "For all types of paints and coatings." },
-                { icon: <FaUsers className="text-2xl text-white" />, bg: "bg-[#6a5ae0]", title: "Customer-Centric Approach", text: "Always focused on your success." },
-                { icon: <FaAward className="text-2xl text-white" />, bg: "bg-[#f0a221]", title: "Industry Expertise", text: "Years of experience in chemical solutions." },
-              ].map((item) => (
-                <div key={item.title} className="rounded-[18px] border border-[#e7ddd5] bg-white p-5 shadow-[0_12px_20px_rgba(15,23,42,0.03)]">
-                  <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full ${item.bg}`}>
-                    {item.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-[#1f2937]">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#4b5563]">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="160">
         <div className="grid gap-5 rounded-[26px] bg-gradient-to-r from-[#b33d2a] via-[#d34b2d] to-[#8d2c2b] p-4 text-white md:grid-cols-4 md:p-6">
           {[
