@@ -58,27 +58,39 @@ const HomeAbout = () => {
             More about us <ArrowRight size={17} aria-hidden="true" />
           </Link> */}
 
-          <div ref={statsRef} className="mt-10 grid grid-cols-3 border-y border-[#eadfd6]">
-            <div className="border-r border-[#eadfd6] py-4 pr-3">
-              <Users size={20} className="mb-2 text-[#d60e1e]" aria-hidden="true" />
-              <strong className="block text-2xl font-extrabold text-[#282321]">
-                {hasViewedStats ? <CountUpComponent end={1200} duration={2} suffix="+" /> : "0+"}
-              </strong>
-              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Satsified Clients</span>
+          <div ref={statsRef} className="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#d60e1e] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff1eb]">
+                <Users size={16} className="text-[#d60e1e]" aria-hidden="true" />
+              </div>
+              <div>
+                <strong className="block text-xl font-extrabold leading-none text-[#282321]">
+                  {hasViewedStats ? <CountUpComponent end={1200} duration={2} suffix="+" /> : "0+"}
+                </strong>
+                <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Satsified Clients</span>
+              </div>
             </div>
-            <div className="border-r border-[#eadfd6] px-3 py-4">
-              <Store size={20} className="mb-2 text-[#e96512]" aria-hidden="true" />
-              <strong className="block text-2xl font-extrabold text-[#282321]">
-                {hasViewedStats ? <CountUpComponent end={100} duration={2} suffix="+" /> : "0+"}
-              </strong>
-              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Overall Dealers</span>
+            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#e96512] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff4eb]">
+                <Store size={16} className="text-[#e96512]" aria-hidden="true" />
+              </div>
+              <div>
+                <strong className="block text-xl font-extrabold leading-none text-[#282321]">
+                  {hasViewedStats ? <CountUpComponent end={100} duration={2} suffix="+" /> : "0+"}
+                </strong>
+                <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Overall Dealers</span>
+              </div>
             </div>
-            <div className="py-4 pl-3">
-              <BriefcaseBusiness size={20} className="mb-2 text-[#d60e1e]" aria-hidden="true" />
-              <strong className="block text-2xl font-extrabold text-[#282321]">
-                {hasViewedStats ? <CountUpComponent end={10} duration={2} suffix="+" /> : "0+"}
-              </strong>
-              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Overall Experience</span>
+            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#d60e1e] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff1eb]">
+                <BriefcaseBusiness size={16} className="text-[#d60e1e]" aria-hidden="true" />
+              </div>
+              <div>
+                <strong className="block text-xl font-extrabold leading-none text-[#282321]">
+                  {hasViewedStats ? <CountUpComponent end={10} duration={2} suffix="+" /> : "0+"}
+                </strong>
+                <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Overall Experience</span>
+              </div>
             </div>
           </div>
         </div>
