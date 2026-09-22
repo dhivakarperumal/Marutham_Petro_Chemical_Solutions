@@ -1,30 +1,21 @@
 import { useMemo, useState } from 'react';
 import PageHeader from '../../CommonComponents/PageHeader';
+import productData from '../../data/product.json';
 
-const categories = ['All', 'Products', 'Packaging', 'Applications', 'Industrial', 'Residential', 'Events', 'Customers'];
+const categories = ['All', ...new Set(productData.map((product) => product.category))];
 
-const galleryItems = [
-  { title: 'Marutham Brand', category: 'Products', image: '/images/gallery/img_1.png' },
-  { title: 'Zebra Brand', category: 'Products', image: '/images/gallery/img_2.png' },
-  { title: 'Eagle Brand', category: 'Products', image: '/images/gallery/img_3.png' },
-  { title: 'NC Thinner Brand', category: 'Products', image: '/images/gallery/img_4.png' },
-  { title: 'Our Product Range', category: 'Products', image: '/images/gallery/1.png' },
-  { title: 'Product Showcase', category: 'Products', image: '/images/gallery/2.png' },
-  { title: 'Application Close-up', category: 'Applications', image: '/images/gallery/2_1.png' },
-  { title: 'Industrial Use', category: 'Industrial', image: '/images/gallery/2_2.png' },
-  { title: 'Residential Projects', category: 'Residential', image: '/images/gallery/2_3.png' },
-  { title: 'Interior Application', category: 'Applications', image: '/images/gallery/2_4.png' },
-  { title: 'Marine Coatings', category: 'Industrial', image: '/images/gallery/2_5.png' },
-  { title: 'Wood Coatings', category: 'Industrial', image: '/images/gallery/3.png' },
-  { title: 'Automotive Applications', category: 'Applications', image: '/images/gallery/3_1.png' },
-  { title: 'Research & Development', category: 'Products', image: '/images/gallery/3_2.png' },
-  { title: 'Packaging & Supply', category: 'Packaging', image: '/images/gallery/3_3.png' },
-  { title: 'Our Team', category: 'Customers', image: '/images/gallery/3_4.png' },
-  { title: 'Exhibitions & Events', category: 'Events', image: '/images/gallery/3_5.png' },
-  { title: 'Sustainable Solutions', category: 'Products', image: '/images/gallery/4.png' },
-  { title: 'Wide Color Possibilities', category: 'Products', image: '/images/gallery/4_1.png' },
-  { title: 'Happy Customers', category: 'Customers', image: '/images/gallery/4_2.png' },
-];
+const categoryImages = {
+  'Enamel Thinner': '/images/gallery/img_1.png',
+  'Paint Thinner': '/images/gallery/img_2.png',
+  'Solvent Thinner': '/images/gallery/img_3.png',
+  'NC Thinner': '/images/gallery/img_4.png',
+};
+
+const galleryItems = categories.slice(1).map((category) => ({
+  title: category,
+  category,
+  image: categoryImages[category],
+}));
 
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState('All');
