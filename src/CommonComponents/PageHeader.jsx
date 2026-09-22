@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PageHeader = ({
   title,
-  background = "/images/pageheaderbanner.png",
+  background = "/images/gallery/pageheader.png",
 }) => {
   return (
     <div
@@ -15,7 +15,7 @@ const PageHeader = ({
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/30"></div>
 
       {/* Bottom orange line */}
       <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#fb5921] to-[#e41a15]"></div>
