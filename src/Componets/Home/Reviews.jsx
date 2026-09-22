@@ -16,7 +16,7 @@ const Reviews = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="reviews-title">
+    <section className="relative overflow-hidden bg-[#fffaf6] px-[5%] pb-20 pt-10 sm:pb-24 sm:pt-12" aria-labelledby="reviews-title">
       <div className="absolute -left-20 top-20 h-64 w-64 rounded-full bg-[#f8c99c40] blur-3xl" />
       <div className="relative mx-auto max-w-[1380px]">
         <div className="mb-8 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">

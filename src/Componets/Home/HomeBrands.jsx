@@ -8,7 +8,7 @@ const brands = [
 
 const HomeBrands = () => {
   return (
-    <section className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="home-brands-title">
+    <section className="relative overflow-hidden bg-[#fffaf6] px-[5%] pb-10 pt-20 sm:pb-12 sm:pt-24" aria-labelledby="home-brands-title">
       <div className="absolute -right-28 top-10 h-80 w-80 rounded-full bg-[#f8c99c35] blur-3xl" />
       <div className="relative mx-auto max-w-[1380px]">
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
