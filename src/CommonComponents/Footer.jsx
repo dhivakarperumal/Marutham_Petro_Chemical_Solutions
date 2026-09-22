@@ -12,12 +12,10 @@ const Footer = () => {
   ];
 
   const ourProducts = [
-    "Polymers",
-    "Solvents",
-    "Additives",
-    "Base Oils",
-    "Chemicals",
-    "Custom Supply"
+    "Enamel Thinner",
+    "Paint Thinner",
+    "Solvent Thinner",
+    "NC Thinner"
   ];
 
   return (
@@ -35,7 +33,7 @@ const Footer = () => {
                 className="h-12 object-contain" 
               />
             </div>
-            <p className="text-gray-400 text-[15px] leading-relaxed">
+            <p className="text-gray-400 text-[15px] leading-relaxed text-justify">
               "Choosing Marutham Thinner for your projects offers several distinct advantages that make it stand out from other thinners in the market."
             </p>
            
@@ -80,7 +78,7 @@ const Footer = () => {
               {ourProducts.map((item, index) => (
                 <li key={index}>
                   <Link 
-                    to={`/products/${item.toLowerCase().replace(' ', '-')}`} 
+                    to={`/products?category=${encodeURIComponent(item)}`} 
                     className="flex items-center text-gray-400 text-[15px] hover:text-[#fb5921] transition-all group"
                   >
                     <FaAngleRight className="mr-2 text-[#fb5921] transition-transform group-hover:translate-x-1" size={14} />

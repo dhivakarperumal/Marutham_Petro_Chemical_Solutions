@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check, Filter } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
 import productData from "../../data/product.json";
 import ProductCard from "./ProductCard";
@@ -7,7 +8,14 @@ import ProductCard from "./ProductCard";
 const categories = ["All products", ...new Set(productData.map((product) => product.category))];
 
 const Products = () => {
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedCategory = searchParams.get("category");
+  const initialCategory = categories.includes(requestedCategory) ? requestedCategory : categories[0];
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+
+  useEffect(() => {
+    setActiveCategory(categories.includes(requestedCategory) ? requestedCategory : categories[0]);
+  }, [requestedCategory]);
   const visibleProducts = useMemo(
     () => activeCategory === categories[0]
       ? productData
@@ -47,7 +55,14 @@ const Products = () => {
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  if (category === categories[0]) {
+                    setSearchParams({});
+                  } else {
+                    setSearchParams({ category });
+                  }
+                }}
                 className={`whitespace-nowrap rounded-full border px-4 py-2.5 text-xs font-extrabold transition ${isActive ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-[0_8px_18px_rgba(214,14,30,0.18)]" : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"}`}
               >
                 {category}
