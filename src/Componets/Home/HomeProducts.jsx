@@ -67,7 +67,7 @@ const HomeProducts = () => {
           })}
         </div>
 
-        <div className="overflow-hidden pt-2" aria-label="Automatic home product slider">
+        <div className="overflow-hidden px-2 py-2" aria-label="Automatic home product slider">
           <div
             className="flex gap-5 transition-transform duration-700 ease-out [--slide-offset:calc(86%+1.25rem)] sm:[--slide-offset:calc(48%+1.25rem)] lg:[--slide-offset:calc(31.5%+1.25rem)] xl:[--slide-offset:calc(24%+1.25rem)]"
             style={{ "--slide-index": slideIndex, transform: "translateX(calc(-1 * var(--slide-index) * var(--slide-offset)))" }}
