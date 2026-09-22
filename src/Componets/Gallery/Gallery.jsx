@@ -80,16 +80,17 @@ const Gallery = () => {
           </div>
         </section>
 
-        <section className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Gallery images">
+        <section className="mt-8 grid auto-rows-[120px] grid-cols-2 gap-3 sm:auto-rows-[150px] sm:grid-cols-4 sm:gap-4" aria-label="Gallery images">
           {filteredItems.map((item, index) => (
             <button
               key={`${item.title}-${index}`}
               type="button"
               onClick={() => setSelectedItem(item)}
-              className="group relative aspect-[4/3] overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_10px_26px_rgba(62,35,17,0.06)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_18px_34px_rgba(62,35,17,0.12)]"
+              className={`group relative row-span-2 overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_10px_26px_rgba(62,35,17,0.06)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_18px_34px_rgba(62,35,17,0.12)] ${index % 5 === 0 ? 'col-span-2' : ''}`}
               aria-label={`View ${item.title}`}
             >
-              <img src={item.image} alt={item.title} className="h-full w-full object-contain transition duration-500 group-hover:scale-105" loading="lazy" />
+              <span className="pointer-events-none absolute inset-3 rounded-sm border border-white/70" />
+              <img src={item.image} alt={item.title} className="relative z-10 h-full w-full object-contain transition duration-500 group-hover:scale-110" loading="lazy" />
             </button>
           ))}
         </section>
