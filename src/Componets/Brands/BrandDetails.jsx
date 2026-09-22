@@ -88,8 +88,8 @@ const BrandDetails = () => {
             <ShieldCheck size={23} className="text-[#e96512]" aria-hidden="true" />
             <h2 className="text-2xl font-extrabold text-[#282321]">Safety and handling</h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {brand.safety_precautions.slice(0, 4).map((precaution) => (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {brand.safety_precautions.map((precaution) => (
               <div key={precaution.title} className="rounded-sm border border-[#eee3da] bg-white p-5">
                 <h3 className="font-extrabold text-[#332e2b]">{precaution.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-[#766e68]">{precaution.description}</p>
