@@ -11,11 +11,19 @@ const categoryImages = {
   'NC Thinner': '/images/gallery/img_4.png',
 };
 
-const galleryItems = categories.slice(1).map((category) => ({
+const categoryGalleryItems = categories.slice(1).map((category) => ({
   title: category,
   category,
   image: categoryImages[category],
 }));
+
+const productGalleryItems = productData.map((product) => ({
+  title: product.product_name,
+  category: product.category,
+  image: product.image,
+}));
+
+const galleryItems = [...categoryGalleryItems, ...productGalleryItems];
 
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState('All');
