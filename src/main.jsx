@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Home from './Componets/Home/Home.jsx'
 import Contact from './Componets/Contact/Contact.jsx'
+import Products from './Componets/Products/Products.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
           <Route index element={<Home />} />
           <Route path="home" element={<Navigate to="/" replace />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="products" element={<Products />} />
         </Route>
       </Routes>
     </BrowserRouter>
