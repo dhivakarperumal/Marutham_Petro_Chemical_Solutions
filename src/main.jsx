@@ -11,6 +11,7 @@ import Contact from './Componets/Contact/Contact.jsx'
 import Products from './Componets/Products/Products.jsx'
 import Gallery from './Componets/Gallery/Gallery.jsx'
 import BrandDetails from './Componets/Brands/BrandDetails.jsx'
+import ProductDetails from './Componets/Products/ProductDetails.jsx'
 
 function AppRoot() {
   useEffect(() => {

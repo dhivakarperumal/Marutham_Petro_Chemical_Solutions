@@ -1,5 +1,9 @@
 import Hero from "./Hero";
-import Products from "../Products/Products";
+import HomeAbout from "./HomeAbout";
+import HomeBrands from "./HomeBrands";
+import HomeProducts from "./HomeProducts";
+import Reviews from "./Reviews";
+import WhyChooseUs from "./WhyChooseUs";
 
 const Home = () => {
  
@@ -7,7 +11,11 @@ const Home = () => {
   return (
     <>
     <Hero />
-    <Products />
+    <HomeProducts />
+    <HomeAbout />
+    <WhyChooseUs />
+    <HomeBrands />
+    <Reviews />
     </>
   );
 };

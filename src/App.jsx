@@ -23,8 +23,8 @@ function App() {
     <section>
       <div className="print:hidden">
         <TopHeader />
-        <Navbar />
       </div>
+      <Navbar />
       <div className="print:hidden">
         <ScrollToTop />
       </div>

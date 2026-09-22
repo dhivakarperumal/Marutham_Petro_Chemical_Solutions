@@ -58,7 +58,7 @@ const Hero = () => {
 
           <div className="mt-10 flex gap-[30px] max-[560px]:mt-[46px] max-[560px]:justify-between max-[560px]:gap-2.5" aria-label="Company highlights">
             <div className="flex items-center gap-2.5 border-r border-[#e2d8d0] pr-7 max-[560px]:gap-1 max-[560px]:pr-2.5">
-              <strong className="text-[1.45rem] leading-none text-[#d60e1e] max-[560px]:text-[1.1rem]">15+</strong>
+              <strong className="text-[1.45rem] leading-none text-[#d60e1e] max-[560px]:text-[1.1rem]">10+</strong>
               <span className="text-[0.7rem] font-bold uppercase leading-[1.25] text-[#817a75] max-[560px]:text-[0.57rem]">Years of<br />experience</span>
             </div>
             <div className="flex items-center gap-2.5 border-r border-[#e2d8d0] pr-7 max-[560px]:gap-1 max-[560px]:pr-2.5">
