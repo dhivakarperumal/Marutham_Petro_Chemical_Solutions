@@ -55,6 +55,24 @@ const Footer = () => {
             </div>
           </div>
 
+           {/* 3. Quick Links */}
+          <div>
+            <h3 className="text-[17px] font-bold text-white mb-6">Quick Links</h3>
+            <ul className="space-y-4">
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <Link 
+                    to={link.path} 
+                    className="flex items-center text-gray-400 text-[15px] hover:text-[#fb5921] transition-all group"
+                  >
+                    <FaAngleRight className="mr-2 text-[#fb5921] transition-transform group-hover:translate-x-1" size={14} />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* 2. Our Products */}
           <div>
             <h3 className="text-[17px] font-bold text-white mb-6">Our Products</h3>
@@ -73,23 +91,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Quick Links */}
-          <div>
-            <h3 className="text-[17px] font-bold text-white mb-6">Quick Links</h3>
-            <ul className="space-y-4">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <Link 
-                    to={link.path} 
-                    className="flex items-center text-gray-400 text-[15px] hover:text-[#fb5921] transition-all group"
-                  >
-                    <FaAngleRight className="mr-2 text-[#fb5921] transition-transform group-hover:translate-x-1" size={14} />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+         
 
           {/* 4. Contact Us */}
           <div>
@@ -99,13 +101,13 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0">
                   <FaPhoneAlt className="text-white text-sm" />
                 </div>
-                <a href="tel:+919876543210" className="text-gray-300 text-[15px] hover:text-[#fb5921] transition-colors">+91 98765 43210</a>
+                <a href="tel:+91 84380 18090" className="text-gray-300 text-[15px] hover:text-[#fb5921] transition-colors">+91 84380 18090</a>
               </div>
               <div className="flex items-center">
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0">
                   <FaEnvelope className="text-white text-sm" />
                 </div>
-                <a href="mailto:maruthamthinner@gmail.com" className="text-[#d4e5db] font-bold text-[15px] hover:underline">
+                <a href="mailto:maruthamthinner@gmail.com" className="text-gray-400  text-[15px] ">
                   maruthamthinner@gmail.com
                 </a>
               </div>
@@ -131,12 +133,12 @@ const Footer = () => {
               <input 
                 type="email" 
                 placeholder="Your email address" 
-                className="bg-[#1c1f26] text-[15px] text-gray-300 px-4 py-3 rounded-l-md border border-gray-800 focus:outline-none focus:border-[#fb5921] w-full min-w-0"
+                className="bg-[#1c1f26] text-[14px] sm:text-[15px] text-gray-300 px-3 sm:px-4 py-3 rounded-l-md border border-gray-800 focus:outline-none focus:border-[#fb5921] w-full min-w-0"
                 required
               />
               <button 
                 type="submit" 
-                className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white px-5 sm:px-6 py-3 rounded-r-md font-medium transition-colors whitespace-nowrap"
+                className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white px-4 sm:px-6 py-3 rounded-r-md font-[500] transition-colors whitespace-nowrap shrink-0"
               >
                 Subscribe
               </button>
