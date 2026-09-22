@@ -120,16 +120,7 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className="mt-6">
-              <div className="flex items-center mb-3">
-                <FaClock className="text-[#fb5921] text-lg mr-3 shrink-0" />
-                <h3 className="text-[17px] font-bold text-white">Hours:</h3>
-              </div>
-              <p className="text-gray-400 text-[15px] ml-7">
-                10:00am - 08:00pm<br/>
-                Monday To Sunday
-              </p>
-            </div>
+            
           </div>
 
          
@@ -150,8 +141,21 @@ const Footer = () => {
                 Subscribe
               </button>
             </form>
+
+            <div className="mt-6">
+              <div className="flex items-center mb-3">
+                <FaClock className="text-[#fb5921] text-lg mr-3 shrink-0" />
+                <h3 className="text-[17px] font-bold text-white">Hours:</h3>
+              </div>
+              <p className="text-gray-400 text-[15px] ml-7">
+                10:00am - 08:00pm<br/>
+                Monday To Sunday
+              </p>
+            </div>
+
           </div>
 
+          
         </div>
       </div>
 
