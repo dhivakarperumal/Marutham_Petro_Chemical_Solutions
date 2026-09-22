@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Check, Filter } from "lucide-react";
+import PageHeader from "../../CommonComponents/PageHeader";
 import productData from "../../data/product.json";
 import ProductCard from "./ProductCard";
 
@@ -15,7 +16,9 @@ const Products = () => {
   );
 
   return (
-    <section id="products" className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="products-title">
+    <>
+      <PageHeader title="Products" />
+      <section id="products" className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="products-title">
       <div className="mx-auto max-w-[1380px]">
         <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
           <div className="max-w-[620px]">
@@ -61,7 +64,8 @@ const Products = () => {
           <Check size={17} className="text-[#e96512]" aria-hidden="true" /> Bulk supply available for commercial and industrial requirements.
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

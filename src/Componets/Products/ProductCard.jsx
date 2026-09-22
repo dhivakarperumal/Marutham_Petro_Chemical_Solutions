@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         <div className="mt-auto flex gap-2 pt-4">
-          <a href={`/contact?product=${encodeURIComponent(product.product_id)}`} className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#d60e1e] px-3 py-2.5 text-center text-[0.68rem] font-extrabold text-white transition hover:bg-[#b90c19]">
+          <a href={`https://wa.me/918438018090?text=${encodeURIComponent(`Hello, I want to order ${product.product_name}.`)}`} target="_blank" rel="noreferrer" className="inline-flex flex-1 items-center justify-center gap-2 rounded-sm bg-[#d60e1e] px-3 py-2.5 text-center text-[0.68rem] font-extrabold text-white transition hover:bg-[#b90c19]">
             Order Now <ArrowRight size={14} aria-hidden="true" />
           </a>
           <a href={`/contact?product=${encodeURIComponent(product.product_id)}`} aria-label={`View details for ${product.product_name}`} title="View details" className="inline-flex items-center justify-center rounded-sm border border-[#eadfd6] px-3 text-[#d60e1e] transition hover:bg-[#fff4eb]">

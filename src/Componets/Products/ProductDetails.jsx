@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Boxes, PackageCheck } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import PageHeader from "../../CommonComponents/PageHeader";
 import productData from "../../data/product.json";
 
 const ProductDetails = () => {
@@ -9,6 +10,7 @@ const ProductDetails = () => {
 
   return (
     <main className="bg-[#fffaf6]">
+      <PageHeader title={product.product_name} />
       <section className="relative overflow-hidden bg-[linear-gradient(118deg,#fffaf4_0%,#fff_52%,#fff1e6_100%)] px-[5%] py-12 sm:py-20">
         <div className="mx-auto max-w-[1380px]">
           <Link to="/products" className="mb-10 inline-flex items-center gap-2 text-sm font-extrabold text-[#766e68] transition hover:text-[#d60e1e]">
@@ -75,9 +77,9 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <Link to={`/contact?product=${encodeURIComponent(product.product_id)}`} className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-6 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.2)] transition hover:bg-[#b90c19]">
+              <a href={`https://wa.me/918438018090?text=${encodeURIComponent(`Hello, I want to order ${product.product_name}.`)}`} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-6 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.2)] transition hover:bg-[#b90c19]">
                 Order Now <ArrowRight size={17} aria-hidden="true" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

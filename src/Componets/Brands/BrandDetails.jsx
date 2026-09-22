@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle2, ChevronRight, ShieldCheck } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import PageHeader from "../../CommonComponents/PageHeader";
 import brandData from "../../data/brand.json";
 import productData from "../../data/product.json";
 import ProductCard from "../Products/ProductCard";
@@ -13,6 +14,7 @@ const BrandDetails = () => {
 
   return (
     <main className="bg-[#fffaf6]">
+      <PageHeader title={brand.name} />
       <section className="relative overflow-hidden bg-[linear-gradient(118deg,#fffaf4_0%,#fff_52%,#fff1e6_100%)] px-[5%] py-16 sm:py-24">
         <div className="absolute -right-28 -top-36 h-[420px] w-[420px] rounded-full border border-[#e9651221]" />
         <div className="relative mx-auto grid max-w-[1380px] items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
