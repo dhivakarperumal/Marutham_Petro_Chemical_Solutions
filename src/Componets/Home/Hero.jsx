@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Factory, PhoneCall, Quote } from "lucide-react";
+import { ArrowRight, CheckCircle2, Factory, PhoneCall, Quote } from "lucide-react";
 import heroSlides from "../../data/heroSlides.json";
 
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const slide = heroSlides[activeIndex];
 
   useEffect(() => {
-    if (isPaused) return undefined;
-
     const timer = window.setInterval(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % heroSlides.length);
     }, 6500);
 
     return () => window.clearInterval(timer);
-  }, [isPaused]);
-
-  const goToSlide = (index) => {
-    setActiveIndex((index + heroSlides.length) % heroSlides.length);
-  };
+  }, []);
 
   return (
     <section
@@ -28,7 +21,7 @@ const Hero = () => {
     >
       <div className="absolute -right-[120px] -top-[180px] h-[520px] w-[520px] rounded-full border border-[#e9651221]" />
 
-      <div className="relative z-10 mx-auto grid min-h-[min(780px,calc(100vh-80px))] w-[90%] max-w-[1380px] grid-cols-1 items-center gap-12 py-[74px] lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-[clamp(40px,7vw,112px)] lg:py-[72px_0_88px]" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+      <div className="relative z-10 mx-auto grid min-h-[min(780px,calc(100vh-80px))] w-[90%] max-w-[1380px] grid-cols-1 items-center gap-12 py-[74px] lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-[clamp(40px,7vw,112px)] lg:py-[72px_0_88px]">
         <div key={`${slide.id}-content`} className="max-w-[680px] animate-hero-enter lg:max-w-[600px]">
           <div className="flex items-center gap-3 text-[0.73rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
             <span className="h-0.5 w-[38px] bg-[#e96512]" />
