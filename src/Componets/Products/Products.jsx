@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 
 const categories = ["All products", ...new Set(productData.map((product) => product.category))];
 
-const Products = () => {
+const Products = ({ isHome = false }) => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const visibleProducts = useMemo(
     () => activeCategory === categories[0]
@@ -53,9 +53,19 @@ const Products = () => {
           })}
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {visibleProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
-        </div>
+        {isHome ? (
+          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4" aria-label="Product slider">
+            {visibleProducts.map((product) => (
+              <div key={product.product_id} className="min-w-[86%] snap-start sm:min-w-[48%] lg:min-w-[31.5%] xl:min-w-[24%]">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {visibleProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
+          </div>
+        )}
 
         <div className="mt-10 flex items-center justify-center gap-2 text-sm font-bold text-[#766e68]">
           <Check size={17} className="text-[#e96512]" aria-hidden="true" /> Bulk supply available for commercial and industrial requirements.
