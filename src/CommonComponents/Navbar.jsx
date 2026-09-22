@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import brandData from '../data/brand.json';
+
+const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -26,7 +30,7 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links (Desktop) */}
-        <div className="hidden lg:flex items-center space-x-8 text-[15px] font-medium text-[#4a5568]">
+        <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
             return (
@@ -43,6 +47,20 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <div className="relative" onMouseEnter={() => setIsBrandsOpen(true)} onMouseLeave={() => setIsBrandsOpen(false)}>
+            <button type="button" onClick={() => setIsBrandsOpen((open) => !open)} className={`border-b-2 pb-1 transition-colors ${location.pathname.startsWith('/brands/') ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} aria-expanded={isBrandsOpen}>
+              Brands <span className="ml-1 text-xs">▾</span>
+            </button>
+            {isBrandsOpen && (
+              <div className="absolute right-0 top-full z-50 mt-3 w-56 rounded-md border border-gray-100 bg-white p-2 shadow-xl">
+                {brandData.map((brand) => (
+                  <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsBrandsOpen(false)} className="block rounded px-3 py-2.5 text-sm font-semibold text-[#4a5568] transition hover:bg-[#fff4eb] hover:text-[#f0301a]">
+                    {brand.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Action Buttons & Mobile Menu Toggle */}
@@ -99,6 +117,14 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <div className="border-b border-gray-50 pb-2">
+            <p className="py-2 text-lg font-medium text-[#4a5568]">Brands</p>
+            <div className="ml-3 flex flex-col gap-2 border-l-2 border-[#f0301a] pl-4">
+              {brandData.map((brand) => (
+                <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsMobileMenuOpen(false)} className="py-1 text-base font-medium text-[#4a5568] hover:text-[#f0301a]">{brand.name}</Link>
+              ))}
+            </div>
+          </div>
           
           <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
             Get a Quote
