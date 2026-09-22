@@ -54,12 +54,8 @@ const HomeAbout = () => {
             Marutham is a renowned and reliable name in the world of paint thinners and paint-related products, committed to delivering superior quality and exceptional performance. With a strong emphasis on innovation and customer satisfaction, Marutham has established itself as a leader in the industry, offering a range of products that cater to both professional painters and DIY enthusiasts.
           </p>
 
-          {/* <Link to="/about" className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-5 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.18)] transition hover:bg-[#b90c19]">
-            More about us <ArrowRight size={17} aria-hidden="true" />
-          </Link> */}
-
           <div ref={statsRef} className="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3">
-            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#d60e1e] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+            <div className="relative flex items-center gap-3 overflow-hidden rounded-sm border border-[#f2dfd0] bg-[linear-gradient(135deg,#fffaf6_0%,#fff1eb_100%)] px-3 py-3 shadow-[0_8px_20px_rgba(62,35,17,0.07)]">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff1eb]">
                 <Users size={16} className="text-[#d60e1e]" aria-hidden="true" />
               </div>
@@ -70,7 +66,7 @@ const HomeAbout = () => {
                 <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Satsified Clients</span>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#e96512] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+            <div className="relative flex items-center gap-3 overflow-hidden rounded-sm border border-[#f2dfd0] bg-[linear-gradient(135deg,#fffaf6_0%,#fff4eb_100%)] px-3 py-3 shadow-[0_8px_20px_rgba(62,35,17,0.07)]">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff4eb]">
                 <Store size={16} className="text-[#e96512]" aria-hidden="true" />
               </div>
@@ -81,7 +77,7 @@ const HomeAbout = () => {
                 <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Overall Dealers</span>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-sm border-t-2 border-[#d60e1e] bg-[#fffaf6] px-3 py-3 shadow-[0_6px_16px_rgba(62,35,17,0.05)]">
+            <div className="relative flex items-center gap-3 overflow-hidden rounded-sm border border-[#f2dfd0] bg-[linear-gradient(135deg,#fffaf6_0%,#fff1eb_100%)] px-3 py-3 shadow-[0_8px_20px_rgba(62,35,17,0.07)]">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff1eb]">
                 <BriefcaseBusiness size={16} className="text-[#d60e1e]" aria-hidden="true" />
               </div>
@@ -93,6 +89,10 @@ const HomeAbout = () => {
               </div>
             </div>
           </div>
+
+          <Link to="/about" className="mt-6 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-5 py-3 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.18)] transition hover:bg-[#b90c19]">
+            More about us <ArrowRight size={17} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>
