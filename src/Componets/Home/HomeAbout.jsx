@@ -1,7 +1,26 @@
-import { ArrowRight, CheckCircle2, Factory, ShieldCheck } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import CountUpModule from "react-countup";
+import { ArrowRight, BriefcaseBusiness, Factory, Store, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
+const CountUpComponent = CountUpModule?.default || CountUpModule;
+
 const HomeAbout = () => {
+  const statsRef = useRef(null);
+  const [hasViewedStats, setHasViewedStats] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHasViewedStats(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.35 });
+
+    if (statsRef.current) observer.observe(statsRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-white px-[5%] py-20 sm:py-24" aria-labelledby="home-about-title">
       <div className="absolute -right-24 top-16 h-72 w-72 rounded-full bg-[#f8c99c40] blur-3xl" />
@@ -29,35 +48,39 @@ const HomeAbout = () => {
             <span className="h-0.5 w-10 bg-[#e96512]" /> About Marutham
           </div>
           <h2 id="home-about-title" className="max-w-[620px] text-[clamp(2.5rem,5vw,5rem)] font-extrabold leading-[0.94] tracking-[-0.045em] text-[#282321]">
-            Consistency in every <span className="text-[#d60e1e]">finish.</span>
+            Marutham <span className="text-[#d60e1e]">Thinner</span>
           </h2>
-          <p className="mt-6 max-w-[590px] text-base leading-7 text-[#766e68]">
-            Marutham Marketing manufactures and supplies dependable paint thinners, enamel thinners, solvents, and coating solutions for professionals and everyday projects.
-          </p>
-          <p className="mt-4 max-w-[590px] text-base leading-7 text-[#766e68]">
-            We focus on practical performance, consistent quality, and reliable supply so every application starts with confidence.
+          <p className="mt-6 max-w-[590px] text-base leading-7 text-[#766e68] text-justify">
+            Marutham is a renowned and reliable name in the world of paint thinners and paint-related products, committed to delivering superior quality and exceptional performance. With a strong emphasis on innovation and customer satisfaction, Marutham has established itself as a leader in the industry, offering a range of products that cater to both professional painters and DIY enthusiasts.
           </p>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            <div className="flex items-start gap-3 border-t border-[#eadfd6] pt-4">
-              <ShieldCheck size={20} className="mt-0.5 shrink-0 text-[#d60e1e]" aria-hidden="true" />
-              <div>
-                <h3 className="text-sm font-extrabold text-[#282321]">Quality you can trust</h3>
-                <p className="mt-1 text-sm leading-6 text-[#766e68]">Reliable performance across every batch.</p>
-              </div>
+          {/* <Link to="/about" className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-5 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.18)] transition hover:bg-[#b90c19]">
+            More about us <ArrowRight size={17} aria-hidden="true" />
+          </Link> */}
+
+          <div ref={statsRef} className="mt-10 grid grid-cols-3 border-y border-[#eadfd6]">
+            <div className="border-r border-[#eadfd6] py-4 pr-3">
+              <Users size={20} className="mb-2 text-[#d60e1e]" aria-hidden="true" />
+              <strong className="block text-2xl font-extrabold text-[#282321]">
+                {hasViewedStats ? <CountUpComponent end={1200} duration={2} suffix="+" /> : "0+"}
+              </strong>
+              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Satsified Clients</span>
             </div>
-            <div className="flex items-start gap-3 border-t border-[#eadfd6] pt-4">
-              <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-[#e96512]" aria-hidden="true" />
-              <div>
-                <h3 className="text-sm font-extrabold text-[#282321]">Built for better results</h3>
-                <p className="mt-1 text-sm leading-6 text-[#766e68]">Solutions for painting and coating work.</p>
-              </div>
+            <div className="border-r border-[#eadfd6] px-3 py-4">
+              <Store size={20} className="mb-2 text-[#e96512]" aria-hidden="true" />
+              <strong className="block text-2xl font-extrabold text-[#282321]">
+                {hasViewedStats ? <CountUpComponent end={100} duration={2} suffix="+" /> : "0+"}
+              </strong>
+              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Overall Dealers</span>
+            </div>
+            <div className="py-4 pl-3">
+              <BriefcaseBusiness size={20} className="mb-2 text-[#d60e1e]" aria-hidden="true" />
+              <strong className="block text-2xl font-extrabold text-[#282321]">
+                {hasViewedStats ? <CountUpComponent end={10} duration={2} suffix="+" /> : "0+"}
+              </strong>
+              <span className="mt-1 block text-[0.62rem] font-extrabold uppercase tracking-[0.08em] text-[#766e68]">Overall Experience</span>
             </div>
           </div>
-
-          <Link to="/about" className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-5 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.18)] transition hover:bg-[#b90c19]">
-            More about us <ArrowRight size={17} aria-hidden="true" />
-          </Link>
         </div>
       </div>
     </section>
