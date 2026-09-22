@@ -13,9 +13,6 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Products', path: '/products' },
-    { name: 'Industries', path: '/industries' },
-    { name: 'Services', path: '/services' },
-    { name: 'Blog', path: '/blog' },
     { name: 'Contact Us', path: '/contact' },
   ];
 
@@ -52,12 +49,14 @@ const Navbar = () => {
               Brands <span className="ml-1 text-xs">▾</span>
             </button>
             {isBrandsOpen && (
-              <div className="absolute right-0 top-full z-50 mt-3 w-56 rounded-md border border-gray-100 bg-white p-2 shadow-xl">
-                {brandData.map((brand) => (
-                  <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsBrandsOpen(false)} className="block rounded px-3 py-2.5 text-sm font-semibold text-[#4a5568] transition hover:bg-[#fff4eb] hover:text-[#f0301a]">
-                    {brand.name}
-                  </Link>
-                ))}
+              <div className="absolute right-0 top-full z-50 w-56 pt-3">
+                <div className="rounded-md border border-gray-100 bg-white p-2 shadow-xl">
+                  {brandData.map((brand) => (
+                    <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsBrandsOpen(false)} className="block rounded px-3 py-2.5 text-sm font-semibold text-[#4a5568] transition hover:bg-[#fff4eb] hover:text-[#f0301a]">
+                      {brand.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
