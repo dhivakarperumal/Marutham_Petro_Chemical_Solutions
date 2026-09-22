@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./CommonComponents/Navbar";
+import TopHeader from "./CommonComponents/TopHeader";
 import Footer from "./CommonComponents/Footer";
 import Home from "./Componets/Home/Home";
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <section>
       <div className="print:hidden">
+        <TopHeader />
         <Navbar />
       </div>
       <div className="print:hidden">
