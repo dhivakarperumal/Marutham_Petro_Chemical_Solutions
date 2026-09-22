@@ -24,7 +24,7 @@ const Footer = () => {
     <footer className="bg-[#111317] border-t border-gray-800 font-sans mt-auto text-white">
       <div className="container mx-auto px-4 md:px-8 py-16">
         {/* We use a responsive grid that will naturally wrap items to the next row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8 lg:gap-10">
           
           {/* 1. Logo & Info */}
           <div className="space-y-6">
@@ -105,54 +105,47 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0">
                   <FaEnvelope className="text-white text-sm" />
                 </div>
-                <a href="mailto:maruthamthinner@gmail.com" className="text-[#0a8c43] font-bold text-[15px] hover:underline">
+                <a href="mailto:maruthamthinner@gmail.com" className="text-[#d4e5db] font-bold text-[15px] hover:underline">
                   maruthamthinner@gmail.com
                 </a>
               </div>
             </div>
-            </div>
-              <div className="flex items-start">
-                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0 mt-1">
-                  <FaMapMarkerAlt className="text-white text-sm" />
-                </div>
-                <p className="text-gray-300 text-[15px] leading-relaxed pt-1">Ambur, Tamil Nadu, India</p>
+
+            <div className="flex items-start mt-5">
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0 mt-1">
+                <FaMapMarkerAlt className="text-white text-sm" />
               </div>
+              <p className="text-gray-400 text-[15px] leading-relaxed">
+                S.F,No.16/9, Dharmapuri Main Road, Sundrampalli Village, Tirupattur District - 635 654
+              </p>
+            </div>
+
+            <div className="mt-6">
+              <div className="flex items-center mb-3">
+                <FaClock className="text-[#fb5921] text-lg mr-3 shrink-0" />
+                <h3 className="text-[17px] font-bold text-white">Hours:</h3>
+              </div>
+              <p className="text-gray-400 text-[15px] ml-7">
+                10:00am - 08:00pm<br/>
+                Monday To Sunday
+              </p>
             </div>
           </div>
 
-          {/* 5. Address & Hours (From previous request) */}
-          <div>
-            <div className="flex items-center mb-6">
-              <FaMapMarkerAlt className="text-[#fb5921] text-lg mr-3 shrink-0" />
-              <h3 className="text-[17px] font-bold text-white">Address:</h3>
-            </div>
-            <p className="text-gray-400 text-[15px] leading-relaxed mb-8 ml-7">
-              S.F,No.16/9, Dharmapuri Main Road, Sundrampalli Village, Tirupattur District <span className="text-[#e41a15] whitespace-nowrap">- 635 654</span>
-            </p>
-            
-            <div className="flex items-center mb-4">
-              <FaClock className="text-[#fb5921] text-lg mr-3 shrink-0" />
-              <h3 className="text-[17px] font-bold text-white">Hours:</h3>
-            </div>
-            <p className="text-gray-400 text-[15px] ml-7">
-              10:00am - 08:00pm<br/>
-              Monday To Sunday
-            </p>
-          </div>
-
+         
           {/* 6. Newsletter Subscription */}
           <div>
             <h3 className="text-[17px] font-bold text-white mb-6">Newsletter</h3>
-            <form className="flex flex-col space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex w-full" onSubmit={(e) => e.preventDefault()}>
               <input 
                 type="email" 
                 placeholder="Your email address" 
-                className="bg-[#1c1f26] text-[15px] text-gray-300 px-4 py-3 rounded-md border border-gray-800 focus:outline-none focus:border-[#fb5921] w-full"
+                className="bg-[#1c1f26] text-[15px] text-gray-300 px-4 py-3 rounded-l-md border border-gray-800 focus:outline-none focus:border-[#fb5921] w-full min-w-0"
                 required
               />
               <button 
                 type="submit" 
-                className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white py-3 rounded-md font-medium transition-colors w-full"
+                className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white px-5 sm:px-6 py-3 rounded-r-md font-medium transition-colors whitespace-nowrap"
               >
                 Subscribe
               </button>
