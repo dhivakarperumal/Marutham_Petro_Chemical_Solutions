@@ -20,12 +20,7 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-[#a0968e]">{product.brand}</span>
-          <span className="text-[0.68rem] font-bold text-[#a0968e]">{product.product_id}</span>
-        </div>
         <h3 className="min-h-[3.5rem] text-[1.28rem] font-extrabold leading-[1.08] text-[#282321]">{product.product_name}</h3>
-        <p className="mt-3 line-clamp-3 text-[0.88rem] leading-[1.55] text-[#766e68]">{product.description}</p>
 
         <div className="mt-5 grid grid-cols-2 gap-2 border-y border-[#eee3da] py-3">
           <div className="flex items-center gap-2">
@@ -39,7 +34,7 @@ const ProductCard = ({ product }) => {
             <Boxes size={17} className="shrink-0 text-[#e96512]" aria-hidden="true" />
             <div>
               <span className="block text-[0.62rem] font-bold uppercase tracking-wide text-[#a0968e]">Bulk order</span>
-              <strong className="text-sm text-[#332e2b]">{product.min_order_no} {product.unit}</strong>
+              <strong className="text-sm text-[#332e2b]">Available</strong>
             </div>
           </div>
         </div>
