@@ -1,6 +1,6 @@
 import Hero from "./Hero";
+import HomeProducts from "./HomeProducts";
 import WhyChooseUs from "./WhyChooseUs";
-import Products from "../Products/Products";
 
 const Home = () => {
  
@@ -9,7 +9,7 @@ const Home = () => {
     <>
     <Hero />
     <WhyChooseUs />
-    <Products isHome />
+    <HomeProducts />
     </>
   );
 };

@@ -5,29 +5,14 @@ import ProductCard from "./ProductCard";
 
 const categories = ["All products", ...new Set(productData.map((product) => product.category))];
 
-const Products = ({ isHome = false }) => {
+const Products = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const [homeSlideIndex, setHomeSlideIndex] = useState(0);
   const visibleProducts = useMemo(
     () => activeCategory === categories[0]
       ? productData
       : productData.filter((product) => product.category === activeCategory),
     [activeCategory],
   );
-
-  useEffect(() => {
-    setHomeSlideIndex(0);
-  }, [activeCategory]);
-
-  useEffect(() => {
-    if (!isHome || visibleProducts.length <= 1) return undefined;
-
-    const timer = window.setInterval(() => {
-      setHomeSlideIndex((currentIndex) => currentIndex >= visibleProducts.length - 1 ? 0 : currentIndex + 1);
-    }, 4200);
-
-    return () => window.clearInterval(timer);
-  }, [isHome, visibleProducts.length]);
 
   return (
     <section id="products" className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="products-title">
@@ -68,24 +53,9 @@ const Products = ({ isHome = false }) => {
           })}
         </div>
 
-        {isHome ? (
-          <div className="overflow-hidden" aria-label="Automatic product slider">
-            <div
-              className="flex gap-5 transition-transform duration-700 ease-out [--slide-offset:calc(86%+1.25rem)] sm:[--slide-offset:calc(48%+1.25rem)] lg:[--slide-offset:calc(31.5%+1.25rem)] xl:[--slide-offset:calc(24%+1.25rem)]"
-              style={{ "--slide-index": homeSlideIndex, transform: "translateX(calc(-1 * var(--slide-index) * var(--slide-offset)))" }}
-            >
-            {visibleProducts.map((product) => (
-              <div key={product.product_id} className="min-w-[86%] sm:min-w-[48%] lg:min-w-[31.5%] xl:min-w-[24%]">
-                <ProductCard product={product} />
-              </div>
-            ))}
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {visibleProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
-          </div>
-        )}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {visibleProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
+        </div>
 
         <div className="mt-10 flex items-center justify-center gap-2 text-sm font-bold text-[#766e68]">
           <Check size={17} className="text-[#e96512]" aria-hidden="true" /> Bulk supply available for commercial and industrial requirements.
