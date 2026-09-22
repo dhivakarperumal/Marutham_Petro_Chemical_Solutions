@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import Navbar from "./CommonComponents/Navbar";
 import TopHeader from "./CommonComponents/TopHeader";
 import Footer from "./CommonComponents/Footer";
-import Home from "./Componets/Home/Home";
+
 
 import ScrollToTop from "./CommonComponents/ScrollToTop";
 // import FloatingSupport from "./CommonComponents/FloatingSupport";
