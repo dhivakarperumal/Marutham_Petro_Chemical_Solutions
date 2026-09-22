@@ -1,4 +1,5 @@
 import React from "react";
+import CountUpModule from "react-countup";
 import {
   FaAward,
   FaCheck,
@@ -42,9 +43,11 @@ const featureList = [
   },
 ];
 
+const CountUpComponent = CountUpModule?.default || CountUpModule;
+
 const stats = [
-  { value: "500+", label: "Happy Customers", icon: <FaUsers className="text-3xl text-[#fb5921]" /> },
-  { value: "100+", label: "Products", icon: <FaStar className="text-3xl text-[#fb5921]" /> },
+  { value: 500, suffix: "+", label: "Happy Customers", icon: <FaUsers className="text-3xl text-[#fb5921]" /> },
+  { value: 100, suffix: "+", label: "Products", icon: <FaStar className="text-3xl text-[#fb5921]" /> },
   { value: "Quality", label: "You Can Trust", icon: <FaCheck className="text-3xl text-[#fb5921]" /> },
   { value: "Safer", label: "Solutions", icon: <FaLeaf className="text-3xl text-[#fb5921]" /> },
   { value: "Growing", label: "Together", icon: <FaArrowRight className="text-3xl text-[#fb5921]" /> },
@@ -55,7 +58,7 @@ const About = () => {
     <div className="w-full bg-[#f7f3ef] text-gray-800">
       <PageHeader title="About Us" />
 
-      <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10" data-aos="fade-up">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1.1fr]">
           <div className="relative overflow-hidden rounded-[28px] bg-[#f5efe9] p-4 shadow-[0_24px_50px_rgba(0,0,0,0.08)] sm:p-6">
             <div
@@ -157,7 +160,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="100">
         <div className="grid gap-4 rounded-[22px] bg-[#f7efe9] p-4 md:grid-cols-5">
           {stats.map((stat) => (
             <div
@@ -167,14 +170,22 @@ const About = () => {
               <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#fff2ee]">
                 {stat.icon}
               </div>
-              <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">{stat.value}</div>
+
+              {typeof stat.value === "number" ? (
+                <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">
+                  <CountUpComponent end={stat.value} suffix={stat.suffix || ""} duration={2.2} />
+                </div>
+              ) : (
+                <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">{stat.value}</div>
+              )}
+
               <div className="mt-1 text-sm font-medium text-[#4b5563]">{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="120">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {[
             {
@@ -214,7 +225,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="140">
         <div className="rounded-[28px] bg-[#f3f1ef] p-6 md:p-8">
           <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
             <div className="pr-0 lg:pr-4">
@@ -254,7 +265,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="160">
         <div className="grid gap-5 rounded-[26px] bg-gradient-to-r from-[#b33d2a] via-[#d34b2d] to-[#8d2c2b] p-4 text-white md:grid-cols-4 md:p-6">
           {[
             { value: "500+", label: "Happy Customers", icon: <FaUsers className="text-3xl" /> },
@@ -273,7 +284,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-20 md:px-8 xl:px-10">
+      <section className="mx-auto max-w-[1500px] px-4 pb-20 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="180">
         <div className="mb-8 flex items-center justify-between gap-4">
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-[#fb5921]">Our Product Range</p>
