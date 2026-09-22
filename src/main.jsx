@@ -7,6 +7,7 @@ import Home from './Componets/Home/Home.jsx'
 import About from './Componets/About/About.jsx'
 import Contact from './Componets/Contact/Contact.jsx'
 import Products from './Componets/Products/Products.jsx'
+import ProductDetails from './Componets/Products/ProductDetails.jsx'
 import BrandDetails from './Componets/Brands/BrandDetails.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="products" element={<Products />} />
+          <Route path="products/:productId" element={<ProductDetails />} />
           <Route path="brands/:brandSlug" element={<BrandDetails />} />
         </Route>
       </Routes>

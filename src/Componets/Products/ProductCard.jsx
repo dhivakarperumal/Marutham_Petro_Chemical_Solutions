@@ -1,4 +1,5 @@
 import { ArrowRight, Boxes, Eye, PackageCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   return (
@@ -11,16 +12,20 @@ const ProductCard = ({ product }) => {
           {product.quantity}
         </span> */}
         <div className="absolute -bottom-20 left-1/2 h-36 w-52 -translate-x-1/2 rounded-full bg-[#f5c59d]/50 blur-2xl transition duration-300 group-hover:scale-125" />
-        <img
-          src={product.image}
-          alt={product.product_name}
-          className="relative z-10 h-full w-full object-contain drop-shadow-[0_14px_10px_rgba(57,32,17,0.18)] transition duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
+        <Link to={`/products/${product.product_id}`} className="relative z-10 h-full w-full" aria-label={`View ${product.product_name}`}>
+          <img
+            src={product.image}
+            alt={product.product_name}
+            className="h-full w-full object-contain drop-shadow-[0_14px_10px_rgba(57,32,17,0.18)] transition duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <h3 className="truncate text-[1.1rem] font-extrabold leading-tight text-[#2d3035]" title={product.product_name}>{product.product_name}</h3>
+        <h3 className="truncate text-[1.1rem] font-extrabold leading-tight text-[#2d3035]" title={product.product_name}>
+          <Link to={`/products/${product.product_id}`} className="transition hover:text-[#d60e1e]">{product.product_name}</Link>
+        </h3>
 
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="rounded-md border border-[#f2dfd0] bg-[#fff8f2] p-2.5">
