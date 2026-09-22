@@ -1,4 +1,5 @@
 import React from "react";
+import CountUpModule from "react-countup";
 import {
   FaAward,
   FaCheck,
@@ -42,9 +43,11 @@ const featureList = [
   },
 ];
 
+const CountUpComponent = CountUpModule?.default || CountUpModule;
+
 const stats = [
-  { value: "500+", label: "Happy Customers", icon: <FaUsers className="text-3xl text-[#fb5921]" /> },
-  { value: "100+", label: "Products", icon: <FaStar className="text-3xl text-[#fb5921]" /> },
+  { value: 500, suffix: "+", label: "Happy Customers", icon: <FaUsers className="text-3xl text-[#fb5921]" /> },
+  { value: 100, suffix: "+", label: "Products", icon: <FaStar className="text-3xl text-[#fb5921]" /> },
   { value: "Quality", label: "You Can Trust", icon: <FaCheck className="text-3xl text-[#fb5921]" /> },
   { value: "Safer", label: "Solutions", icon: <FaLeaf className="text-3xl text-[#fb5921]" /> },
   { value: "Growing", label: "Together", icon: <FaArrowRight className="text-3xl text-[#fb5921]" /> },
@@ -167,7 +170,15 @@ const About = () => {
               <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#fff2ee]">
                 {stat.icon}
               </div>
-              <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">{stat.value}</div>
+
+              {typeof stat.value === "number" ? (
+                <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">
+                  <CountUpComponent end={stat.value} suffix={stat.suffix || ""} duration={2.2} />
+                </div>
+              ) : (
+                <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">{stat.value}</div>
+              )}
+
               <div className="mt-1 text-sm font-medium text-[#4b5563]">{stat.label}</div>
             </div>
           ))}

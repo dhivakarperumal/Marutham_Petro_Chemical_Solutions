@@ -11,7 +11,7 @@ const Contact = () => {
       <PageHeader title="Contact Us" />
 
       {/* 2. INFO CARDS */}
-      <section className="container mx-auto px-4 md:px-8 relative z-20 -mt-12 mb-16">
+      <section className="container mx-auto px-4 md:px-8 relative z-20 -mt-12 mb-16" data-aos="fade-up">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl shadow-lg p-6 flex gap-4 items-start border border-gray-100">
             <div className="w-12 h-12 rounded-full bg-[#fb5921] flex items-center justify-center text-white shrink-0 text-xl shadow-md">
@@ -60,7 +60,7 @@ const Contact = () => {
       </section>
 
       {/* 3. MAIN CONTENT: FORM & MAP */}
-      <section className="container mx-auto px-4 md:px-8 py-8 mb-16">
+      <section className="container mx-auto px-4 md:px-8 py-8 mb-16" data-aos="fade-up" data-aos-delay="80">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
           {/* Left: Contact Form */}
@@ -171,7 +171,7 @@ const Contact = () => {
       </section>
 
       {/* 4. FEATURES STRIP */}
-      <section className="border-y border-gray-100 bg-white py-10">
+      <section className="border-y border-gray-100 bg-white py-10" data-aos="fade-up" data-aos-delay="120">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-wrap justify-center lg:justify-between gap-6 md:gap-4">
             <div className="flex items-center gap-3">
@@ -218,12 +218,12 @@ const Contact = () => {
       </section>
 
       {/* 5. FAQ SECTION */}
-      <section className="relative w-full overflow-hidden bg-white py-20">
+      <section className="relative w-full overflow-hidden bg-white py-20" data-aos="fade-up" data-aos-delay="150">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
           
           {/* Left Image (Truck) */}
           <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px]">
-            <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=800&auto=format&fit=crop" alt="Marutham Marketing Transport" className="w-full h-full object-cover" />
+            <img src="/images/hero/img1.png" alt="Marutham Marketing Transport" className="w-full h-full object-cover" />
           </div>
           
           {/* Middle FAQ */}
