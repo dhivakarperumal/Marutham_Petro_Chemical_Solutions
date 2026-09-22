@@ -22,7 +22,7 @@ const Hero = () => {
       <div className="absolute -right-[120px] -top-[180px] h-[520px] w-[520px] rounded-full border border-[#e9651221]" />
 
       <div className="relative z-10 mx-auto grid min-h-[min(780px,calc(100vh-80px))] w-[90%] max-w-[1380px] grid-cols-1 items-center gap-12 py-[74px] lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-[clamp(40px,7vw,112px)] lg:py-[72px_0_88px]">
-        <div key={`${slide.id}-content`} className="max-w-[680px] animate-hero-enter lg:max-w-[600px]">
+        <div key={`${slide.id}-content`} className="max-w-[680px] animate-hero-page-turn lg:max-w-[600px]">
           <div className="flex items-center gap-3 text-[0.73rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
             <span className="h-0.5 w-[38px] bg-[#e96512]" />
             <span>{slide.eyebrow}</span>
@@ -72,7 +72,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div key={`${slide.id}-visual`} className="relative mx-auto min-h-[350px] w-full max-w-[650px] animate-hero-enter lg:min-h-[530px] lg:max-w-none">
+        <div key={`${slide.id}-visual`} className="relative mx-auto min-h-[350px] w-full max-w-[650px] animate-hero-page-turn lg:min-h-[530px] lg:max-w-none">
           <div className="absolute left-[4%] top-[10%] h-[78%] w-[78%] rounded-full bg-[#f8c99c] opacity-45 blur-[64px]" />
           <div className="absolute right-0 top-[4%] h-[78%] w-[92%] rotate-[2.5deg] overflow-hidden border-[10px] border-white/85 shadow-[22px_25px_0_#f8d9be,0_25px_60px_rgba(55,36,22,0.2)] lg:h-[84%] lg:w-[94%]">
             <img
