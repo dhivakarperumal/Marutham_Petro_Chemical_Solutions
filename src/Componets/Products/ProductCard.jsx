@@ -33,8 +33,8 @@ const ProductCard = ({ product }) => {
           <div className="flex items-center gap-2">
             <Boxes size={17} className="shrink-0 text-[#e96512]" aria-hidden="true" />
             <div>
-              <span className="block text-[0.62rem] font-bold uppercase tracking-wide text-[#a0968e]">Bulk order</span>
-              <strong className="text-sm text-[#332e2b]">Available</strong>
+              <span className="block text-[0.62rem] font-bold uppercase tracking-wide text-[#a0968e]">Minimum Order</span>
+              <strong className="text-sm text-[#332e2b]">{product.min_order_no} {product.unit}</strong>
             </div>
           </div>
         </div>
