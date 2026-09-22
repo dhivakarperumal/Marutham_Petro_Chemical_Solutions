@@ -58,9 +58,16 @@ const About = () => {
       <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1.1fr]">
           <div className="relative overflow-hidden rounded-[28px] bg-[#f5efe9] p-4 shadow-[0_24px_50px_rgba(0,0,0,0.08)] sm:p-6">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,89,33,0.18),transparent_40%),radial-gradient(circle_at_bottom_right,_rgba(116,52,227,0.18),transparent_35%)]" />
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
+              style={{
+                backgroundImage: 'url("/images/about/about.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
 
-            <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#fce6d6] via-[#f9efe6] to-[#e9e0d8] p-3 sm:p-5">
+            <div className="relative overflow-hidden rounded-[24px] bg-white/10 p-3 sm:p-5">
               <div className="relative mx-auto flex min-h-[550px] max-w-[620px] items-end justify-center">
                 <div className="absolute left-0 top-10 rotate-[-10deg] text-3xl font-bold italic text-[#fb5921] opacity-90 sm:text-4xl">
                   <div>Colors</div>
@@ -279,12 +286,15 @@ const About = () => {
 
         <div className="grid gap-5 md:grid-cols-3">
           {[
-            { name: "Enamel Thinners", desc: "Smooth finish, better coverage", image: "linear-gradient(135deg,#5cb1ff,#ddf0ff)" },
-            { name: "Lacquer Thinners", desc: "Fast drying, high performance", image: "linear-gradient(135deg,#ff5e5e,#f7d1a9)" },
-            { name: "Industrial Solvents", desc: "Reliable for multiple applications", image: "linear-gradient(135deg,#ffb949,#ffef8a)" },
+            { name: "Enamel Thinners", desc: "Smooth finish, better coverage", image: "/images/hero/img1.png" },
+            { name: "Lacquer Thinners", desc: "Fast drying, high performance", image: "/images/hero/img2.png" },
+            { name: "Industrial Solvents", desc: "Reliable for multiple applications", image: "/images/hero/img3.png" },
           ].map((product) => (
             <div key={product.name} className="overflow-hidden rounded-[22px] border border-[#f1e5df] bg-white shadow-[0_18px_30px_rgba(15,23,42,0.04)]">
-              <div className="h-60" style={{ background: product.image }} />
+              <div
+                className="h-60 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url("${product.image}")` }}
+              />
               <div className="p-5">
                 <h3 className="text-2xl font-bold text-[#1f2937]">{product.name}</h3>
                 <p className="mt-2 text-[15px] leading-6 text-[#4b5563]">{product.desc}</p>
