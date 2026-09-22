@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import brandData from '../data/brand.json';
+import productData from '../data/product.json';
 
 const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -8,6 +9,30 @@ const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const searchResults = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    if (!query) return [];
+
+    return productData.filter((product) => [
+      product.product_name,
+      product.product_id,
+      product.category,
+      product.brand,
+      product.quantity,
+    ].some((value) => value.toLowerCase().includes(query))).slice(0, 6);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') setIsSearchOpen(false);
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -82,7 +107,7 @@ const Navbar = () => {
 
           {/* Action Buttons & Mobile Menu Toggle */}
           <div className="flex items-center space-x-3 md:space-x-5">
-            <button className="hidden sm:block p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors">
+            <button type="button" onClick={() => setIsSearchOpen((open) => !open)} aria-label="Search products" aria-expanded={isSearchOpen} className="p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -112,6 +137,44 @@ const Navbar = () => {
             </button>
           </div>
         </div>
+
+        {isSearchOpen && (
+          <div className="absolute right-4 top-full z-[60] mt-2 w-[min(92vw,380px)] rounded-md border border-[#eadfd6] bg-white p-3 shadow-xl md:right-8">
+            <div className="flex items-center gap-2 rounded-sm border border-[#eadfd6] bg-[#fffaf6] px-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-[#d60e1e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+              </svg>
+              <input
+                autoFocus
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search products..."
+                className="min-w-0 flex-1 bg-transparent py-3 text-sm text-[#282321] outline-none placeholder:text-[#a0968e]"
+                aria-label="Search products"
+              />
+              <button type="button" onClick={() => { setSearchTerm(''); setIsSearchOpen(false); }} className="text-[#a0968e] transition hover:text-[#d60e1e]" aria-label="Close product search">
+                <span className="text-lg leading-none">&times;</span>
+              </button>
+            </div>
+
+            {searchTerm.trim() && (
+              <div className="mt-2 max-h-72 overflow-y-auto">
+                {searchResults.length ? searchResults.map((product) => (
+                  <Link key={product.product_id} to={`/products/${product.product_id}`} onClick={() => { setIsSearchOpen(false); setSearchTerm(''); }} className="flex items-center gap-3 rounded-sm px-2 py-2.5 transition hover:bg-[#fff4eb]">
+                    <img src={product.image} alt="" className="h-10 w-10 rounded-sm bg-[#fff8f2] object-contain p-1" />
+                    <span className="min-w-0">
+                      <strong className="block truncate text-sm text-[#282321]">{product.product_name}</strong>
+                      <span className="text-xs text-[#766e68]">{product.category} · {product.quantity}</span>
+                    </span>
+                  </Link>
+                )) : (
+                  <p className="px-2 py-3 text-sm text-[#766e68]">No products found.</p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
