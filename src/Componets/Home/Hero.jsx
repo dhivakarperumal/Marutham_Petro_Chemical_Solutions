@@ -36,7 +36,7 @@ const Hero = () => {
           </div>
 
           <h1 id="hero-title" className="my-[22px] mb-6 max-w-[660px] font-extrabold tracking-[-0.045em]">
-            <span className="block truncate text-[clamp(3.2rem,5.8vw,5.8rem)] leading-[0.92] text-[#d60e1e] max-[560px]:text-[clamp(2.7rem,13vw,4.4rem)]">{slide.highlight}</span>
+            <span className="block break-words text-[clamp(3.2rem,5.8vw,5.8rem)] leading-[0.92] text-[#d60e1e] max-[560px]:text-[clamp(2.7rem,13vw,4.4rem)]">{slide.highlight}</span>
             <span className="mt-3 block line-clamp-2 text-[clamp(1.9rem,3.4vw,3.3rem)] leading-[1.02] text-[#242323] max-[560px]:text-[clamp(1.7rem,8vw,2.7rem)]">{slide.title}</span>
           </h1>
 
@@ -104,7 +104,7 @@ const Hero = () => {
           <span className="absolute right-[3%] top-0 text-[1.2rem] font-extrabold text-[#d60e1e]">{String(activeIndex + 1).padStart(2, "0")} <i className="text-[0.8rem] font-normal not-italic text-[#a99d94]">/ {String(heroSlides.length).padStart(2, "0")}</i></span>
         </div>
       </div>
-      <div className="absolute bottom-[24px] left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#eadfd6] bg-white/75 px-2 py-1.5 shadow-sm backdrop-blur-sm" aria-label="Hero slides">
+      {/* <div className="absolute bottom-[24px] left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#eadfd6] bg-white/75 px-2 py-1.5 shadow-sm backdrop-blur-sm" aria-label="Hero slides">
         <button type="button" onClick={() => goToSlide(activeIndex - 1)} className="rounded-full p-1.5 text-[#6e6966] transition hover:bg-[#fff4eb] hover:text-[#d60e1e]" aria-label="Previous hero slide">
           <ChevronLeft size={17} aria-hidden="true" />
         </button>
@@ -116,7 +116,7 @@ const Hero = () => {
         <button type="button" onClick={() => goToSlide(activeIndex + 1)} className="rounded-full p-1.5 text-[#6e6966] transition hover:bg-[#fff4eb] hover:text-[#d60e1e]" aria-label="Next hero slide">
           <ChevronRight size={17} aria-hidden="true" />
         </button>
-      </div>
+      </div> */}
     </section>
   );
 };
