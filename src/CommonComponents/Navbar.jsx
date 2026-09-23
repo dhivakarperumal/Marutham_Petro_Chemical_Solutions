@@ -113,12 +113,12 @@ const Navbar = () => {
               </svg>
             </button>
             
-            <button className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md">
+            <Link to="/contact" className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md">
               Get a Quote
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </button>
+            </Link>
 
             <button 
               className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity"
@@ -203,12 +203,12 @@ const Navbar = () => {
             </div>
           </div>
           
-          <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
+          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
             Get a Quote
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
-          </button>
+          </Link>
         </div>
       )}
     </nav>

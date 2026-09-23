@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaUsers, FaRegClock, FaFileAlt, FaChevronDown, FaComments } from 'react-icons/fa';
 import { MdLocalShipping, MdSupportAgent, MdEnergySavingsLeaf, MdVerifiedUser } from 'react-icons/md';
 
 import PageHeader from '../../CommonComponents/PageHeader';
+
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_0n2loa8';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_k4kqaxk';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'PGkFp8TEtPWxWmOMo';
 
 const faqs = [
   {
@@ -29,9 +34,93 @@ const faqs = [
 
 const Contact = () => {
   const [openFaq, setOpenFaq] = useState(0);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    productInterest: '',
+    industryType: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
 
   const toggleFaq = (idx) => {
     setOpenFaq((prev) => (prev === idx ? null : idx));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'EmailJS is not configured yet. Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your .env file.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: '', message: '' });
+
+    try {
+      const cleanName = formData.name?.trim() || 'Not provided';
+      const cleanCompany = formData.company?.trim() || 'Not provided';
+      const cleanEmail = formData.email?.trim() || 'Not provided';
+      const cleanPhone = formData.phone?.trim() || 'Not provided';
+      const cleanProduct = formData.productInterest?.trim() || 'Not provided';
+      const cleanIndustry = formData.industryType?.trim() || 'Not provided';
+      const cleanMessage = formData.message?.trim() || 'Not provided';
+
+      const templateParams = {
+        name: cleanName,
+        company: cleanCompany,
+        email: cleanEmail,
+        phone: cleanPhone,
+        product_interest: cleanProduct,
+        industry_type: cleanIndustry,
+        message: cleanMessage,
+
+        from_name: cleanName,
+        company_name: cleanCompany,
+        from_email: cleanEmail,
+      };
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Your message has been sent successfully. Our team will contact you soon.',
+      });
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        productInterest: '',
+        industryType: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('EmailJS send failed:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Something went wrong while sending your message. Please try again or contact us directly.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -81,7 +170,7 @@ const Contact = () => {
             <div>
               <h4 className="font-bold text-gray-900">Request a Quote</h4>
               <p className="text-gray-600 text-sm mt-1 leading-snug">Get the best pricing for your requirements</p>
-              <a href="#" className="text-[#fb5921] text-sm font-bold mt-2 inline-flex items-center hover:underline">Get a Quote &rarr;</a>
+              <a href="mailto:maruthamthinner@gmail.com?subject=Request%20for%20Quote" className="text-[#fb5921] text-sm font-bold mt-2 inline-flex items-center hover:underline">Get a Quote &rarr;</a>
             </div>
           </div>
         </div>
@@ -102,19 +191,55 @@ const Contact = () => {
               <p className="text-gray-600 mt-3 text-sm">Fill out the form below and our team will get back to you shortly.</p>
             </div>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <input type="text" placeholder="Your Name *" className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]" required />
-                <input type="text" placeholder="Company Name" className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]" />
-                <input type="email" placeholder="Email Address *" className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]" required />
-                <input type="tel" placeholder="Phone Number *" className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]" required />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name *"
+                  className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                  required
+                />
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  placeholder="Company Name"
+                  className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email Address *"
+                  className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                  required
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number *"
+                  className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                  required
+                />
                 
                 <div className="relative">
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm text-gray-500 appearance-none focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]">
-                    <option>Product Interest</option>
-                    <option>Polymers</option>
-                    <option>Solvents</option>
-                    <option>Chemicals</option>
+                  <select
+                    name="productInterest"
+                    value={formData.productInterest}
+                    onChange={handleChange}
+                    className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm text-gray-500 appearance-none focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                  >
+                    <option value="">Product Interest</option>
+                    <option value="Polymers">Polymers</option>
+                    <option value="Solvents">Solvents</option>
+                    <option value="Chemicals">Chemicals</option>
                   </select>
                   <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">
                     <FaChevronDown size={12} />
@@ -122,11 +247,16 @@ const Contact = () => {
                 </div>
 
                 <div className="relative">
-                  <select className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm text-gray-500 appearance-none focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]">
-                    <option>Industry Type</option>
-                    <option>Manufacturing</option>
-                    <option>Automotive</option>
-                    <option>Construction</option>
+                  <select
+                    name="industryType"
+                    value={formData.industryType}
+                    onChange={handleChange}
+                    className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm text-gray-500 appearance-none focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                  >
+                    <option value="">Industry Type</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Construction">Construction</option>
                   </select>
                   <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">
                     <FaChevronDown size={12} />
@@ -134,11 +264,29 @@ const Contact = () => {
                 </div>
               </div>
 
-              <textarea placeholder="Your Message *&#10;Tell us about your requirement..." rows="4" className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]" required></textarea>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Your Message *&#10;Tell us about your requirement..."
+                rows="4"
+                className="w-full border border-gray-200 rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#fb5921] focus:ring-1 focus:ring-[#fb5921]"
+                required
+              ></textarea>
 
-              <button type="submit" className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-8 rounded-md flex items-center transition-all shadow-md mt-2 w-fit">
+              {submitStatus.message && (
+                <p className={`text-sm ${submitStatus.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                  {submitStatus.message}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-8 rounded-md flex items-center transition-all shadow-md mt-2 w-fit disabled:opacity-70 disabled:cursor-not-allowed"
+              >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
