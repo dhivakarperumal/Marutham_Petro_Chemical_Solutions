@@ -89,11 +89,11 @@ const About = () => {
 
       <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1.1fr]">
-          <div className="relative min-h-[420px] overflow-hidden rounded-[6px] border border-[#eadfd6] bg-[linear-gradient(145deg,#fff8f2_0%,#fce8d8_100%)] p-5 shadow-[0_20px_45px_rgba(62,35,17,0.08)] sm:min-h-[520px] sm:p-8" data-aos="fade-right" data-aos-duration="850">
+          <div className="relative overflow-hidden rounded-[6px] border border-[#eadfd6] bg-[linear-gradient(145deg,#fff8f2_0%,#fce8d8_100%)] p-5 shadow-[0_20px_45px_rgba(62,35,17,0.08)] sm:p-8" data-aos="fade-right" data-aos-duration="850">
             <img
               src="/images/about/about.png"
               alt="Marutham thinner products and solutions"
-              className="relative z-10 h-full w-full object-cover object-center"
+              className="relative z-10 block h-auto w-full object-contain object-center"
               loading="lazy"
             />
           </div>
