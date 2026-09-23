@@ -160,7 +160,7 @@ const Gallery = () => {
             </div>
 
             {/* Main Stage with Image & Next/Prev Controls */}
-            <div className="relative my-2 flex h-[50vh] sm:h-[58vh] w-full items-center justify-center">
+            <div className="relative my-2 flex h-[62vh] sm:h-[70vh] w-full items-center justify-center">
               {/* Previous Button */}
               <button
                 type="button"
@@ -192,32 +192,10 @@ const Gallery = () => {
               </button>
             </div>
 
-            {/* Image Title */}
-            <div className="text-center py-1">
+            {/* Image Details */}
+            <div className="mt-2 text-center">
               <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
-            </div>
-
-            {/* Bottom Thumbnail Strip for fast Next/Next navigation */}
-            <div className="mt-2 flex w-full items-center justify-start sm:justify-center gap-2 overflow-x-auto py-2 px-1 scrollbar-thin">
-              {allGalleryImages.map((item, idx) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setSelectedIndex(idx)}
-                  className={`relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-[#fff8f3] p-1 transition cursor-pointer ${
-                    idx === selectedIndex
-                      ? "border-2 border-[#e96512] ring-2 ring-[#e96512]/30 scale-105 opacity-100"
-                      : "border-[#ebdcd0] opacity-60 hover:opacity-100 hover:border-[#e96512]"
-                  }`}
-                  aria-label={`View ${item.title}`}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </button>
-              ))}
+              <span className="text-xs font-semibold text-[#8b827b]">{currentImage.category}</span>
             </div>
           </div>
         </div>
