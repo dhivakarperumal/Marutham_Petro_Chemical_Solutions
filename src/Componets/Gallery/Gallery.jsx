@@ -85,12 +85,23 @@ const Gallery = () => {
   }, [displayedCategories]);
 
   const currentImage = selectedIndex !== null ? allGalleryImages[selectedIndex] : null;
+  const [isClosing, setIsClosing] = useState(false);
 
   const openViewer = (id) => {
     const idx = allGalleryImages.findIndex((item) => item.id === id);
     if (idx !== -1) {
+      setIsClosing(false);
       setSelectedIndex(idx);
     }
+  };
+
+  const closeModal = () => {
+    if (isClosing || selectedIndex === null) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedIndex(null);
+      setIsClosing(false);
+    }, 220);
   };
 
   const handlePrev = (e) => {
@@ -111,7 +122,7 @@ const Gallery = () => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "ArrowRight") handleNext();
-      if (e.key === "Escape") setSelectedIndex(null);
+      if (e.key === "Escape") closeModal();
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -121,7 +132,7 @@ const Gallery = () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [selectedIndex, allGalleryImages.length]);
+  }, [selectedIndex, allGalleryImages.length, isClosing]);
 
   return (
     <div className="bg-[#fffaf6] text-[#1c1c1c] overflow-x-hidden">
@@ -129,11 +140,15 @@ const Gallery = () => {
       {currentImage && (
         <ModalPortal>
           <div
-            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm transition-opacity"
-            onClick={() => setSelectedIndex(null)}
+            className={`fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm ${
+              isClosing ? "animate-modal-backdrop-out" : "animate-modal-backdrop-in"
+            }`}
+            onClick={closeModal}
           >
             <div
-              className="relative flex max-h-[92vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl animate-fadeIn"
+              className={`relative flex max-h-[92vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl ${
+                isClosing ? "animate-modal-card-out" : "animate-modal-card-in"
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top Modal Header */}
@@ -153,7 +168,7 @@ const Gallery = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setSelectedIndex(null)}
+                  onClick={closeModal}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
                   aria-label="Close image preview"
                 >
@@ -179,7 +194,7 @@ const Gallery = () => {
                     key={currentImage.id}
                     src={currentImage.image}
                     alt={currentImage.title}
-                    className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] transition-all duration-300"
+                    className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] animate-image-in"
                   />
                 </div>
 

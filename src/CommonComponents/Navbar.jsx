@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import brandData from '../data/brand.json';
 import productData from '../data/product.json';
@@ -11,7 +11,9 @@ const Navbar = () => {
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
   const [isMobileBrandsOpen, setIsMobileBrandsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchClosing, setIsSearchClosing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const searchContainerRef = useRef(null);
 
   const searchResults = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -35,10 +37,44 @@ const Navbar = () => {
 
   const isBrandsActive = location.pathname.startsWith('/brands');
 
+  const toggleSearch = () => {
+    if (isSearchOpen) {
+      closeSearch();
+    } else {
+      setIsSearchOpen(true);
+      setIsSearchClosing(false);
+    }
+  };
+
+  const closeSearch = () => {
+    if (!isSearchOpen || isSearchClosing) return;
+    setIsSearchClosing(true);
+    setTimeout(() => {
+      setIsSearchOpen(false);
+      setIsSearchClosing(false);
+      setSearchTerm('');
+    }, 200);
+  };
+
+  // Close search when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        closeSearch();
+      }
+    };
+
+    if (isSearchOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isSearchOpen, isSearchClosing]);
+
   // Close menus on route change; open mobile brands dropdown if currently on a brand page
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsBrandsOpen(false);
+    closeSearch();
     if (location.pathname.startsWith('/brands')) {
       setIsMobileBrandsOpen(true);
     }
@@ -48,7 +84,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
-        setIsSearchOpen(false);
+        closeSearch();
         setIsBrandsOpen(false);
         setIsMobileMenuOpen(false);
       }
@@ -56,7 +92,7 @@ const Navbar = () => {
 
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, []);
+  }, [isSearchOpen, isSearchClosing]);
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -99,14 +135,14 @@ const Navbar = () => {
               <button 
                 type="button" 
                 onClick={() => setIsBrandsOpen((open) => !open)} 
-                className={`flex items-center gap-1 border-b-2 pb-1 transition-colors ${isBrandsActive ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} 
+                className={`flex items-center gap-1 border-b-2 pb-1 transition-colors cursor-pointer ${isBrandsActive ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} 
                 aria-expanded={isBrandsOpen}
               >
                 <span>Brands</span>
                 <span className={`text-[10px] transition-transform duration-200 inline-block ${isBrandsOpen ? 'rotate-180' : ''}`}>▾</span>
               </button>
               {isBrandsOpen && (
-                <div className="absolute right-0 top-full z-50 w-56 pt-3">
+                <div className="absolute right-0 top-full z-50 w-56 pt-3 animate-dropdown-in">
                   <div className="rounded-md border border-gray-100 bg-white p-2 shadow-xl">
                     {brandData.map((brand) => {
                       const brandSlug = slugify(brand.name);
@@ -150,11 +186,74 @@ const Navbar = () => {
 
           {/* Action Buttons & Mobile Menu Toggle */}
           <div className="flex items-center space-x-3 md:space-x-5" data-aos="fade-left" data-aos-delay="160">
-            <button type="button" onClick={() => setIsSearchOpen((open) => !open)} aria-label="Search products" aria-expanded={isSearchOpen} className="p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
+            {/* Search Button and Animated Dropdown */}
+            <div ref={searchContainerRef} className="relative">
+              <button 
+                type="button" 
+                onClick={toggleSearch} 
+                aria-label="Search products" 
+                aria-expanded={isSearchOpen} 
+                className={`p-2.5 rounded-full transition-all cursor-pointer ${
+                  isSearchOpen ? 'bg-[#fff0eb] text-[#d60e1e] ring-2 ring-[#d60e1e]/20' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+
+              {(isSearchOpen || isSearchClosing) && (
+                <div 
+                  className={`absolute right-0 top-full z-[60] mt-2.5 w-[min(92vw,380px)] rounded-xl border border-[#eadfd6] bg-white p-3 shadow-2xl backdrop-blur-md transition-all ${
+                    isSearchClosing ? 'animate-dropdown-out' : 'animate-dropdown-in'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 rounded-lg border border-[#eadfd6] bg-[#fffaf6] px-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-[#d60e1e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <input
+                      autoFocus
+                      type="search"
+                      value={searchTerm}
+                      onChange={(event) => setSearchTerm(event.target.value)}
+                      placeholder="Search products..."
+                      className="min-w-0 flex-1 bg-transparent py-3 text-sm text-[#282321] outline-none placeholder:text-[#a0968e]"
+                      aria-label="Search products"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={closeSearch} 
+                      className="text-[#a0968e] transition hover:text-[#d60e1e] p-1 cursor-pointer" 
+                      aria-label="Close product search"
+                    >
+                      <span className="text-lg leading-none">&times;</span>
+                    </button>
+                  </div>
+
+                  {searchTerm.trim() && (
+                    <div className="mt-2 max-h-72 overflow-y-auto divide-y divide-[#fdf4ed]">
+                      {searchResults.length ? searchResults.map((product) => (
+                        <Link 
+                          key={product.product_id} 
+                          to={`/products/${product.product_id}`} 
+                          onClick={closeSearch} 
+                          className="flex items-center gap-3 rounded-lg px-2.5 py-2.5 transition hover:bg-[#fff4eb]"
+                        >
+                          <img src={product.image} alt="" className="h-10 w-10 rounded-md bg-[#fff8f2] object-contain p-1 border border-[#f3e3d3]" />
+                          <span className="min-w-0">
+                            <strong className="block truncate text-sm text-[#282321]">{product.product_name}</strong>
+                            <span className="text-xs text-[#766e68]">{product.category} · {product.quantity}</span>
+                          </span>
+                        </Link>
+                      )) : (
+                        <p className="px-2 py-3 text-sm text-[#766e68]">No products found.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             
             <Link 
               to="/contact" 
@@ -167,7 +266,7 @@ const Navbar = () => {
             </Link>
 
             <button 
-              className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity"
+              className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity cursor-pointer"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
@@ -184,47 +283,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        {isSearchOpen && (
-          <div className="absolute right-4 top-full z-[60] mt-2 w-[min(92vw,380px)] rounded-md border border-[#eadfd6] bg-white p-3 shadow-xl md:right-8">
-            <div className="flex items-center gap-2 rounded-sm border border-[#eadfd6] bg-[#fffaf6] px-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-[#d60e1e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-              </svg>
-              <input
-                autoFocus
-                type="search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search products..."
-                className="min-w-0 flex-1 bg-transparent py-3 text-sm text-[#282321] outline-none placeholder:text-[#a0968e]"
-                aria-label="Search products"
-              />
-              <button type="button" onClick={() => { setSearchTerm(''); setIsSearchOpen(false); }} className="text-[#a0968e] transition hover:text-[#d60e1e]" aria-label="Close product search">
-                <span className="text-lg leading-none">&times;</span>
-              </button>
-            </div>
-
-            {searchTerm.trim() && (
-              <div className="mt-2 max-h-72 overflow-y-auto">
-                {searchResults.length ? searchResults.map((product) => (
-                  <Link key={product.product_id} to={`/products/${product.product_id}`} onClick={() => { setIsSearchOpen(false); setSearchTerm(''); }} className="flex items-center gap-3 rounded-sm px-2 py-2.5 transition hover:bg-[#fff4eb]">
-                    <img src={product.image} alt="" className="h-10 w-10 rounded-sm bg-[#fff8f2] object-contain p-1" />
-                    <span className="min-w-0">
-                      <strong className="block truncate text-sm text-[#282321]">{product.product_name}</strong>
-                      <span className="text-xs text-[#766e68]">{product.category} · {product.quantity}</span>
-                    </span>
-                  </Link>
-                )) : (
-                  <p className="px-2 py-3 text-sm text-[#766e68]">No products found.</p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col py-4 px-6 max-h-[calc(100vh-80px)] overflow-y-auto z-50">
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col py-4 px-6 max-h-[calc(100vh-80px)] overflow-y-auto z-50 animate-dropdown-in">
             {navLinks.slice(0, 3).map((link) => {
               const isActive = isLinkActive(link.path);
               return (
@@ -247,7 +308,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => setIsMobileBrandsOpen((open) => !open)}
-                className={`flex w-full items-center justify-between py-1 text-lg font-medium transition-colors ${
+                className={`flex w-full items-center justify-between py-1 text-lg font-medium transition-colors cursor-pointer ${
                   isBrandsActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
                 }`}
                 aria-expanded={isMobileBrandsOpen}
@@ -263,7 +324,7 @@ const Navbar = () => {
               </button>
 
               {isMobileBrandsOpen && (
-                <div className="mt-2 space-y-1 rounded-lg border border-[#f5e6d8] bg-[#fffaf6] p-2 shadow-inner">
+                <div className="mt-2 space-y-1 rounded-lg border border-[#f5e6d8] bg-[#fffaf6] p-2 shadow-inner animate-dropdown-in">
                   {brandData.map((brand) => {
                     const brandSlug = slugify(brand.name);
                     const isCurrentBrand = location.pathname === `/brands/${brandSlug}`;
