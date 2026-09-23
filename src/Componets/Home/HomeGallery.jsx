@@ -45,7 +45,7 @@ const HomeGallery = () => {
               <span className="h-0.5 w-10 bg-[#e96512]" /> Product Gallery Showcase
             </div>
             <h2 id="home-gallery-title" className="max-w-[700px] text-[clamp(2.3rem,4.5vw,4.5rem)] font-extrabold leading-[0.96] tracking-[-0.04em] text-[#282321]">
-              Visual Showcase. <span className="text-[#d60e1e]">Product Gallery.</span>
+              Visual  <span className="text-[#d60e1e]">Showcase .</span>
             </h2>
           </div>
           <div className="flex flex-wrap gap-2">
