@@ -58,7 +58,7 @@ const HomeGallery = () => {
             <div className="mb-2 flex items-center gap-2.5 text-[0.68rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-8 bg-[#e96512]" /> Product Gallery Showcase
             </div>
-            <h2 id="home-gallery-title" className="text-[clamp(1.8rem,3.2vw,2.8rem)] font-extrabold leading-[1] tracking-[-0.035em] text-[#282321]">
+            <h2 id="home-gallery-title" className="text-[clamp(1.5rem,3vw,2.8rem)] font-extrabold leading-[1.05] sm:leading-[1] tracking-[-0.035em] text-[#282321]">
               Visual Showcase. <span className="text-[#d60e1e]">Product Gallery.</span>
             </h2>
           </div>

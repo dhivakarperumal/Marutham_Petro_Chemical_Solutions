@@ -30,8 +30,8 @@ const Hero = () => {
           </div>
 
           <h1 id="hero-title" className="my-[22px] mb-6 max-w-[660px] font-extrabold tracking-[-0.045em]">
-            <span className="block break-words text-[clamp(3.2rem,5.8vw,5.8rem)] leading-[0.92] text-[#d60e1e] max-[560px]:text-[clamp(2.7rem,13vw,4.4rem)]">{slide.highlight}</span>
-            <span className="mt-3 block line-clamp-2 text-[clamp(1.9rem,3.4vw,3.3rem)] leading-[1.02] text-[#242323] max-[560px]:text-[clamp(1.7rem,8vw,2.7rem)]">{slide.title}</span>
+            <span className="block break-words text-[clamp(3.2rem,5.8vw,5.8rem)] leading-[0.92] text-[#d60e1e] max-[560px]:text-[clamp(2.1rem,10vw,3.2rem)]">{slide.highlight}</span>
+            <span className="mt-3 block line-clamp-2 text-[clamp(1.9rem,3.4vw,3.3rem)] leading-[1.02] text-[#242323] max-[560px]:text-[clamp(1.35rem,6vw,2rem)]">{slide.title}</span>
           </h1>
 
           <p className="max-w-[510px] text-[1.08rem] leading-[1.7] text-[#6e6966] max-[560px]:text-base">

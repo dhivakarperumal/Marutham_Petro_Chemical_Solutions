@@ -16,7 +16,7 @@ const HomeBrands = () => {
             <div className="mb-4 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-10 bg-[#e96512]" /> Our brands
             </div>
-            <h2 id="home-brands-title" className="max-w-[520px] text-[clamp(2.2rem,4vw,4rem)] font-extrabold leading-[0.96] tracking-[-0.045em] text-[#282321]">
+            <h2 id="home-brands-title" className="max-w-[520px] text-[clamp(1.75rem,3.8vw,4rem)] font-extrabold leading-[1] sm:leading-[0.96] tracking-[-0.045em] text-[#282321]">
               Trusted brands. <span className="text-[#d60e1e]">Better finishes.</span>
             </h2>
           </div>
