@@ -19,7 +19,7 @@ const Contact = () => {
             </div>
             <div>
               <h4 className="font-bold text-gray-900">Call Us</h4>
-              <p className="text-gray-900 font-semibold mt-1">+91 98765 43210</p>
+              <p className="text-gray-900 font-semibold mt-1">+91 84380 18090</p>
               <p className="text-xs text-gray-500 mt-1">Mon - Sat, 9:00 AM - 6:00 PM</p>
             </div>
           </div>
@@ -30,7 +30,7 @@ const Contact = () => {
             </div>
             <div>
               <h4 className="font-bold text-gray-900">Email Us</h4>
-              <p className="text-gray-900 font-semibold mt-1 text-sm break-all">info@maruthammarketing.com</p>
+              <p className="text-gray-900 font-semibold mt-1 text-sm break-all">maruthamthinner@gmail.com</p>
               <p className="text-xs text-gray-500 mt-1">We'll get back to you soon</p>
             </div>
           </div>
@@ -41,8 +41,7 @@ const Contact = () => {
             </div>
             <div>
               <h4 className="font-bold text-gray-900">Visit Us</h4>
-              <p className="text-gray-600 text-sm mt-1 leading-snug">Ambur, Tirupathur District,<br/>Tamil Nadu, India</p>
-              <p className="text-xs text-gray-500 mt-1">Pin: 635802</p>
+              <p className="text-gray-600 text-sm mt-1 leading-snug">S.F, No.16/9, Dharmapuri Main Road,<br/>Sundrampalli Village, Tirupattur District - 635 654</p>
             </div>
           </div>
           
@@ -147,9 +146,9 @@ const Contact = () => {
                 <div>
                   <h4 className="font-bold text-gray-900 text-sm">Head Office</h4>
                   <p className="text-xs text-gray-600 mt-1 leading-relaxed">
-                    Marutham Marketing<br/>
-                    Ambur, Tirupathur District,<br/>
-                    Tamil Nadu, India - 635802
+                    S.F, No.16/9, Dharmapuri Main Road,<br/>
+                    Sundrampalli Village,<br/>
+                    Tirupattur District - 635 654
                   </p>
                 </div>
               </div>

@@ -5,6 +5,35 @@ import { Link } from "react-router-dom";
 
 const CountUpComponent = CountUpModule?.default || CountUpModule;
 
+const VisibleCountUp = ({ end, suffix = "", duration = 2, className = "" }) => {
+  const ref = useRef(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <span ref={ref} className={className}>
+      {hasStarted ? <CountUpComponent end={end} duration={duration} suffix={suffix} /> : `0${suffix}`}
+    </span>
+  );
+};
+
 const HomeAbout = () => {
   const statsRef = useRef(null);
   const [hasViewedStats, setHasViewedStats] = useState(false);
@@ -61,7 +90,7 @@ const HomeAbout = () => {
               </div>
               <div>
                 <strong className="block text-xl font-extrabold leading-none text-[#282321]">
-                  {hasViewedStats ? <CountUpComponent end={1200} duration={2} suffix="+" /> : "0+"}
+                  <VisibleCountUp end={1200} duration={2} suffix="+" />
                 </strong>
                 <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Satsified Clients</span>
               </div>
@@ -72,7 +101,7 @@ const HomeAbout = () => {
               </div>
               <div>
                 <strong className="block text-xl font-extrabold leading-none text-[#282321]">
-                  {hasViewedStats ? <CountUpComponent end={100} duration={2} suffix="+" /> : "0+"}
+                  <VisibleCountUp end={100} duration={2} suffix="+" />
                 </strong>
                 <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Overall Dealers</span>
               </div>
@@ -83,7 +112,7 @@ const HomeAbout = () => {
               </div>
               <div>
                 <strong className="block text-xl font-extrabold leading-none text-[#282321]">
-                  {hasViewedStats ? <CountUpComponent end={10} duration={2} suffix="+" /> : "0+"}
+                  <VisibleCountUp end={10} duration={2} suffix="+" />
                 </strong>
                 <span className="mt-1 block text-[0.56rem] font-extrabold uppercase tracking-[0.06em] text-[#766e68]">Overall Experience</span>
               </div>

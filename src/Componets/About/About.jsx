@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CountUpModule from "react-countup";
 import {
   FaAward,
@@ -44,6 +44,35 @@ const featureList = [
 ];
 
 const CountUpComponent = CountUpModule?.default || CountUpModule;
+
+const VisibleCountUp = ({ end, suffix = "", duration = 2.2, className = "" }) => {
+  const ref = useRef(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <span ref={ref} className={className}>
+      {hasStarted ? <CountUpComponent end={end} suffix={suffix} duration={duration} /> : `0${suffix}`}
+    </span>
+  );
+};
 
 const stats = [
   { value: 500, suffix: "+", label: "Happy Customers", icon: <FaUsers className="text-3xl text-[#fb5921]" /> },
@@ -150,7 +179,7 @@ const About = () => {
 
               {typeof stat.value === "number" ? (
                 <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">
-                  <CountUpComponent end={stat.value} suffix={stat.suffix || ""} duration={2.2} />
+                  <VisibleCountUp end={stat.value} suffix={stat.suffix || ""} duration={2.2} />
                 </div>
               ) : (
                 <div className="text-3xl font-black uppercase tracking-tight text-[#fb5921]">{stat.value}</div>
