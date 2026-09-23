@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -13,25 +13,40 @@ const categoryImages = {
   "NC Thinner": "/images/gallery/img_4.png",
 };
 
-const categories = [...new Set(productData.map((product) => product.category))];
-
 const HomeGallery = () => {
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const activeCategory = categories[categoryIndex];
-  const categoryProducts = useMemo(
-    () => productData.filter((product) => product.category === activeCategory),
-    [activeCategory]
-  );
+  const swiperRef = useRef(null);
 
-  // Buffer slides to guarantee continuous seamless infinite marquee without stutter
-  const swiperProducts = useMemo(() => {
-    if (!categoryProducts.length) return [];
-    let list = [...categoryProducts];
-    while (list.length < 16) {
-      list = [...list, ...categoryProducts];
+  // Map each category to its starting product index in productData
+  const categoryStartIndices = useMemo(() => {
+    const map = {};
+    productData.forEach((product, idx) => {
+      if (map[product.category] === undefined) {
+        map[product.category] = idx;
+      }
+    });
+    return map;
+  }, []);
+
+  const categories = useMemo(() => Object.keys(categoryStartIndices), [categoryStartIndices]);
+  const [activeCategory, setActiveCategory] = useState(categories[0] || "Enamel Thinner");
+
+  // When user clicks a category tab, slide smoothly to that category's first product
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+    const targetIdx = categoryStartIndices[category];
+    if (swiperRef.current && targetIdx !== undefined) {
+      swiperRef.current.slideToLoop(targetIdx, 650);
     }
-    return list;
-  }, [categoryProducts]);
+  };
+
+  // As the swiper automatically slides through products across categories,
+  // update the activeCategory and left static image when moving into a new category
+  const handleSlideChange = (swiper) => {
+    const activeProduct = productData[swiper.realIndex];
+    if (activeProduct && activeProduct.category !== activeCategory) {
+      setActiveCategory(activeProduct.category);
+    }
+  };
 
   return (
     <section className="relative overflow-hidden bg-white px-[5%] py-10 sm:py-12" aria-labelledby="home-gallery-title">
@@ -48,13 +63,13 @@ const HomeGallery = () => {
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 type="button"
-                onClick={() => setCategoryIndex(index)}
+                onClick={() => handleCategoryClick(category)}
                 className={`rounded-full border px-3 py-1.5 text-[0.68rem] font-extrabold transition cursor-pointer ${
-                  index === categoryIndex
+                  category === activeCategory
                     ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-sm"
                     : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"
                 }`}
@@ -68,17 +83,35 @@ const HomeGallery = () => {
             >
               View all <ArrowRight size={14} aria-hidden="true" />
             </Link>
+            <div className="ml-1 flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#766e68] shadow-sm transition hover:border-[#d60e1e] hover:text-[#d60e1e] cursor-pointer"
+                aria-label="Previous product"
+              >
+                <ChevronLeft size={15} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => swiperRef.current?.slideNext()}
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d60e1e] text-white shadow-sm transition hover:bg-[#b90c19] cursor-pointer"
+                aria-label="Next product"
+              >
+                <ChevronRight size={15} aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Gallery Content: Left Static Image with Small Gap + Right Continuous Swiper */}
+        {/* Gallery Content: Left Static Image with Small Gap + Right Sequential Swiper */}
         <div className="grid items-stretch gap-3 sm:gap-4 lg:grid-cols-[250px_1fr] xl:grid-cols-[270px_1fr]">
-          {/* Left Static Category Image (Compact Height & Width) */}
-          <div className="relative flex h-[270px] sm:h-[290px] lg:h-[300px] flex-col overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_12px_28px_rgba(62,35,17,0.06)]">
+          {/* Left Static Category Image (Updates smoothly as the swiper moves across categories) */}
+          <div className="relative flex h-[255px] sm:h-[270px] lg:h-[280px] flex-col overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_12px_28px_rgba(62,35,17,0.06)]">
             <div className="absolute -bottom-12 right-4 h-32 w-32 rounded-full bg-[#f5c59d80] blur-2xl" />
             <img
               key={activeCategory}
-              src={categoryImages[activeCategory]}
+              src={categoryImages[activeCategory] || "/images/gallery/img_1.png"}
               alt={`${activeCategory} main range`}
               className="relative z-10 h-full w-full object-contain drop-shadow-[0_12px_12px_rgba(57,32,17,0.18)] animate-hero-page-turn"
             />
@@ -87,54 +120,48 @@ const HomeGallery = () => {
             </span>
           </div>
 
-          {/* Right Continuous Swiper (Starts aligned with left image, no sub-header) */}
+          {/* Right Product Swiper (All categories sequentially; seamlessly continues from Enamel -> Paint -> Solvent -> NC -> Enamel) */}
           <div className="min-w-0">
             <div className="overflow-hidden">
               <Swiper
-                key={activeCategory}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onRealIndexChange={handleSlideChange}
                 modules={[Autoplay]}
                 loop={true}
-                speed={4500}
+                speed={700}
                 autoplay={{
-                  delay: 0,
+                  delay: 3500,
                   disableOnInteraction: false,
                   pauseOnMouseEnter: true,
                 }}
-                spaceBetween={12}
-                slidesPerView={1.3}
+                spaceBetween={14}
+                slidesPerView={1}
                 breakpoints={{
-                  480: { slidesPerView: 1.7, spaceBetween: 12 },
-                  640: { slidesPerView: 2.3, spaceBetween: 14 },
-                  1024: { slidesPerView: 2.8, spaceBetween: 14 },
-                  1280: { slidesPerView: 3.3, spaceBetween: 16 },
+                  480: { slidesPerView: 1.5, spaceBetween: 12 },
+                  640: { slidesPerView: 2, spaceBetween: 14 },
+                  1024: { slidesPerView: 3, spaceBetween: 14 },
+                  1280: { slidesPerView: 3, spaceBetween: 16 },
                 }}
                 className="home-gallery-swiper"
               >
-                {swiperProducts.map((product, index) => (
-                  <SwiperSlide key={`${product.product_id}-gallery-${index}`} className="h-auto">
+                {productData.map((product, index) => (
+                  <SwiperSlide key={`${product.product_id}-${index}`} className="h-auto">
                     <Link
                       to={`/products/${product.product_id}`}
-                      className="group flex h-[270px] sm:h-[290px] lg:h-[300px] flex-col overflow-hidden rounded-md border border-[#eadfd6] bg-[#fffaf6] shadow-[0_8px_20px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_14px_26px_rgba(62,35,17,0.1)]"
+                      className="group relative flex h-[255px] sm:h-[270px] lg:h-[280px] flex-col items-center justify-center overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_8px_20px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_14px_26px_rgba(62,35,17,0.1)]"
+                      aria-label={product.product_name}
                     >
-                      <div className="relative flex h-[175px] sm:h-[195px] lg:h-[205px] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,#fff8f2_0%,#fce8d8_100%)] p-2.5">
-                        <span className="absolute left-2.5 top-2.5 rounded-full border border-[#f3b58e] bg-white/95 px-2 py-0.5 text-[0.52rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                          {product.quantity}
-                        </span>
-                        <img
-                          src={product.image}
-                          alt={product.product_name}
-                          className="h-full w-full object-contain drop-shadow-[0_10px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col justify-center border-t border-[#f4eae2] bg-white p-2.5 text-center">
-                        <span className="block truncate text-xs sm:text-[0.82rem] font-extrabold text-[#282321] transition group-hover:text-[#d60e1e]">
-                          {product.product_name}
-                        </span>
-                        <span className="mt-0.5 block text-[0.68rem] font-semibold text-[#8b827b]">
-                          Pack: {product.quantity} · Min: {product.min_order_no} {product.unit}
-                        </span>
-                      </div>
+                      <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-1 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                        {product.quantity}
+                      </span>
+                      <img
+                        src={product.image}
+                        alt={product.product_name}
+                        className="relative z-10 h-full w-full object-contain drop-shadow-[0_12px_10px_rgba(57,32,17,0.16)] transition duration-500 group-hover:scale-110"
+                        loading="lazy"
+                      />
                     </Link>
                   </SwiperSlide>
                 ))}
