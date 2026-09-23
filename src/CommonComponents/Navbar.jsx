@@ -44,17 +44,17 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50">
-      <nav className="relative w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm">
+      <nav className="relative w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-sm" data-aos="fade-down" data-aos-duration="650" data-aos-delay="80">
         <div className="mx-auto flex max-w-[1380px] items-center justify-between px-4 py-3 md:px-8">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center" data-aos="fade-right" data-aos-delay="120">
             <Link to="/">
               <img src="/images/logo.png" alt="Marutham Marketing" className="h-12 md:h-14 object-contain" />
             </Link>
           </div>
 
           {/* Navigation Links (Desktop) */}
-          <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]">
+          <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]" data-aos="fade-down" data-aos-delay="160">
             {navLinks.slice(0, 3).map((link) => {
               const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
               return (
@@ -106,7 +106,7 @@ const Navbar = () => {
           </div>
 
           {/* Action Buttons & Mobile Menu Toggle */}
-          <div className="flex items-center space-x-3 md:space-x-5">
+          <div className="flex items-center space-x-3 md:space-x-5" data-aos="fade-left" data-aos-delay="160">
             <button type="button" onClick={() => setIsSearchOpen((open) => !open)} aria-label="Search products" aria-expanded={isSearchOpen} className="p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

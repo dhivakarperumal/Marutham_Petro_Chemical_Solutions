@@ -27,9 +27,11 @@ const ScrollToTop = () => {
     });
 
     // Refresh AOS animations for the newly navigated page
-    setTimeout(() => {
-      AOS.refresh();
-    }, 50);
+    const timer = setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;
