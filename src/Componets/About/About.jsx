@@ -86,37 +86,14 @@ const About = () => {
                   <div className="relative flex h-[360px] w-[300px] items-end justify-center sm:h-[420px] sm:w-[340px]">
                     <div className="absolute bottom-0 left-1/2 h-[32px] w-[220px] -translate-x-1/2 rounded-full bg-[#d6c4b1]/70 blur-md" />
 
-                    <div className="absolute bottom-[28px] left-1/2 h-[220px] w-[150px] -translate-x-1/2 rounded-[36px] border border-[#f1e8e2] bg-gradient-to-b from-[#f6f1ed] via-[#f7d8cf] to-[#f1a38a] shadow-[0_18px_20px_rgba(0,0,0,0.12)]">
-                      <div className="absolute inset-x-4 top-4 h-10 rounded-t-[20px] bg-[#0f0f12] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.08)]" />
+                    
 
-                      <div className="absolute left-1/2 top-1 h-[76px] w-[120px] -translate-x-1/2 rounded-[22px] bg-gradient-to-r from-[#1b1f27] via-[#0e0f12] to-[#272d38] shadow-[0_12px_16px_rgba(0,0,0,0.25)]" />
-
-                      <div className="absolute inset-x-3 top-[86px] h-[118px] rounded-[18px] bg-gradient-to-b from-[#f5f2ef] via-[#faf5f3] to-[#f4f0ee] text-center">
-                        <div className="pt-8 text-[12px] font-black uppercase tracking-[0.2em] text-[#2a2e38]">Marutham</div>
-                        <div className="mt-3 text-[18px] font-black uppercase tracking-[0.12em] text-[#d14b2f]">Enamel</div>
-                        <div className="mt-1 text-[12px] font-bold uppercase tracking-[0.14em] text-[#e95b32]">Thinner</div>
-                      </div>
-
-                      <div className="absolute right-2 top-[150px] h-[120px] w-[26px] rounded-r-[16px] bg-gradient-to-b from-[#ef8a62] via-[#f3995f] to-[#d95032] opacity-90" />
-                      <div className="absolute left-2 top-[150px] h-[120px] w-[26px] rounded-l-[16px] bg-gradient-to-b from-[#ef8a62] via-[#f3995f] to-[#d95032] opacity-90" />
-
-                      <div className="absolute inset-x-[26px] top-[195px] h-[42px] rounded-b-[18px] bg-gradient-to-r from-[#f8d7cf] via-[#f3d3ca] to-[#e6a28a] opacity-90" />
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 h-[115px] w-[120px] rounded-[20px] bg-gradient-to-br from-[#e47443] via-[#cb3b2f] to-[#a12b2d] shadow-[0_10px_18px_rgba(0,0,0,0.15)]" />
-                    <div className="absolute bottom-0 right-0 h-[115px] w-[120px] rounded-[20px] bg-gradient-to-br from-[#6137d0] via-[#4d2f8e] to-[#2d183a] shadow-[0_10px_18px_rgba(0,0,0,0.15)]" />
-                    <div className="absolute bottom-12 left-4 h-[110px] w-[90px] rounded-[18px] bg-gradient-to-r from-[#f4d0a9] to-[#d2a44a] opacity-90" />
-                    <div className="absolute bottom-8 left-10 h-12 w-24 rounded-full bg-[#f8f1eb]/80 blur-[2px]" />
-                    <div className="absolute bottom-3 left-16 h-[120px] w-[64px] rotate-[30deg] rounded-[18px] bg-gradient-to-br from-[#d4572c] via-[#a82620] to-[#5b0b13] shadow-[0_16px_12px_rgba(0,0,0,0.2)]" />
-                    <div className="absolute bottom-6 left-28 h-[120px] w-[64px] rotate-[12deg] rounded-[18px] bg-gradient-to-br from-[#aa7d2d] via-[#c86b1f] to-[#7d3218] shadow-[0_16px_12px_rgba(0,0,0,0.2)]" />
+                   
                   </div>
                 </div>
               </div>
 
-              <div className="relative mt-4 flex items-center justify-between rounded-[18px] border border-[#f0d5c2] bg-[#f9f2ec] px-4 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3b2d2a] sm:text-xs">
-                <span className="text-[#6b4b3f]">Premium Solutions</span>
-                <span className="text-[#fb5921]">for a brighter tomorrow</span>
-              </div>
+             
             </div>
           </div>
 
