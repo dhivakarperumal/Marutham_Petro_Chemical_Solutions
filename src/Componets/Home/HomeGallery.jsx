@@ -50,7 +50,7 @@ const HomeGallery = () => {
 
   return (
     <section className="relative overflow-hidden bg-white px-[5%] py-10 sm:py-12" aria-labelledby="home-gallery-title">
-      <div className="absolute -left-24 top-10 h-60 w-60 rounded-full bg-[#f8c99c30] blur-3xl" />
+      <div className="absolute -left-24 top-10 h-60 w-60 rounded-full bg-[#f8c99c30] blur-3xl pointer-events-none" />
       <div className="relative mx-auto max-w-[1380px]">
         {/* Gallery Section Header */}
         <div className="mb-5 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
