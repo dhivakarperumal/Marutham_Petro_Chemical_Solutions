@@ -24,7 +24,6 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState("All");
 
-  // Group products by category in order
   const categoriesData = useMemo(() => {
     return categories.map((cat) => ({
       category: cat,
@@ -78,7 +77,7 @@ const Gallery = () => {
 
       <div className="mx-auto max-w-[1380px] px-4 py-12 md:px-6 lg:px-8 sm:py-16">
         {/* Category Navigation Filter Pills */}
-        <div className="mb-12 flex flex-wrap items-center justify-center gap-2.5">
+        <div className="mb-14 flex flex-wrap items-center justify-center gap-2.5">
           <button
             type="button"
             onClick={() => setActiveFilter("All")}
@@ -106,24 +105,32 @@ const Gallery = () => {
           ))}
         </div>
 
-        {/* Stacked Category Blocks: Center Main Range Image + Surrounding Products */}
-        <div className="space-y-20 sm:space-y-24">
+        {/* Stacked Mosaic Collage Layout for Each Category */}
+        <div className="space-y-24 sm:space-y-28">
           {displayedCategories.map(({ category, mainImage, subtitle, products }) => {
-            const leftProducts = products.slice(0, 2);
-            const rightProducts = products.slice(2);
-            const isFiveItems = rightProducts.length === 3;
+            // Distribute products into mosaic slots matching the reference collage:
+            // Top-Left: Main Range Hero image
+            // Top-Right: Largest single container (e.g. 4500ml)
+            // Bottom-Left: 450ml bottle
+            // Bottom-Middle: 900ml bottle
+            // Bottom-Right: Stacked 1800ml and 2700ml (or single 2700ml for NC)
+            const p450 = products.find((p) => p.quantity.includes("450ml")) || products[0];
+            const p900 = products.find((p) => p.quantity.includes("900ml")) || products[1];
+            const p1800 = products.find((p) => p.quantity.includes("1800ml"));
+            const p2700 = products.find((p) => p.quantity.includes("2700ml")) || products[products.length - 2];
+            const p4500 = products.find((p) => p.quantity.includes("4500ml")) || products[products.length - 1];
 
             return (
-              <section key={category} className="border-b border-[#ebdcd0] pb-16 last:border-b-0 last:pb-0">
+              <section key={category} className="border-b border-[#ebdcd0] pb-20 last:border-b-0 last:pb-0">
                 {/* Category Header */}
                 <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
                   <div>
-                    <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-[#d94c16]">
-                      {category} Collection
+                    <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
+                      Collection Showcase
                     </span>
-                    <h3 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#282321]">
+                    <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#282321]">
                       {category}
-                    </h3>
+                    </h2>
                     <p className="mt-1 max-w-[650px] text-sm text-[#766e68]">{subtitle}</p>
                   </div>
                   <Link
@@ -134,111 +141,180 @@ const Gallery = () => {
                   </Link>
                 </div>
 
-                {/* Symmetrical Center-Main Showcase Layout */}
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.4fr_1.3fr] lg:items-stretch">
-                  {/* LEFT WING: First 2 individual product bottles */}
-                  <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-1">
-                    {leftProducts.map((product) => (
+                {/* Collage Container with Overlapping Center Title Badge */}
+                <div className="relative">
+                  {/* Central Overlapping Floating Title Badge (Exact match to reference photo) */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[88%] sm:w-auto">
+                    <div className="border border-[#282321] bg-white px-5 py-3 sm:px-10 sm:py-4 shadow-2xl text-center">
+                      <span className="block text-[0.55rem] sm:text-[0.65rem] font-bold uppercase tracking-[0.3em] text-[#d94c16]">
+                        Visual Collection
+                      </span>
+                      <h3 className="mt-0.5 text-sm sm:text-lg lg:text-xl font-bold uppercase tracking-[0.22em] text-[#282321] font-serif whitespace-nowrap">
+                        {category} Gallery
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Mosaic Images Grid */}
+                  <div className="space-y-3 sm:space-y-4">
+                    {/* TOP ROW: 2 Images (Top-Left Large Hero ~60% width, Top-Right ~40% width) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
+                      {/* Top-Left: Main Category Range Image (Large Hero, 7 cols) */}
                       <div
-                        key={product.product_id}
-                        className="group relative flex h-[190px] sm:h-[200px] flex-col items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-3 shadow-[0_4px_16px_rgba(62,35,17,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_12px_26px_rgba(62,35,17,0.08)]"
+                        onClick={() => setSelectedImage({ image: mainImage, title: `${category} Full Range`, category })}
+                        className="group relative sm:col-span-7 h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(150deg,#fff5ec_0%,#fcdbc2_55%,#f7bea0_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.06)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                       >
-                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl transition duration-500 group-hover:scale-125" />
-                        
-                        <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.06em] text-[#d60e1e] shadow-sm">
-                          {product.quantity}
+                        <div className="absolute -bottom-10 -right-10 h-44 w-44 rounded-full bg-[#e96512]/25 blur-2xl" />
+                        <span className="absolute left-3.5 top-3.5 z-20 rounded-full bg-[#282321] px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
+                          Main Range
                         </span>
-
-                        <button
-                          type="button"
-                          onClick={() => setSelectedImage({ image: product.image, title: product.product_name, category: product.category })}
-                          className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e] cursor-pointer"
-                          aria-label="Preview full size"
-                        >
+                        <span className="absolute right-3.5 top-3.5 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
                           <Eye size={13} />
-                        </button>
-
+                        </span>
                         <img
-                          src={product.image}
-                          alt={product.product_name}
-                          className="relative z-10 max-h-[82%] w-full object-contain pt-2 drop-shadow-[0_8px_6px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
+                          src={mainImage}
+                          alt={`${category} main range`}
+                          className="relative z-10 max-h-[85%] w-full object-contain drop-shadow-[0_16px_16px_rgba(57,32,17,0.22)] transition duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
                       </div>
-                    ))}
-                  </div>
 
-                  {/* CENTER: Featured Main Category Group Image */}
-                  <div
-                    onClick={() => setSelectedImage({ image: mainImage, title: `${category} Full Range`, category })}
-                    className="group relative flex h-[300px] sm:h-[360px] lg:h-full min-h-[390px] flex-col overflow-hidden rounded-2xl border-2 border-[#e96512]/45 bg-[linear-gradient(150deg,#fff4eb_0%,#fcd9c0_55%,#f7bea0_100%)] p-5 shadow-[0_16px_36px_rgba(233,101,18,0.14)] ring-4 ring-[#e96512]/10 cursor-pointer"
-                  >
-                    <div className="absolute -bottom-12 -right-12 h-44 w-44 rounded-full bg-[#e96512]/30 blur-2xl" />
-
-                    {/* Featured Top Tag */}
-                    <div className="relative z-20 flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#282321] px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#e96512] animate-pulse" /> Range Overview
-                      </span>
-                      <span className="rounded-full bg-white/80 px-2.5 py-0.5 text-[0.55rem] font-bold text-[#625953] backdrop-blur-xs">
-                        {products.length} Sizes
-                      </span>
-                    </div>
-
-                    {/* Main Category Image in Center */}
-                    <img
-                      src={mainImage}
-                      alt={`${category} main range`}
-                      className="relative z-10 my-auto max-h-[76%] w-full object-contain drop-shadow-[0_16px_16px_rgba(57,32,17,0.22)] transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-
-                    {/* Prominent Bottom Category Badge */}
-                    <div className="relative z-20 flex items-center justify-between">
-                      <span className="inline-block rounded-full bg-[#d60e1e] px-3.5 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-white shadow-md">
-                        {category}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-[0.7rem] font-extrabold text-[#766e68] group-hover:text-[#d60e1e] transition">
-                        <Eye size={13} /> Click to enlarge
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* RIGHT WING: Remaining 2 or 3 individual product bottles */}
-                  <div className={`grid gap-3.5 ${isFiveItems ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-1"}`}>
-                    {rightProducts.map((product, idx) => {
-                      const isLastSpanning = isFiveItems && idx === 2;
-                      return (
+                      {/* Top-Right: Largest Pack Image (5 cols) */}
+                      {p4500 && (
                         <div
-                          key={product.product_id}
-                          className={`group relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-3 shadow-[0_4px_16px_rgba(62,35,17,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_12px_24px_rgba(62,35,17,0.08)] ${
-                            isLastSpanning ? "col-span-2 h-[190px] sm:h-[200px]" : "h-[190px] sm:h-[200px]"
-                          }`}
+                          onClick={() => setSelectedImage({ image: p4500.image, title: p4500.product_name, category })}
+                          className="group relative sm:col-span-5 h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff8f2_55%,#fdeedf_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.05)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                         >
-                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl transition duration-500 group-hover:scale-125" />
-                          
-                          <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.06em] text-[#d60e1e] shadow-sm">
-                            {product.quantity}
+                          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-28 w-36 rounded-full bg-[#fcdbc3]/60 blur-xl" />
+                          <span className="absolute left-3.5 top-3.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                            {p4500.quantity}
                           </span>
-
-                          <button
-                            type="button"
-                            onClick={() => setSelectedImage({ image: product.image, title: product.product_name, category: product.category })}
-                            className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e] cursor-pointer"
-                            aria-label="Preview full size"
-                          >
+                          <span className="absolute right-3.5 top-3.5 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
                             <Eye size={13} />
-                          </button>
-
+                          </span>
                           <img
-                            src={product.image}
-                            alt={product.product_name}
-                            className="relative z-10 max-h-[82%] w-full object-contain pt-2 drop-shadow-[0_8px_6px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
+                            src={p4500.image}
+                            alt={p4500.product_name}
+                            className="relative z-10 max-h-[82%] w-full object-contain drop-shadow-[0_12px_12px_rgba(57,32,17,0.16)] transition duration-500 group-hover:scale-110"
                             loading="lazy"
                           />
                         </div>
-                      );
-                    })}
+                      )}
+                    </div>
+
+                    {/* BOTTOM ROW: 3 Columns matching bottom half of reference image */}
+                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
+                      {/* Bottom-Left: 450ml (4 cols) */}
+                      {p450 && (
+                        <div
+                          onClick={() => setSelectedImage({ image: p450.image, title: p450.product_name, category })}
+                          className="group relative sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                        >
+                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
+                          <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                            {p450.quantity}
+                          </span>
+                          <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
+                            <Eye size={13} />
+                          </span>
+                          <img
+                            src={p450.image}
+                            alt={p450.product_name}
+                            className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+
+                      {/* Bottom-Middle: 900ml (4 cols) */}
+                      {p900 && (
+                        <div
+                          onClick={() => setSelectedImage({ image: p900.image, title: p900.product_name, category })}
+                          className="group relative sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                        >
+                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
+                          <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                            {p900.quantity}
+                          </span>
+                          <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
+                            <Eye size={13} />
+                          </span>
+                          <img
+                            src={p900.image}
+                            alt={p900.product_name}
+                            className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+
+                      {/* Bottom-Right: 4 cols (2 stacked items for 5-product categories, or 1 item for 4-product category) */}
+                      <div className="sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex flex-col gap-3 sm:gap-4">
+                        {p1800 ? (
+                          <>
+                            {/* Stacked Top: 1800ml */}
+                            <div
+                              onClick={() => setSelectedImage({ image: p1800.image, title: p1800.product_name, category })}
+                              className="group relative flex-1 flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-2.5 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                            >
+                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-16 w-24 rounded-full bg-[#fcdbc3]/50 blur-lg" />
+                              <span className="absolute left-2.5 top-2.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2 py-0.5 text-[0.52rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                                {p1800.quantity}
+                              </span>
+                              <span className="absolute right-2.5 top-2.5 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
+                                <Eye size={12} />
+                              </span>
+                              <img
+                                src={p1800.image}
+                                alt={p1800.product_name}
+                                className="relative z-10 max-h-[82%] w-full object-contain pt-1 drop-shadow-[0_6px_6px_rgba(57,32,17,0.12)] transition duration-500 group-hover:scale-110"
+                                loading="lazy"
+                              />
+                            </div>
+
+                            {/* Stacked Bottom: 2700ml */}
+                            <div
+                              onClick={() => setSelectedImage({ image: p2700.image, title: p2700.product_name, category })}
+                              className="group relative flex-1 flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-2.5 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                            >
+                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-16 w-24 rounded-full bg-[#fcdbc3]/50 blur-lg" />
+                              <span className="absolute left-2.5 top-2.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2 py-0.5 text-[0.52rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                                {p2700.quantity}
+                              </span>
+                              <span className="absolute right-2.5 top-2.5 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
+                                <Eye size={12} />
+                              </span>
+                              <img
+                                src={p2700.image}
+                                alt={p2700.product_name}
+                                className="relative z-10 max-h-[82%] w-full object-contain pt-1 drop-shadow-[0_6px_6px_rgba(57,32,17,0.12)] transition duration-500 group-hover:scale-110"
+                                loading="lazy"
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          /* For categories without 1800ml (NC Thinner): Single full-height 2700ml card */
+                          <div
+                            onClick={() => setSelectedImage({ image: p2700.image, title: p2700.product_name, category })}
+                            className="group relative h-full flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          >
+                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
+                            <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
+                              {p2700.quantity}
+                            </span>
+                            <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
+                              <Eye size={13} />
+                            </span>
+                            <img
+                              src={p2700.image}
+                              alt={p2700.product_name}
+                              className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
