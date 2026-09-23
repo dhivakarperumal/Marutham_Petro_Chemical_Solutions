@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowRight, Eye, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, Eye, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
 import productData from "../../data/product.json";
@@ -21,7 +21,7 @@ const categorySubtitles = {
 const categories = ["Enamel Thinner", "Paint Thinner", "Solvent Thinner", "NC Thinner"];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [activeFilter, setActiveFilter] = useState("All");
 
   const categoriesData = useMemo(() => {
@@ -38,36 +38,186 @@ const Gallery = () => {
     return categoriesData.filter((cat) => cat.category === activeFilter);
   }, [activeFilter, categoriesData]);
 
+  // Flattened ordered list of all gallery images for Next/Prev navigation
+  const allGalleryImages = useMemo(() => {
+    const list = [];
+    displayedCategories.forEach(({ category, mainImage, products }) => {
+      // 1. Main Category Hero Range image
+      list.push({
+        id: `${category}-hero`,
+        image: mainImage,
+        title: `${category} Full Range`,
+        category,
+        badge: "Main Range",
+      });
+
+      // 2. 4500ml container
+      const p4500 = products.find((p) => p.quantity.includes("4500ml")) || products[products.length - 1];
+      if (p4500) {
+        list.push({
+          id: p4500.product_id,
+          image: p4500.image,
+          title: p4500.product_name,
+          category,
+          badge: p4500.quantity,
+        });
+      }
+
+      // 3. Bottom row products
+      const p450 = products.find((p) => p.quantity.includes("450ml"));
+      const p900 = products.find((p) => p.quantity.includes("900ml"));
+      const p1800 = products.find((p) => p.quantity.includes("1800ml"));
+      const p2700 = products.find((p) => p.quantity.includes("2700ml"));
+      const bottom = [p450, p900, p1800, p2700].filter(Boolean);
+
+      bottom.forEach((p) => {
+        list.push({
+          id: p.product_id,
+          image: p.image,
+          title: p.product_name,
+          category,
+          badge: p.quantity,
+        });
+      });
+    });
+    return list;
+  }, [displayedCategories]);
+
+  const currentImage = selectedIndex !== null ? allGalleryImages[selectedIndex] : null;
+
+  const openViewer = (id) => {
+    const idx = allGalleryImages.findIndex((item) => item.id === id);
+    if (idx !== -1) {
+      setSelectedIndex(idx);
+    }
+  };
+
+  const handlePrev = (e) => {
+    e?.stopPropagation();
+    if (selectedIndex === null || allGalleryImages.length === 0) return;
+    setSelectedIndex((prev) => (prev > 0 ? prev - 1 : allGalleryImages.length - 1));
+  };
+
+  const handleNext = (e) => {
+    e?.stopPropagation();
+    if (selectedIndex === null || allGalleryImages.length === 0) return;
+    setSelectedIndex((prev) => (prev < allGalleryImages.length - 1 ? prev + 1 : 0));
+  };
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") setSelectedIndex(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedIndex, allGalleryImages.length]);
+
   return (
     <div className="bg-[#fffaf6] text-[#1c1c1c]">
-      {/* Lightbox Modal */}
-      {selectedImage && (
+      {/* Lightbox Modal with Next / Prev Navigation */}
+      {currentImage && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-xs transition-opacity"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm transition-opacity"
+          onClick={() => setSelectedIndex(null)}
         >
           <div
-            className="relative flex max-h-[90vh] w-full max-w-4xl flex-col items-center justify-center overflow-hidden rounded-xl bg-white p-6 shadow-2xl"
+            className="relative flex max-h-[95vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              type="button"
-              onClick={() => setSelectedImage(null)}
-              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
-              aria-label="Close image preview"
-            >
-              <X size={20} />
-            </button>
-            <div className="flex max-h-[75vh] w-full items-center justify-center">
-              <img
-                src={selectedImage.image}
-                alt={selectedImage.title}
-                className="max-h-[72vh] w-full object-contain"
-              />
+            {/* Top Modal Header */}
+            <div className="flex w-full items-center justify-between border-b border-[#f0e7df] pb-3">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="rounded-full bg-[#e96512]/10 px-3 py-1 text-xs font-extrabold text-[#e96512]">
+                  {currentImage.category}
+                </span>
+                {currentImage.badge && (
+                  <span className="rounded-full border border-[#f3b58e] bg-[#fff8f2] px-2.5 py-0.5 text-[0.68rem] font-bold text-[#d60e1e]">
+                    {currentImage.badge}
+                  </span>
+                )}
+                <span className="text-xs font-semibold text-[#8b827b]">
+                  {selectedIndex + 1} of {allGalleryImages.length}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedIndex(null)}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
+                aria-label="Close image preview"
+              >
+                <X size={18} />
+              </button>
             </div>
-            <div className="mt-4 text-center">
-              <h4 className="text-base font-extrabold text-[#282321]">{selectedImage.title}</h4>
-              <span className="text-xs font-semibold text-[#8b827b]">{selectedImage.category}</span>
+
+            {/* Main Stage with Image & Next/Prev Controls */}
+            <div className="relative my-2 flex h-[50vh] sm:h-[58vh] w-full items-center justify-center">
+              {/* Previous Button */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="absolute left-1 sm:left-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={22} />
+              </button>
+
+              {/* Main Preview Image */}
+              <div className="flex h-full w-full items-center justify-center px-12 sm:px-16">
+                <img
+                  key={currentImage.id}
+                  src={currentImage.image}
+                  alt={currentImage.title}
+                  className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] transition-all duration-300"
+                />
+              </div>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={handleNext}
+                className="absolute right-1 sm:right-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                aria-label="Next image"
+              >
+                <ChevronRight size={22} />
+              </button>
+            </div>
+
+            {/* Image Title */}
+            <div className="text-center py-1">
+              <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
+            </div>
+
+            {/* Bottom Thumbnail Strip for fast Next/Next navigation */}
+            <div className="mt-2 flex w-full items-center justify-start sm:justify-center gap-2 overflow-x-auto py-2 px-1 scrollbar-thin">
+              {allGalleryImages.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setSelectedIndex(idx)}
+                  className={`relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-[#fff8f3] p-1 transition cursor-pointer ${
+                    idx === selectedIndex
+                      ? "border-2 border-[#e96512] ring-2 ring-[#e96512]/30 scale-105 opacity-100"
+                      : "border-[#ebdcd0] opacity-60 hover:opacity-100 hover:border-[#e96512]"
+                  }`}
+                  aria-label={`View ${item.title}`}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -158,7 +308,7 @@ const Gallery = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       {/* Top-Left: Main Category Range Image */}
                       <div
-                        onClick={() => setSelectedImage({ image: mainImage, title: `${category} Full Range`, category })}
+                        onClick={() => openViewer(`${category}-hero`)}
                         className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(150deg,#fff5ec_0%,#fcdbc2_55%,#f7bea0_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.06)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                       >
                         <div className="absolute -bottom-10 -right-10 h-44 w-44 rounded-full bg-[#e96512]/25 blur-2xl" />
@@ -179,7 +329,7 @@ const Gallery = () => {
                       {/* Top-Right: 4500ml container (equal 50% width) */}
                       {p4500 && (
                         <div
-                          onClick={() => setSelectedImage({ image: p4500.image, title: p4500.product_name, category })}
+                          onClick={() => openViewer(p4500.product_id)}
                           className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff8f2_55%,#fdeedf_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.05)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                         >
                           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-28 w-36 rounded-full bg-[#fcdbc3]/60 blur-xl" />
@@ -210,7 +360,7 @@ const Gallery = () => {
                       {bottomProducts.map((p) => (
                         <div
                           key={p.product_id}
-                          onClick={() => setSelectedImage({ image: p.image, title: p.product_name, category })}
+                          onClick={() => openViewer(p.product_id)}
                           className="group relative h-[240px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                         >
                           <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
