@@ -84,7 +84,7 @@ const stats = [
 
 const About = () => {
   return (
-    <div className="w-full bg-[#f7f3ef] text-gray-800">
+    <div className="w-full overflow-x-hidden bg-[#f7f3ef] text-gray-800">
       <PageHeader title="About Us" />
 
       <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
