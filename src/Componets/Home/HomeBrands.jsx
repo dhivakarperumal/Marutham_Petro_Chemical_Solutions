@@ -11,7 +11,7 @@ const HomeBrands = () => {
     <section className="relative overflow-hidden bg-[#fffaf6] px-[5%] pb-10 pt-20 sm:pb-12 sm:pt-24" aria-labelledby="home-brands-title">
       <div className="absolute -right-28 top-10 h-80 w-80 rounded-full bg-[#f8c99c35] blur-3xl" />
       <div className="relative mx-auto max-w-[1380px]">
-        <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end" data-aos="fade-down">
           <div>
             <div className="mb-4 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-10 bg-[#e96512]" /> Our brands
@@ -26,11 +26,13 @@ const HomeBrands = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-3 sm:gap-5">
-          {brands.map((brand) => (
+          {brands.map((brand, index) => (
             <Link
               key={brand.name}
               to={`/brands/${brand.slug}`}
               className="group relative min-w-0 overflow-hidden rounded-md border border-[#eadfd6] bg-white shadow-[0_12px_30px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_20px_38px_rgba(62,35,17,0.12)]"
+              data-aos="zoom-in-up"
+              data-aos-delay={index * 150}
             >
               <div className="relative flex h-[270px] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 sm:h-[360px] sm:p-5">
                 <div className="absolute -bottom-16 left-1/2 h-36 w-52 -translate-x-1/2 rounded-full bg-[#f5c59d80] blur-3xl transition duration-500 group-hover:scale-125" />

@@ -18,6 +18,7 @@ const Hero = () => {
     <section
       className="relative min-h-[min(780px,calc(100vh-80px))] overflow-hidden bg-[linear-gradient(118deg,#fffaf4_0%,#fff_48%,#fff4eb_100%)] text-[#201f1f] after:absolute after:bottom-0 after:right-[8%] after:h-1 after:w-[32%] after:bg-[linear-gradient(90deg,#d60e1e,#e96512)] after:content-['']"
       aria-labelledby="hero-title"
+      data-aos="fade"
     >
       <div className="absolute -right-[120px] -top-[180px] h-[520px] w-[520px] rounded-full border border-[#e9651221]" />
 
@@ -56,7 +57,7 @@ const Hero = () => {
             </div>
           )}
 
-          <div className="mt-10 flex gap-[30px] max-[560px]:mt-[46px] max-[560px]:justify-between max-[560px]:gap-2.5" aria-label="Company highlights">
+          <div className="mt-10 flex gap-[30px] max-[560px]:mt-[46px] max-[560px]:justify-between max-[560px]:gap-2.5" aria-label="Company highlights" data-aos="zoom-in" data-aos-delay="200">
             <div className="flex items-center gap-2.5 border-r border-[#e2d8d0] pr-7 max-[560px]:gap-1 max-[560px]:pr-2.5">
               <strong className="text-[1.45rem] leading-none text-[#d60e1e] max-[560px]:text-[1.1rem]">10+</strong>
               <span className="text-[0.7rem] font-bold uppercase leading-[1.25] text-[#817a75] max-[560px]:text-[0.57rem]">Years of<br />experience</span>

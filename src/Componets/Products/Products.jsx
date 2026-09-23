@@ -28,7 +28,7 @@ const Products = () => {
       <PageHeader title="Products" />
       <section id="products" className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="products-title">
       <div className="mx-auto max-w-[1380px]">
-        <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end" data-aos="fade-down">
           <div className="max-w-[620px]">
             <div className="mb-3 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-9 bg-[#e96512]" /> Our product range
@@ -46,7 +46,7 @@ const Products = () => {
           </div>
         </div>
 
-        <div className="mb-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Product categories">
+        <div className="mb-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Product categories" data-aos="fade-up" data-aos-delay="100">
           {categories.map((category) => {
             const isActive = activeCategory === category;
             return (
@@ -72,10 +72,19 @@ const Products = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {visibleProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
+          {visibleProducts.map((product, idx) => (
+            <div
+              key={product.product_id}
+              data-aos="zoom-in-up"
+              data-aos-delay={(idx % 4) * 80}
+              className="h-full"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
         </div>
 
-        <div className="mt-10 flex items-center justify-center gap-2 text-sm font-bold text-[#766e68]">
+        <div className="mt-10 flex items-center justify-center gap-2 text-sm font-bold text-[#766e68]" data-aos="fade-up" data-aos-delay="200">
           <Check size={17} className="text-[#e96512]" aria-hidden="true" /> Bulk supply available for commercial and industrial requirements.
         </div>
       </div>

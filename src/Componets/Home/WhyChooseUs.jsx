@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
       <div className="absolute -bottom-44 left-[35%] h-96 w-96 rounded-full bg-[#f8c99c40] blur-3xl" />
 
       <div className="relative mx-auto grid max-w-[1380px] gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-20">
-        <div className="max-w-[470px]">
+        <div className="max-w-[470px]" data-aos="fade-right" data-aos-duration="800">
           <div className="mb-5 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.22em] text-[#d94c16]">
             <span className="h-0.5 w-10 bg-[#e96512]" /> Why Choose Us
           </div>
@@ -31,7 +31,12 @@ const WhyChooseUs = () => {
 
         <div className="grid gap-x-10 gap-y-0 sm:grid-cols-2">
           {benefits.map(({ icon: Icon, title, text }, index) => (
-            <div key={title} className={`border-[#eadfd6] py-6 ${index < 2 ? "border-b" : ""} ${index % 2 === 0 ? "sm:border-r sm:pr-8" : "sm:pl-8"}`}>
+            <div
+              key={title}
+              className={`border-[#eadfd6] py-6 ${index < 2 ? "border-b" : ""} ${index % 2 === 0 ? "sm:border-r sm:pr-8" : "sm:pl-8"}`}
+              data-aos="fade-left"
+              data-aos-delay={index * 120}
+            >
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-[#fff1eb] text-[#d60e1e]">
                 <Icon size={20} strokeWidth={2.4} aria-hidden="true" />
               </div>

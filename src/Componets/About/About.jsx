@@ -87,9 +87,9 @@ const About = () => {
     <div className="w-full bg-[#f7f3ef] text-gray-800">
       <PageHeader title="About Us" />
 
-      <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10" data-aos="fade-up">
+      <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1.1fr]">
-          <div className="relative overflow-hidden rounded-[28px] bg-[#f5efe9] p-4 shadow-[0_24px_50px_rgba(0,0,0,0.08)] sm:p-6">
+          <div className="relative overflow-hidden rounded-[28px] bg-[#f5efe9] p-4 shadow-[0_24px_50px_rgba(0,0,0,0.08)] sm:p-6" data-aos="fade-right" data-aos-duration="850">
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
               style={{
@@ -126,7 +126,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative" data-aos="fade-left" data-aos-duration="850">
             <div className="mb-5 flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.28em] text-[#fb5921]">
               <span className="inline-block h-[2px] w-16 bg-[#fb5921]" />
               About Our Company
@@ -149,10 +149,12 @@ const About = () => {
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {featureList.map((feature) => (
+              {featureList.map((feature, fIdx) => (
                 <div
                   key={feature.title}
                   className="rounded-[20px] border border-[#f1e6df] bg-white/90 p-5 shadow-[0_12px_24px_rgba(15,23,42,0.04)]"
+                  data-aos="zoom-in-up"
+                  data-aos-delay={fIdx * 80}
                 >
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-[14px] bg-[#fff2ee]">
                     {feature.icon}
@@ -166,7 +168,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="100">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="zoom-in-up" data-aos-delay="100">
         <div className="grid gap-4 rounded-[22px] bg-[#f7efe9] p-4 md:grid-cols-5">
           {stats.map((stat) => (
             <div
@@ -191,7 +193,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="120">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {[
             {
@@ -221,8 +223,13 @@ const About = () => {
               title: "Our People",
               text: "A dedicated team committed to delivering the best products and support to our customers.",
             },
-          ].map((item) => (
-            <div key={item.title} className="rounded-[22px] border border-[#f0e3dc] bg-white p-5 shadow-[0_12px_24px_rgba(15,23,42,0.04)]">
+          ].map((item, idx) => (
+            <div
+              key={item.title}
+              className="rounded-[22px] border border-[#f0e3dc] bg-white p-5 shadow-[0_12px_24px_rgba(15,23,42,0.04)]"
+              data-aos="zoom-in-up"
+              data-aos-delay={idx * 100}
+            >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#fff2ee]">{item.icon}</div>
               <h3 className="text-2xl font-bold text-[#1f2937]">{item.title}</h3>
               <div className="mt-3 text-[15px] leading-7 text-[#4b5563]">{item.text}</div>
@@ -231,7 +238,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="160">
+      <section className="mx-auto max-w-[1500px] px-4 pb-16 md:px-8 xl:px-10" data-aos="flip-up" data-aos-delay="140">
         <div className="grid gap-5 rounded-[26px] bg-gradient-to-r from-[#b33d2a] via-[#d34b2d] to-[#8d2c2b] p-4 text-white md:grid-cols-4 md:p-6">
           {[
             { value: "500+", label: "Happy Customers", icon: <FaUsers className="text-3xl" /> },
@@ -250,8 +257,8 @@ const About = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-4 pb-20 md:px-8 xl:px-10" data-aos="fade-up" data-aos-delay="180">
-        <div className="mb-8 flex items-center justify-between gap-4">
+      <section className="mx-auto max-w-[1500px] px-4 pb-20 md:px-8 xl:px-10">
+        <div className="mb-8 flex items-center justify-between gap-4" data-aos="fade-down">
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.24em] text-[#fb5921]">Our Product Range</p>
             <h2 className="mt-3 text-4xl font-black leading-tight text-[#1f2937] md:text-5xl">Solutions for Every Need</h2>
@@ -266,8 +273,13 @@ const About = () => {
             { name: "Enamel Thinners", desc: "Smooth finish, better coverage", image: "/images/hero/img1.png" },
             { name: "Lacquer Thinners", desc: "Fast drying, high performance", image: "/images/hero/img2.png" },
             { name: "Industrial Solvents", desc: "Reliable for multiple applications", image: "/images/hero/img3.png" },
-          ].map((product) => (
-            <div key={product.name} className="overflow-hidden rounded-[22px] border border-[#f1e5df] bg-white shadow-[0_18px_30px_rgba(15,23,42,0.04)]">
+          ].map((product, pIdx) => (
+            <div
+              key={product.name}
+              className="overflow-hidden rounded-[22px] border border-[#f1e5df] bg-white shadow-[0_18px_30px_rgba(15,23,42,0.04)]"
+              data-aos="zoom-in-up"
+              data-aos-delay={pIdx * 120}
+            >
               <div
                 className="h-60 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url("${product.image}")` }}
