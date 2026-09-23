@@ -35,7 +35,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full font-sans text-gray-800">
+    <div className="w-full text-gray-800">
       {/* 1. HERO SECTION */}
       <PageHeader title="Contact Us" />
 
@@ -319,7 +319,7 @@ const Contact = () => {
               </button>
             </div>
             
-            <div className="font-[cursive] text-4xl text-gray-800 rotate-[-8deg] mt-8 text-center hidden md:block">
+            <div className="font-extrabold italic text-4xl text-gray-800 rotate-[-8deg] mt-8 text-center hidden md:block">
                Let's <br/>Grow Together
             </div>
           </div>
