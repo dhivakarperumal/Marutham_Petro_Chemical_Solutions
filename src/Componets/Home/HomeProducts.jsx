@@ -66,8 +66,8 @@ const HomeProducts = () => {
           </div> */}
         </div>
 
-        {/* Category Tabs - Wrapped naturally without horizontal scroll */}
-        <div className="mb-8 flex flex-wrap gap-2 sm:gap-2.5" role="tablist" aria-label="Home product categories" data-aos="fade-up" data-aos-delay="80">
+        {/* Category Tabs - Centered on responsive, wrapped naturally */}
+        <div className="mb-8 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5" role="tablist" aria-label="Home product categories" data-aos="fade-up" data-aos-delay="80">
           {categories.map((category) => {
             const isActive = activeCategory === category;
             return (
