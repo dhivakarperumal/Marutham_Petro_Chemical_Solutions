@@ -108,17 +108,14 @@ const Gallery = () => {
         {/* Stacked Mosaic Collage Layout for Each Category */}
         <div className="space-y-24 sm:space-y-28">
           {displayedCategories.map(({ category, mainImage, subtitle, products }) => {
-            // Distribute products into mosaic slots matching the reference collage:
-            // Top-Left: Main Range Hero image
-            // Top-Right: Largest single container (e.g. 4500ml)
-            // Bottom-Left: 450ml bottle
-            // Bottom-Middle: 900ml bottle
-            // Bottom-Right: Stacked 1800ml and 2700ml (or single 2700ml for NC)
-            const p450 = products.find((p) => p.quantity.includes("450ml")) || products[0];
-            const p900 = products.find((p) => p.quantity.includes("900ml")) || products[1];
-            const p1800 = products.find((p) => p.quantity.includes("1800ml"));
-            const p2700 = products.find((p) => p.quantity.includes("2700ml")) || products[products.length - 2];
+            // Top row: Main Range Hero + 4500ml pack (equal 50% width share)
+            // Bottom row: 450ml, 900ml, 1800ml, 2700ml (equal width share)
             const p4500 = products.find((p) => p.quantity.includes("4500ml")) || products[products.length - 1];
+            const p450 = products.find((p) => p.quantity.includes("450ml"));
+            const p900 = products.find((p) => p.quantity.includes("900ml"));
+            const p1800 = products.find((p) => p.quantity.includes("1800ml"));
+            const p2700 = products.find((p) => p.quantity.includes("2700ml"));
+            const bottomProducts = [p450, p900, p1800, p2700].filter(Boolean);
 
             return (
               <section key={category} className="border-b border-[#ebdcd0] pb-20 last:border-b-0 last:pb-0">
@@ -143,13 +140,13 @@ const Gallery = () => {
 
                 {/* Collage Container with Overlapping Center Title Badge */}
                 <div className="relative">
-                  {/* Central Overlapping Floating Title Badge (Exact match to reference photo) */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[88%] sm:w-auto">
-                    <div className="border border-[#282321] bg-white px-5 py-3 sm:px-10 sm:py-4 shadow-2xl text-center">
-                      <span className="block text-[0.55rem] sm:text-[0.65rem] font-bold uppercase tracking-[0.3em] text-[#d94c16]">
+                  {/* Central Overlapping Floating Title Badge with Orange Theme */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[90%] sm:w-auto">
+                    <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-6 py-3.5 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-4 ring-[#e96512]/15">
+                      <span className="block text-[0.55rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.3em] text-[#e96512]">
                         Visual Collection
                       </span>
-                      <h3 className="mt-0.5 text-sm sm:text-lg lg:text-xl font-bold uppercase tracking-[0.22em] text-[#282321] font-serif whitespace-nowrap">
+                      <h3 className="mt-0.5 text-sm sm:text-lg lg:text-xl font-extrabold uppercase tracking-[0.22em] text-[#e96512] font-serif whitespace-nowrap">
                         {category} Gallery
                       </h3>
                     </div>
@@ -157,12 +154,12 @@ const Gallery = () => {
 
                   {/* Mosaic Images Grid */}
                   <div className="space-y-3 sm:space-y-4">
-                    {/* TOP ROW: 2 Images (Top-Left Large Hero ~60% width, Top-Right ~40% width) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
-                      {/* Top-Left: Main Category Range Image (Large Hero, 7 cols) */}
+                    {/* TOP ROW: 2 Images sharing equal width (50% / 50%) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      {/* Top-Left: Main Category Range Image */}
                       <div
                         onClick={() => setSelectedImage({ image: mainImage, title: `${category} Full Range`, category })}
-                        className="group relative sm:col-span-7 h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(150deg,#fff5ec_0%,#fcdbc2_55%,#f7bea0_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.06)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                        className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(150deg,#fff5ec_0%,#fcdbc2_55%,#f7bea0_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.06)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                       >
                         <div className="absolute -bottom-10 -right-10 h-44 w-44 rounded-full bg-[#e96512]/25 blur-2xl" />
                         <span className="absolute left-3.5 top-3.5 z-20 rounded-full bg-[#282321] px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
@@ -179,11 +176,11 @@ const Gallery = () => {
                         />
                       </div>
 
-                      {/* Top-Right: Largest Pack Image (5 cols) */}
+                      {/* Top-Right: 4500ml container (equal 50% width) */}
                       {p4500 && (
                         <div
                           onClick={() => setSelectedImage({ image: p4500.image, title: p4500.product_name, category })}
-                          className="group relative sm:col-span-5 h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff8f2_55%,#fdeedf_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.05)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff8f2_55%,#fdeedf_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.05)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                         >
                           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-28 w-36 rounded-full bg-[#fcdbc3]/60 blur-xl" />
                           <span className="absolute left-3.5 top-3.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
@@ -202,118 +199,35 @@ const Gallery = () => {
                       )}
                     </div>
 
-                    {/* BOTTOM ROW: 3 Columns matching bottom half of reference image */}
-                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
-                      {/* Bottom-Left: 450ml (4 cols) */}
-                      {p450 && (
+                    {/* BOTTOM ROW: All bottom images sharing equal width */}
+                    <div
+                      className={`grid gap-3 sm:gap-4 ${
+                        bottomProducts.length === 4
+                          ? "grid-cols-2 sm:grid-cols-4"
+                          : "grid-cols-1 sm:grid-cols-3"
+                      }`}
+                    >
+                      {bottomProducts.map((p) => (
                         <div
-                          onClick={() => setSelectedImage({ image: p450.image, title: p450.product_name, category })}
-                          className="group relative sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          key={p.product_id}
+                          onClick={() => setSelectedImage({ image: p.image, title: p.product_name, category })}
+                          className="group relative h-[240px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                         >
                           <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
                           <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                            {p450.quantity}
+                            {p.quantity}
                           </span>
                           <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
                             <Eye size={13} />
                           </span>
                           <img
-                            src={p450.image}
-                            alt={p450.product_name}
+                            src={p.image}
+                            alt={p.product_name}
                             className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
                             loading="lazy"
                           />
                         </div>
-                      )}
-
-                      {/* Bottom-Middle: 900ml (4 cols) */}
-                      {p900 && (
-                        <div
-                          onClick={() => setSelectedImage({ image: p900.image, title: p900.product_name, category })}
-                          className="group relative sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
-                        >
-                          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
-                          <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                            {p900.quantity}
-                          </span>
-                          <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
-                            <Eye size={13} />
-                          </span>
-                          <img
-                            src={p900.image}
-                            alt={p900.product_name}
-                            className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-
-                      {/* Bottom-Right: 4 cols (2 stacked items for 5-product categories, or 1 item for 4-product category) */}
-                      <div className="sm:col-span-4 h-[240px] sm:h-[300px] lg:h-[350px] flex flex-col gap-3 sm:gap-4">
-                        {p1800 ? (
-                          <>
-                            {/* Stacked Top: 1800ml */}
-                            <div
-                              onClick={() => setSelectedImage({ image: p1800.image, title: p1800.product_name, category })}
-                              className="group relative flex-1 flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-2.5 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
-                            >
-                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-16 w-24 rounded-full bg-[#fcdbc3]/50 blur-lg" />
-                              <span className="absolute left-2.5 top-2.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2 py-0.5 text-[0.52rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                                {p1800.quantity}
-                              </span>
-                              <span className="absolute right-2.5 top-2.5 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
-                                <Eye size={12} />
-                              </span>
-                              <img
-                                src={p1800.image}
-                                alt={p1800.product_name}
-                                className="relative z-10 max-h-[82%] w-full object-contain pt-1 drop-shadow-[0_6px_6px_rgba(57,32,17,0.12)] transition duration-500 group-hover:scale-110"
-                                loading="lazy"
-                              />
-                            </div>
-
-                            {/* Stacked Bottom: 2700ml */}
-                            <div
-                              onClick={() => setSelectedImage({ image: p2700.image, title: p2700.product_name, category })}
-                              className="group relative flex-1 flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-2.5 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
-                            >
-                              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-16 w-24 rounded-full bg-[#fcdbc3]/50 blur-lg" />
-                              <span className="absolute left-2.5 top-2.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2 py-0.5 text-[0.52rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                                {p2700.quantity}
-                              </span>
-                              <span className="absolute right-2.5 top-2.5 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
-                                <Eye size={12} />
-                              </span>
-                              <img
-                                src={p2700.image}
-                                alt={p2700.product_name}
-                                className="relative z-10 max-h-[82%] w-full object-contain pt-1 drop-shadow-[0_6px_6px_rgba(57,32,17,0.12)] transition duration-500 group-hover:scale-110"
-                                loading="lazy"
-                              />
-                            </div>
-                          </>
-                        ) : (
-                          /* For categories without 1800ml (NC Thinner): Single full-height 2700ml card */
-                          <div
-                            onClick={() => setSelectedImage({ image: p2700.image, title: p2700.product_name, category })}
-                            className="group relative h-full flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
-                          >
-                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
-                            <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                              {p2700.quantity}
-                            </span>
-                            <span className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-sm opacity-0 transition group-hover:opacity-100 hover:text-[#d60e1e]">
-                              <Eye size={13} />
-                            </span>
-                            <img
-                              src={p2700.image}
-                              alt={p2700.product_name}
-                              className="relative z-10 max-h-[80%] w-full object-contain drop-shadow-[0_8px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
-                              loading="lazy"
-                            />
-                          </div>
-                        )}
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
