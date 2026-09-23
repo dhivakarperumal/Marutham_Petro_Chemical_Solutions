@@ -1,15 +1,5 @@
 import { useState } from "react";
-import {
-  ArrowRight,
-  CheckCircle2,
-  ChevronRight,
-  Droplets,
-  Flame,
-  PackageCheck,
-  ShieldCheck,
-  Sparkles,
-  Wind,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronRight, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
 import brandData from "../../data/brand.json";
@@ -17,15 +7,6 @@ import productData from "../../data/product.json";
 import ProductCard from "../Products/ProductCard";
 
 const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-
-const getSafetyIcon = (title = "") => {
-  const t = title.toLowerCase();
-  if (t.includes("fire") || t.includes("flammab")) return Flame;
-  if (t.includes("ventil") || t.includes("odor") || t.includes("evaporat")) return Wind;
-  if (t.includes("container") || t.includes("child") || t.includes("packag")) return PackageCheck;
-  if (t.includes("toxic") || t.includes("irritat") || t.includes("emission")) return Droplets;
-  return ShieldCheck;
-};
 
 const sizeSpecifications = [
   {
@@ -299,75 +280,24 @@ const BrandDetails = () => {
       </section> */}
 
       {/* Safety and Handling */}
-      <section className="border-t border-[#ebdcd0] bg-[#fffdfa] px-[5%] py-16 sm:py-20">
+      <section className="border-t border-[#ebdcd0] bg-white px-[5%] py-12 sm:py-16">
         <div className="mx-auto max-w-[1380px]">
-          {/* Section Header */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between border-b border-[#ebdcd0] pb-6 mb-10">
-            <div>
-              <div className="flex items-center gap-2 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
-                <ShieldCheck size={14} className="text-[#e96512]" />
-                <span>Handling & Precautions</span>
-              </div>
-              <h2 className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#282321]">
-                Safety and Handling
-              </h2>
-              <p className="mt-2 text-sm text-[#766e68] max-w-[620px] leading-relaxed">
-                Essential safety precautions and guidelines to ensure secure storage, worker protection, and optimal performance with {brand.name}.
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#f3b58e] bg-[#fff8f2] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#d94c16] self-start sm:self-auto shadow-sm">
-              <CheckCircle2 size={15} className="text-[#e96512]" /> Safety First
-            </span>
+          <div className="mb-6 flex items-center gap-3">
+            <ShieldCheck size={22} className="text-[#e96512]" aria-hidden="true" />
+            <h2 className="text-2xl font-extrabold text-[#282321]">Safety and handling</h2>
           </div>
 
-          {/* Cards Grid */}
-          <div
-            className={`grid gap-6 ${
-              brand.safety_precautions.length === 4
-                ? "grid-cols-1 sm:grid-cols-2"
-                : brand.safety_precautions.length === 3
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            }`}
-          >
-            {brand.safety_precautions.map((precaution, idx) => {
-              const Icon = getSafetyIcon(precaution.title);
-
-              return (
-                <div
-                  key={precaution.title}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-[#ebdcd0] bg-white p-6 sm:p-7 shadow-[0_4px_18px_rgba(62,35,17,0.03)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[#e96512] hover:shadow-[0_16px_36px_rgba(233,101,18,0.1)]"
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#fff2ee] text-[#e96512] transition-all duration-300 group-hover:bg-[#e96512] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#e96512]/20">
-                        <Icon size={22} />
-                      </div>
-                      <span className="font-mono text-xs font-black tracking-wider text-[#c5b9ae] group-hover:text-[#e96512] transition-colors">
-                        0{idx + 1}
-                      </span>
-                    </div>
-
-                    <h3 className="mt-5 text-lg font-bold text-[#282321] transition-colors group-hover:text-[#e96512]">
-                      {precaution.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[#766e68]">
-                      {precaution.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-6 flex items-center justify-between border-t border-[#f5ece4] pt-3.5 text-xs">
-                    <span className="flex items-center gap-1.5 font-bold text-[#8b827b]">
-                      <CheckCircle2 size={13} className="text-[#e96512]" /> Recommended Practice
-                    </span>
-                    <span className="font-bold text-[0.68rem] uppercase tracking-wider text-[#e96512]">
-                      Safe Use
-                    </span>
-                  </div>
+          <ul className="space-y-4 max-w-[1050px]">
+            {brand.safety_precautions.map((precaution) => (
+              <li key={precaution.title} className="flex items-start gap-3">
+                <CheckCircle2 size={18} className="mt-1 shrink-0 text-[#e96512]" aria-hidden="true" />
+                <div className="text-sm leading-6 text-[#4f4843]">
+                  <strong className="font-extrabold text-[#282321]">{precaution.title}: </strong>
+                  <span className="text-justify">{precaution.description}</span>
                 </div>
-              );
-            })}
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
