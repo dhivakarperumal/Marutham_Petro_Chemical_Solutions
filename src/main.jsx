@@ -34,6 +34,7 @@ function AppRoot() {
           <Route path="gallery" element={<Gallery />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:productId" element={<ProductDetails />} />
+          <Route path="brands" element={<Navigate to="/brands/marutham-thinner" replace />} />
           <Route path="brands/:brandSlug" element={<BrandDetails />} />
         </Route>
       </Routes>

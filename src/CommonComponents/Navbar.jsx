@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import brandData from '../data/brand.json';
 import productData from '../data/product.json';
@@ -9,8 +9,11 @@ const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isMobileBrandsOpen, setIsMobileBrandsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchClosing, setIsSearchClosing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const searchContainerRef = useRef(null);
 
   const searchResults = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -25,14 +28,71 @@ const Navbar = () => {
     ].some((value) => value.toLowerCase().includes(query))).slice(0, 6);
   }, [searchTerm]);
 
+  const isLinkActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  const isBrandsActive = location.pathname.startsWith('/brands');
+
+  const toggleSearch = () => {
+    if (isSearchOpen) {
+      closeSearch();
+    } else {
+      setIsSearchOpen(true);
+      setIsSearchClosing(false);
+    }
+  };
+
+  const closeSearch = () => {
+    if (!isSearchOpen || isSearchClosing) return;
+    setIsSearchClosing(true);
+    setTimeout(() => {
+      setIsSearchOpen(false);
+      setIsSearchClosing(false);
+      setSearchTerm('');
+    }, 200);
+  };
+
+  // Close search when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        closeSearch();
+      }
+    };
+
+    if (isSearchOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isSearchOpen, isSearchClosing]);
+
+  // Close menus on route change; open mobile brands dropdown if currently on a brand page
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsBrandsOpen(false);
+    closeSearch();
+    if (location.pathname.startsWith('/brands')) {
+      setIsMobileBrandsOpen(true);
+    }
+  }, [location.pathname]);
+
+  // Close search/menu on Escape key
   useEffect(() => {
     const handleEscape = (event) => {
-      if (event.key === 'Escape') setIsSearchOpen(false);
+      if (event.key === 'Escape') {
+        closeSearch();
+        setIsBrandsOpen(false);
+        setIsMobileMenuOpen(false);
+      }
     };
 
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, []);
+  }, [isSearchOpen, isSearchClosing]);
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -56,7 +116,7 @@ const Navbar = () => {
           {/* Navigation Links (Desktop) */}
           <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]" data-aos="fade-down" data-aos-delay="160">
             {navLinks.slice(0, 3).map((link) => {
-              const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
+              const isActive = isLinkActive(link.path);
               return (
                 <Link
                   key={link.name}
@@ -72,48 +132,133 @@ const Navbar = () => {
               );
             })}
             <div className="relative" onMouseEnter={() => setIsBrandsOpen(true)} onMouseLeave={() => setIsBrandsOpen(false)}>
-              <button type="button" onClick={() => setIsBrandsOpen((open) => !open)} className={`border-b-2 pb-1 transition-colors ${location.pathname.startsWith('/brands/') ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} aria-expanded={isBrandsOpen}>
-                Brands <span className="ml-1 text-xs">▾</span>
+              <button 
+                type="button" 
+                onClick={() => setIsBrandsOpen((open) => !open)} 
+                className={`flex items-center gap-1 border-b-2 pb-1 transition-colors cursor-pointer ${isBrandsActive ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} 
+                aria-expanded={isBrandsOpen}
+              >
+                <span>Brands</span>
+                <span className={`text-[10px] transition-transform duration-200 inline-block ${isBrandsOpen ? 'rotate-180' : ''}`}>▾</span>
               </button>
               {isBrandsOpen && (
-                <div className="absolute right-0 top-full z-50 w-56 pt-3">
+                <div className="absolute right-0 top-full z-50 w-56 pt-3 animate-dropdown-in">
                   <div className="rounded-md border border-gray-100 bg-white p-2 shadow-xl">
-                    {brandData.map((brand) => (
-                      <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsBrandsOpen(false)} className="block rounded px-3 py-2.5 text-sm font-semibold text-[#4a5568] transition hover:bg-[#fff4eb] hover:text-[#f0301a]">
-                        {brand.name}
-                      </Link>
-                    ))}
+                    {brandData.map((brand) => {
+                      const brandSlug = slugify(brand.name);
+                      const isCurrentBrand = location.pathname === `/brands/${brandSlug}`;
+                      return (
+                        <Link 
+                          key={brand.product_id} 
+                          to={`/brands/${brandSlug}`} 
+                          onClick={() => setIsBrandsOpen(false)} 
+                          className={`block rounded px-3 py-2.5 text-sm font-semibold transition ${
+                            isCurrentBrand 
+                              ? 'bg-[#fff4eb] text-[#f0301a]' 
+                              : 'text-[#4a5568] hover:bg-[#fff4eb] hover:text-[#f0301a]'
+                          }`}
+                        >
+                          {brand.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               )}
             </div>
-          {navLinks.slice(3).map((link) => {
-            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
-            return (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`pb-1 border-b-2 transition-colors ${
-                  isActive 
-                    ? 'text-[#f0301a] border-[#f0301a]' 
-                    : 'border-transparent hover:text-[#f0301a]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
+            {navLinks.slice(3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`pb-1 border-b-2 transition-colors ${
+                    isActive 
+                      ? 'text-[#f0301a] border-[#f0301a]' 
+                      : 'border-transparent hover:text-[#f0301a]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Action Buttons & Mobile Menu Toggle */}
           <div className="flex items-center space-x-3 md:space-x-5" data-aos="fade-left" data-aos-delay="160">
-            <button type="button" onClick={() => setIsSearchOpen((open) => !open)} aria-label="Search products" aria-expanded={isSearchOpen} className="p-2.5 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
+            {/* Search Button and Animated Dropdown */}
+            <div ref={searchContainerRef} className="relative">
+              <button 
+                type="button" 
+                onClick={toggleSearch} 
+                aria-label="Search products" 
+                aria-expanded={isSearchOpen} 
+                className={`p-2.5 rounded-full transition-all cursor-pointer ${
+                  isSearchOpen ? 'bg-[#fff0eb] text-[#d60e1e] ring-2 ring-[#d60e1e]/20' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+
+              {(isSearchOpen || isSearchClosing) && (
+                <div 
+                  className={`absolute right-0 top-full z-[60] mt-2.5 w-[min(92vw,380px)] rounded-xl border border-[#eadfd6] bg-white p-3 shadow-2xl backdrop-blur-md transition-all ${
+                    isSearchClosing ? 'animate-dropdown-out' : 'animate-dropdown-in'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 rounded-lg border border-[#eadfd6] bg-[#fffaf6] px-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-[#d60e1e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <input
+                      autoFocus
+                      type="search"
+                      value={searchTerm}
+                      onChange={(event) => setSearchTerm(event.target.value)}
+                      placeholder="Search products..."
+                      className="min-w-0 flex-1 bg-transparent py-3 text-sm text-[#282321] outline-none placeholder:text-[#a0968e]"
+                      aria-label="Search products"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={closeSearch} 
+                      className="text-[#a0968e] transition hover:text-[#d60e1e] p-1 cursor-pointer" 
+                      aria-label="Close product search"
+                    >
+                      <span className="text-lg leading-none">&times;</span>
+                    </button>
+                  </div>
+
+                  {searchTerm.trim() && (
+                    <div className="mt-2 max-h-72 overflow-y-auto divide-y divide-[#fdf4ed]">
+                      {searchResults.length ? searchResults.map((product) => (
+                        <Link 
+                          key={product.product_id} 
+                          to={`/products/${product.product_id}`} 
+                          onClick={closeSearch} 
+                          className="flex items-center gap-3 rounded-lg px-2.5 py-2.5 transition hover:bg-[#fff4eb]"
+                        >
+                          <img src={product.image} alt="" className="h-10 w-10 rounded-md bg-[#fff8f2] object-contain p-1 border border-[#f3e3d3]" />
+                          <span className="min-w-0">
+                            <strong className="block truncate text-sm text-[#282321]">{product.product_name}</strong>
+                            <span className="text-xs text-[#766e68]">{product.category} · {product.quantity}</span>
+                          </span>
+                        </Link>
+                      )) : (
+                        <p className="px-2 py-3 text-sm text-[#766e68]">No products found.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             
-            <Link to="/contact" className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md">
+            <Link 
+              to="/contact" 
+              className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md"
+            >
               Get a Quote
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -121,7 +266,7 @@ const Navbar = () => {
             </Link>
 
             <button 
-              className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity"
+              className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity cursor-pointer"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
@@ -138,81 +283,102 @@ const Navbar = () => {
           </div>
         </div>
 
-        {isSearchOpen && (
-          <div className="absolute right-4 top-full z-[60] mt-2 w-[min(92vw,380px)] rounded-md border border-[#eadfd6] bg-white p-3 shadow-xl md:right-8">
-            <div className="flex items-center gap-2 rounded-sm border border-[#eadfd6] bg-[#fffaf6] px-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 shrink-0 text-[#d60e1e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-              </svg>
-              <input
-                autoFocus
-                type="search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search products..."
-                className="min-w-0 flex-1 bg-transparent py-3 text-sm text-[#282321] outline-none placeholder:text-[#a0968e]"
-                aria-label="Search products"
-              />
-              <button type="button" onClick={() => { setSearchTerm(''); setIsSearchOpen(false); }} className="text-[#a0968e] transition hover:text-[#d60e1e]" aria-label="Close product search">
-                <span className="text-lg leading-none">&times;</span>
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col py-4 px-6 max-h-[calc(100vh-80px)] overflow-y-auto z-50 animate-dropdown-in">
+            {navLinks.slice(0, 3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-lg font-medium transition-colors py-2.5 border-b border-gray-100 flex items-center justify-between ${
+                    isActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                </Link>
+              );
+            })}
+
+            {/* Brands Dropdown in Mobile Menu */}
+            <div className="border-b border-gray-100 py-2.5">
+              <button
+                type="button"
+                onClick={() => setIsMobileBrandsOpen((open) => !open)}
+                className={`flex w-full items-center justify-between py-1 text-lg font-medium transition-colors cursor-pointer ${
+                  isBrandsActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
+                }`}
+                aria-expanded={isMobileBrandsOpen}
+              >
+                <span>Brands</span>
+                <span
+                  className={`text-xs transition-transform duration-200 inline-block ${
+                    isMobileBrandsOpen ? 'rotate-180 text-[#f0301a]' : 'text-gray-400'
+                  }`}
+                >
+                  ▾
+                </span>
               </button>
+
+              {isMobileBrandsOpen && (
+                <div className="mt-2 space-y-1 rounded-lg border border-[#f5e6d8] bg-[#fffaf6] p-2 shadow-inner animate-dropdown-in">
+                  {brandData.map((brand) => {
+                    const brandSlug = slugify(brand.name);
+                    const isCurrentBrand = location.pathname === `/brands/${brandSlug}`;
+                    return (
+                      <Link
+                        key={brand.product_id}
+                        to={`/brands/${brandSlug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-semibold transition ${
+                          isCurrentBrand
+                            ? 'bg-[#ffebe0] text-[#f0301a]'
+                            : 'text-[#4a5568] hover:bg-[#fff4eb] hover:text-[#f0301a]'
+                        }`}
+                      >
+                        <span>{brand.name}</span>
+                        {isCurrentBrand && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
-            {searchTerm.trim() && (
-              <div className="mt-2 max-h-72 overflow-y-auto">
-                {searchResults.length ? searchResults.map((product) => (
-                  <Link key={product.product_id} to={`/products/${product.product_id}`} onClick={() => { setIsSearchOpen(false); setSearchTerm(''); }} className="flex items-center gap-3 rounded-sm px-2 py-2.5 transition hover:bg-[#fff4eb]">
-                    <img src={product.image} alt="" className="h-10 w-10 rounded-sm bg-[#fff8f2] object-contain p-1" />
-                    <span className="min-w-0">
-                      <strong className="block truncate text-sm text-[#282321]">{product.product_name}</strong>
-                      <span className="text-xs text-[#766e68]">{product.category} · {product.quantity}</span>
-                    </span>
-                  </Link>
-                )) : (
-                  <p className="px-2 py-3 text-sm text-[#766e68]">No products found.</p>
-                )}
-              </div>
-            )}
+            {navLinks.slice(3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-lg font-medium transition-colors py-2.5 border-b border-gray-100 flex items-center justify-between ${
+                    isActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                </Link>
+              );
+            })}
+
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4"
+            >
+              Get a Quote
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
           </div>
         )}
-
-      {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col py-4 px-6 space-y-4">
-          {navLinks.map((link) => {
-            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
-            return (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium transition-colors py-2 border-b border-gray-50 ${
-                  isActive ? 'text-[#f0301a]' : 'text-[#4a5568] hover:text-[#f0301a]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-          <div className="border-b border-gray-50 pb-2">
-            <p className="py-2 text-lg font-medium text-[#4a5568]">Brands</p>
-            <div className="ml-3 flex flex-col gap-2 border-l-2 border-[#f0301a] pl-4">
-              {brandData.map((brand) => (
-                <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsMobileMenuOpen(false)} className="py-1 text-base font-medium text-[#4a5568] hover:text-[#f0301a]">{brand.name}</Link>
-              ))}
-            </div>
-          </div>
-          
-          <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
-            Get a Quote
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
-        </div>
-      )}
-    </nav>
-  </header>
+      </nav>
+    </header>
   );
 };
 

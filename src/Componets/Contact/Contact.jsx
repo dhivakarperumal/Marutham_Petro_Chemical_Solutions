@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaUsers, FaRegClock, FaFileAlt, FaChevronDown, FaComments } from 'react-icons/fa';
-import { MdLocalShipping, MdSupportAgent, MdEnergySavingsLeaf, MdVerifiedUser } from 'react-icons/md';
-
+import { MdLocalShipping, MdEnergySavingsLeaf, MdVerifiedUser } from 'react-icons/md';
 import PageHeader from '../../CommonComponents/PageHeader';
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_0n2loa8';
@@ -124,36 +123,36 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full text-gray-800">
+    <div className="w-full text-gray-800 overflow-x-hidden">
       {/* 1. HERO SECTION */}
       <PageHeader title="Contact Us" />
 
       {/* 2. INFO CARDS */}
-      <section className="container mx-auto px-4 md:px-8 relative z-20 -mt-12 mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl shadow-lg p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="0">
+      <section className="container mx-auto px-4 md:px-8 relative z-20 -mt-8 sm:-mt-12 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="0">
             <div className="w-12 h-12 rounded-full bg-[#fb5921] flex items-center justify-center text-white shrink-0 text-xl shadow-md">
               <FaPhoneAlt />
             </div>
             <div>
               <h4 className="font-bold text-gray-900">Call Us</h4>
-              <p className="text-gray-900 font-semibold mt-1">+91 84380 18090</p>
+              <a href="tel:+918438018090" className="text-gray-900 font-semibold mt-1 block hover:text-[#fb5921] transition-colors">+91 84380 18090</a>
               <p className="text-xs text-gray-500 mt-1">Mon - Sat, 9:00 AM - 6:00 PM</p>
             </div>
           </div>
           
-          <div className="bg-white rounded-xl shadow-lg p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="100">
+          <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="100">
             <div className="w-12 h-12 rounded-full bg-[#e41a15] flex items-center justify-center text-white shrink-0 text-xl shadow-md">
               <FaEnvelope />
             </div>
             <div>
               <h4 className="font-bold text-gray-900">Email Us</h4>
-              <p className="text-gray-900 font-semibold mt-1 text-sm break-all">maruthamthinner@gmail.com</p>
+              <a href="mailto:maruthamthinner@gmail.com" className="text-gray-900 font-semibold mt-1 text-sm break-all block hover:text-[#e41a15] transition-colors">maruthamthinner@gmail.com</a>
               <p className="text-xs text-gray-500 mt-1">We'll get back to you soon</p>
             </div>
           </div>
           
-          <div className="bg-white rounded-xl shadow-lg p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="200">
+          <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="200">
             <div className="w-12 h-12 rounded-full bg-[#fb5921] flex items-center justify-center text-white shrink-0 text-xl shadow-md">
               <FaMapMarkerAlt />
             </div>
@@ -163,7 +162,7 @@ const Contact = () => {
             </div>
           </div>
           
-          <div className="bg-white rounded-xl shadow-lg p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="300">
+          <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 flex gap-4 items-start border border-gray-100" data-aos="zoom-in-up" data-aos-delay="300">
             <div className="w-12 h-12 rounded-full bg-[#e41a15] flex items-center justify-center text-white shrink-0 text-xl shadow-md">
               <FaFileAlt />
             </div>
@@ -177,18 +176,18 @@ const Contact = () => {
       </section>
 
       {/* 3. MAIN CONTENT: FORM & MAP */}
-      <section className="container mx-auto px-4 md:px-8 py-8 mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="container mx-auto px-4 md:px-8 py-4 sm:py-8 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           
           {/* Left: Contact Form */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm" data-aos="fade-right" data-aos-duration="850">
-            <div className="mb-8">
+          <div id="contact-form" className="bg-white rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm" data-aos="fade-right" data-aos-duration="850">
+            <div className="mb-6 sm:mb-8">
               <h4 className="text-[#fb5921] font-bold text-xs tracking-[0.2em] uppercase mb-2">Send Us a Message</h4>
               <div className="flex items-center gap-3">
                 <div className="w-1.5 h-8 bg-[#e41a15]"></div>
-                <h2 className="text-3xl font-extrabold text-gray-900">Get in <span className="text-[#e41a15]">Touch</span></h2>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Get in <span className="text-[#e41a15]">Touch</span></h2>
               </div>
-              <p className="text-gray-600 mt-3 text-sm">Fill out the form below and our team will get back to you shortly.</p>
+              <p className="text-gray-600 mt-2 sm:mt-3 text-sm">Fill out the form below and our team will get back to you shortly.</p>
             </div>
 
             <form className="space-y-5" onSubmit={handleSubmit}>
@@ -292,16 +291,16 @@ const Contact = () => {
           </div>
 
           {/* Right: Map & Info */}
-          <div className="bg-[#fcfdfd] rounded-2xl p-8 border border-gray-100 shadow-sm flex flex-col" data-aos="fade-left" data-aos-duration="850">
+          <div className="bg-[#fcfdfd] rounded-2xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col" data-aos="fade-left" data-aos-duration="850">
             <div className="mb-6">
               <h4 className="text-[#fb5921] font-bold text-xs tracking-[0.2em] uppercase mb-2">Our Location</h4>
               <div className="flex items-center gap-3">
                 <div className="w-1.5 h-8 bg-[#e41a15]"></div>
-                <h2 className="text-3xl font-extrabold text-gray-900">Find Us <span className="text-[#e41a15]">Here</span></h2>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Find Us <span className="text-[#e41a15]">Here</span></h2>
               </div>
             </div>
 
-            <div className="w-full h-[250px] rounded-xl overflow-hidden mb-6 relative border border-gray-200">
+            <div className="w-full h-[220px] sm:h-[260px] rounded-xl overflow-hidden mb-6 relative border border-gray-200">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15609.471676644265!2d78.5074213!3d12.224163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bac394747738ad3%3A0x6e902b36e9ff762!2sTirupathur%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                 width="100%"
@@ -312,13 +311,13 @@ const Contact = () => {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Google Map Location"
               ></iframe>
-              <div className="absolute bottom-4 right-4 bg-white px-3 py-1.5 rounded-md shadow-md text-xs font-bold flex items-center hover:bg-gray-50 cursor-pointer text-gray-800">
+              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-white px-3 py-1.5 rounded-md shadow-md text-xs font-bold flex items-center hover:bg-gray-50 cursor-pointer text-gray-800">
                 View Larger Map <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
-              <div className="bg-[#fff2ef] p-5 rounded-xl border border-[#ffe4dc] flex gap-4">
+              <div className="bg-[#fff2ef] p-4 sm:p-5 rounded-xl border border-[#ffe4dc] flex gap-3.5 sm:gap-4">
                 <div className="text-[#fb5921] mt-1 shrink-0"><FaMapMarkerAlt size={20} /></div>
                 <div>
                   <h4 className="font-bold text-gray-900 text-sm">Head Office</h4>
@@ -329,7 +328,7 @@ const Contact = () => {
                   </p>
                 </div>
               </div>
-              <div className="bg-[#fff2ef] p-5 rounded-xl border border-[#ffe4dc] flex gap-4">
+              <div className="bg-[#fff2ef] p-4 sm:p-5 rounded-xl border border-[#ffe4dc] flex gap-3.5 sm:gap-4">
                 <div className="text-[#fb5921] mt-1 shrink-0"><FaRegClock size={20} /></div>
                 <div>
                   <h4 className="font-bold text-gray-900 text-sm">Working Hours</h4>
@@ -347,10 +346,10 @@ const Contact = () => {
       </section>
 
       {/* 4. FEATURES STRIP */}
-      <section className="border-y border-gray-100 bg-white py-10">
+      <section className="border-y border-gray-100 bg-white py-8 sm:py-10">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-wrap justify-center lg:justify-between gap-6 md:gap-4">
-            <div className="flex items-center gap-3" data-aos="fade-up" data-aos-delay="0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-4">
+            <div className="flex items-center gap-3.5" data-aos="fade-up" data-aos-delay="0">
               <div className="w-12 h-12 rounded-full bg-[#fff0eb] flex items-center justify-center text-[#fb5921] shrink-0 text-2xl shadow-sm border border-[#ffe4dc]">
                 <MdLocalShipping />
               </div>
@@ -360,7 +359,7 @@ const Contact = () => {
               </div>
             </div>
             
-            <div className="flex items-center gap-3" data-aos="fade-up" data-aos-delay="80">
+            <div className="flex items-center gap-3.5" data-aos="fade-up" data-aos-delay="80">
               <div className="w-12 h-12 rounded-full bg-[#fff0eb] flex items-center justify-center text-[#fb5921] shrink-0 text-2xl shadow-sm border border-[#ffe4dc]">
                 <MdVerifiedUser />
               </div>
@@ -370,7 +369,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3" data-aos="fade-up" data-aos-delay="160">
+            <div className="flex items-center gap-3.5" data-aos="fade-up" data-aos-delay="160">
               <div className="w-12 h-12 rounded-full bg-[#fff0eb] flex items-center justify-center text-[#e41a15] shrink-0 text-2xl shadow-sm border border-[#ffe4dc]">
                 <FaUsers />
               </div>
@@ -380,7 +379,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3" data-aos="fade-up" data-aos-delay="240">
+            <div className="flex items-center gap-3.5" data-aos="fade-up" data-aos-delay="240">
               <div className="w-12 h-12 rounded-full bg-[#fff0eb] flex items-center justify-center text-[#fb5921] shrink-0 text-2xl shadow-sm border border-[#ffe4dc]">
                 <MdEnergySavingsLeaf />
               </div>
@@ -394,20 +393,20 @@ const Contact = () => {
       </section>
 
       {/* 5. FAQ SECTION */}
-      <section className="relative w-full overflow-hidden bg-white py-20">
+      <section className="relative w-full overflow-hidden bg-white py-14 sm:py-20">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
           
           {/* Left Image (Truck) */}
-          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px] lg:h-[460px]" data-aos="fade-right" data-aos-duration="850">
+          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[240px] sm:h-[340px] lg:h-[460px]" data-aos="fade-right" data-aos-duration="850">
             <img src="/images/hero/img1.png" alt="Marutham Marketing Transport" className="w-full h-full object-cover" />
           </div>
           
           {/* Middle FAQ */}
           <div className="w-full lg:w-4/12" data-aos="fade-up" data-aos-delay="100">
             <h4 className="text-[#fb5921] font-bold text-xs tracking-[0.2em] uppercase mb-2">Frequently Asked Questions</h4>
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
               <div className="w-1.5 h-8 bg-[#e41a15]"></div>
-              <h2 className="text-3xl font-extrabold text-gray-900">Quick <span className="text-[#e41a15]">Answers</span></h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Quick <span className="text-[#e41a15]">Answers</span></h2>
             </div>
 
             <div className="space-y-3">
@@ -425,7 +424,7 @@ const Contact = () => {
                     <button
                       type="button"
                       onClick={() => toggleFaq(idx)}
-                      className="w-full flex justify-between items-center p-4 text-left cursor-pointer transition-colors"
+                      className="w-full flex justify-between items-center p-3.5 sm:p-4 text-left cursor-pointer transition-colors"
                       aria-expanded={isOpen}
                     >
                       <span className="text-sm font-bold text-gray-800 pr-3">{faq.question}</span>
@@ -455,16 +454,16 @@ const Contact = () => {
           </div>
 
           {/* Right Contact Card */}
-          <div className="w-full lg:w-3/12 flex flex-col items-center mt-10 lg:mt-0" data-aos="fade-left" data-aos-delay="200">
-            <div className="bg-[#fff6f4] rounded-2xl p-8 text-center shadow-sm w-full max-w-sm relative">
-              <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center text-[#fb5921] text-3xl shadow-sm mb-4">
+          <div className="w-full lg:w-3/12 flex flex-col items-center mt-6 lg:mt-0" data-aos="fade-left" data-aos-delay="200">
+            <div className="bg-[#fff6f4] rounded-2xl p-6 sm:p-8 text-center shadow-sm w-full max-w-sm relative border border-[#ffe8e2]">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full mx-auto flex items-center justify-center text-[#fb5921] text-2xl sm:text-3xl shadow-sm mb-4">
                 <FaComments size={24} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Still Have Questions?</h3>
-              <p className="text-sm text-gray-600 mb-6">Our team is here to help you with any product, pricing, or technical queries.</p>
-              <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md transition-all shadow-md w-full">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Still Have Questions?</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-5 sm:mb-6 leading-relaxed">Our team is here to help you with any product, pricing, or technical queries.</p>
+              <a href="#contact-form" className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md transition-all shadow-md w-full inline-block text-center cursor-pointer">
                 Contact Us Now &rarr;
-              </button>
+              </a>
             </div>
             
             <div className="font-extrabold italic text-4xl text-gray-800 rotate-[-8deg] mt-8 text-center hidden md:block" data-aos="zoom-in" data-aos-delay="300">

@@ -2,7 +2,7 @@ import { FaFacebookF, FaInstagram, FaWhatsapp, FaTwitter, FaPhoneAlt, FaEnvelope
 
 const TopHeader = () => {
   return (
-    <div className="bg-[#121416] text-white" data-aos="fade-down" data-aos-duration="600">
+    <div className="hidden md:block bg-[#121416]  text-white" data-aos="fade-down" data-aos-duration="600">
       <div className="mx-auto flex max-w-[1380px] items-center justify-between gap-3 px-4 py-2 text-[11px] md:px-8 md:text-xs">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-gray-200" data-aos="fade-right" data-aos-delay="100">
           <a href="tel:+918438018090" className="flex items-center gap-2 font-medium transition hover:text-[#fb5921]">

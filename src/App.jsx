@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./CommonComponents/Navbar";
@@ -15,13 +15,23 @@ import Loader from "./CommonComponents/Loader";
 function App() {
   const [loading] = useState(false);
   const location = useLocation();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    setIsNavigating(true);
+    const timer = setTimeout(() => {
+      setIsNavigating(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <section>
+    <section className="relative min-h-screen flex flex-col">
+      {isNavigating && <div className="route-progress-bar" aria-hidden="true" />}
       <div className="print:hidden">
         <TopHeader />
       </div>
@@ -30,7 +40,9 @@ function App() {
         <ScrollToTop />
       </div>
    
-      <Outlet />
+      <main key={`page-${location.pathname}`} className="page-transition flex-1">
+        <Outlet />
+      </main>
       <FloatingSupport />
       <Toaster
         position="top-right"
@@ -42,7 +54,7 @@ function App() {
           },
         }}
       />
-      <Footer key={location.pathname} />
+      <Footer key={`footer-${location.pathname}`} />
     </section>
   );
 }

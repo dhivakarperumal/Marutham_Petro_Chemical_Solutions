@@ -18,7 +18,7 @@ const WhyChooseUs = () => {
           <div className="mb-5 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.22em] text-[#d94c16]">
             <span className="h-0.5 w-10 bg-[#e96512]" /> Why Choose Us
           </div>
-          <h2 id="why-choose-title" className="text-[clamp(2.6rem,5vw,5rem)] font-extrabold leading-[0.94] tracking-[-0.045em] text-[#282321]">
+          <h2 id="why-choose-title" className="text-[clamp(1.85rem,4.5vw,5rem)] font-extrabold leading-[1] sm:leading-[0.94] tracking-[-0.045em] text-[#282321]">
             More Than Just <span className="text-[#d60e1e]">a Thinner Supplier</span>
           </h2>
           <p className="mt-6 max-w-[430px] text-base leading-7 text-[#766e68]">

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Eye, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
+import ModalPortal from "../../CommonComponents/ModalPortal";
 import productData from "../../data/product.json";
 
 const categoryImages = {
@@ -84,12 +85,23 @@ const Gallery = () => {
   }, [displayedCategories]);
 
   const currentImage = selectedIndex !== null ? allGalleryImages[selectedIndex] : null;
+  const [isClosing, setIsClosing] = useState(false);
 
   const openViewer = (id) => {
     const idx = allGalleryImages.findIndex((item) => item.id === id);
     if (idx !== -1) {
+      setIsClosing(false);
       setSelectedIndex(idx);
     }
+  };
+
+  const closeModal = () => {
+    if (isClosing || selectedIndex === null) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedIndex(null);
+      setIsClosing(false);
+    }, 220);
   };
 
   const handlePrev = (e) => {
@@ -110,7 +122,7 @@ const Gallery = () => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "ArrowRight") handleNext();
-      if (e.key === "Escape") setSelectedIndex(null);
+      if (e.key === "Escape") closeModal();
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -120,85 +132,91 @@ const Gallery = () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [selectedIndex, allGalleryImages.length]);
+  }, [selectedIndex, allGalleryImages.length, isClosing]);
 
   return (
-    <div className="bg-[#fffaf6] text-[#1c1c1c]">
+    <div className="bg-[#fffaf6] text-[#1c1c1c] overflow-x-hidden">
       {/* Lightbox Modal with Next / Prev Navigation */}
       {currentImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm transition-opacity"
-          onClick={() => setSelectedIndex(null)}
-        >
+        <ModalPortal>
           <div
-            className="relative flex max-h-[95vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            className={`fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm ${
+              isClosing ? "animate-modal-backdrop-out" : "animate-modal-backdrop-in"
+            }`}
+            onClick={closeModal}
           >
-            {/* Top Modal Header */}
-            <div className="flex w-full items-center justify-between border-b border-[#f0e7df] pb-3">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="rounded-full bg-[#e96512]/10 px-3 py-1 text-xs font-extrabold text-[#e96512]">
-                  {currentImage.category}
-                </span>
-                {currentImage.badge && (
-                  <span className="rounded-full border border-[#f3b58e] bg-[#fff8f2] px-2.5 py-0.5 text-[0.68rem] font-bold text-[#d60e1e]">
-                    {currentImage.badge}
+            <div
+              className={`relative flex max-h-[92vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl ${
+                isClosing ? "animate-modal-card-out" : "animate-modal-card-in"
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Top Modal Header */}
+              <div className="flex w-full items-center justify-between border-b border-[#f0e7df] pb-3">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="rounded-full bg-[#e96512]/10 px-3 py-1 text-xs font-extrabold text-[#e96512]">
+                    {currentImage.category}
                   </span>
-                )}
-                <span className="text-xs font-semibold text-[#8b827b]">
-                  {selectedIndex + 1} of {allGalleryImages.length}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedIndex(null)}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
-                aria-label="Close image preview"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Main Stage with Image & Next/Prev Controls */}
-            <div className="relative my-2 flex h-[62vh] sm:h-[70vh] w-full items-center justify-center">
-              {/* Previous Button */}
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="absolute left-1 sm:left-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={22} />
-              </button>
-
-              {/* Main Preview Image */}
-              <div className="flex h-full w-full items-center justify-center px-12 sm:px-16">
-                <img
-                  key={currentImage.id}
-                  src={currentImage.image}
-                  alt={currentImage.title}
-                  className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] transition-all duration-300"
-                />
+                  {currentImage.badge && (
+                    <span className="rounded-full border border-[#f3b58e] bg-[#fff8f2] px-2.5 py-0.5 text-[0.68rem] font-bold text-[#d60e1e]">
+                      {currentImage.badge}
+                    </span>
+                  )}
+                  <span className="text-xs font-semibold text-[#8b827b]">
+                    {selectedIndex + 1} of {allGalleryImages.length}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
+                  aria-label="Close image preview"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
-              {/* Next Button */}
-              <button
-                type="button"
-                onClick={handleNext}
-                className="absolute right-1 sm:right-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
-                aria-label="Next image"
-              >
-                <ChevronRight size={22} />
-              </button>
-            </div>
+              {/* Main Stage with Image & Next/Prev Controls */}
+              <div className="relative my-2 flex h-[58vh] sm:h-[68vh] w-full items-center justify-center">
+                {/* Previous Button */}
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="absolute left-1 sm:left-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={22} />
+                </button>
 
-            {/* Image Details */}
-            <div className="mt-2 text-center">
-              <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
-              <span className="text-xs font-semibold text-[#8b827b]">{currentImage.category}</span>
+                {/* Main Preview Image */}
+                <div className="flex h-full w-full items-center justify-center px-10 sm:px-16">
+                  <img
+                    key={currentImage.id}
+                    src={currentImage.image}
+                    alt={currentImage.title}
+                    className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] animate-image-in"
+                  />
+                </div>
+
+                {/* Next Button */}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="absolute right-1 sm:right-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={22} />
+                </button>
+              </div>
+
+              {/* Image Details */}
+              <div className="mt-2 text-center">
+                <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
+                <span className="text-xs font-semibold text-[#8b827b]">{currentImage.category}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </ModalPortal>
       )}
 
       <PageHeader title="Gallery" />
@@ -270,12 +288,12 @@ const Gallery = () => {
                 {/* Collage Container with Overlapping Center Title Badge */}
                 <div className="relative">
                   {/* Central Overlapping Floating Title Badge with Orange Theme */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[90%] sm:w-auto" data-aos="zoom-in" data-aos-delay="150">
-                    <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-6 py-3.5 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-4 ring-[#e96512]/15">
-                      <span className="block text-[0.55rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.3em] text-[#e96512]">
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-max max-w-[calc(100%-32px)] sm:max-w-none sm:w-auto" data-aos="zoom-in" data-aos-delay="150">
+                    <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-4 py-2 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-2 sm:ring-4 ring-[#e96512]/15">
+                      <span className="block text-[0.52rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[#e96512]">
                         Visual Collection
                       </span>
-                      <h3 className="mt-0.5 text-sm sm:text-lg lg:text-xl font-extrabold uppercase tracking-[0.22em] text-[#e96512] font-serif whitespace-nowrap">
+                      <h3 className="mt-0.5 text-xs sm:text-lg lg:text-xl font-extrabold uppercase tracking-[0.08em] sm:tracking-[0.22em] text-[#e96512] font-serif leading-tight">
                         {category} Gallery
                       </h3>
                     </div>
@@ -344,7 +362,7 @@ const Gallery = () => {
                         <div
                           key={p.product_id}
                           onClick={() => openViewer(p.product_id)}
-                          className="group relative h-[240px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          className="group relative h-[210px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-3 sm:p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                           data-aos="zoom-in-up"
                           data-aos-delay={pIdx * 80}
                         >
