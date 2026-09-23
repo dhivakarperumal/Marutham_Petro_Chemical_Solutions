@@ -33,7 +33,7 @@ const Products = () => {
             <div className="mb-3 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-9 bg-[#e96512]" /> Our product range
             </div>
-            <h2 id="products-title" className="text-[clamp(2.3rem,4vw,4.2rem)] font-extrabold leading-none tracking-[-0.04em] text-[#282321]">
+            <h2 id="products-title" className="text-[clamp(1.75rem,3.8vw,4.2rem)] font-extrabold leading-[1.05] sm:leading-none tracking-[-0.04em] text-[#282321]">
               Solutions for every <span className="text-[#d60e1e]">finish.</span>
             </h2>
             {/* <p className="mt-4 max-w-[560px] text-base leading-7 text-[#766e68]">
@@ -46,7 +46,7 @@ const Products = () => {
           </div>
         </div>
 
-        <div className="mb-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Product categories" data-aos="fade-up" data-aos-delay="100">
+        <div className="mb-9 flex flex-wrap justify-center gap-2 sm:gap-2.5" role="tablist" aria-label="Product categories" data-aos="fade-up" data-aos-delay="100">
           {categories.map((category) => {
             const isActive = activeCategory === category;
             return (
@@ -63,7 +63,7 @@ const Products = () => {
                     setSearchParams({ category });
                   }
                 }}
-                className={`whitespace-nowrap rounded-full border px-4 py-2.5 text-xs font-extrabold transition ${isActive ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-[0_8px_18px_rgba(214,14,30,0.18)]" : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"}`}
+                className={`cursor-pointer rounded-full border px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-extrabold transition ${isActive ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-[0_8px_18px_rgba(214,14,30,0.18)]" : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"}`}
               >
                 {category}
               </button>
