@@ -40,7 +40,7 @@ function App() {
         <ScrollToTop />
       </div>
    
-      <main key={location.pathname} className="page-transition flex-1">
+      <main key={`page-${location.pathname}`} className="page-transition flex-1">
         <Outlet />
       </main>
       <FloatingSupport />
@@ -54,7 +54,7 @@ function App() {
           },
         }}
       />
-      <Footer key={location.pathname} />
+      <Footer key={`footer-${location.pathname}`} />
     </section>
   );
 }
