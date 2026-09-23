@@ -89,41 +89,13 @@ const About = () => {
 
       <section className="mx-auto max-w-[1500px] px-4 py-10 md:px-8 xl:px-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_1.1fr]">
-          <div className="relative overflow-hidden rounded-[28px] bg-[#f5efe9] p-4 shadow-[0_24px_50px_rgba(0,0,0,0.08)] sm:p-6" data-aos="fade-right" data-aos-duration="850">
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
-              style={{
-                backgroundImage: 'url("/images/about/about.png")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+          <div className="relative overflow-hidden rounded-[6px] border border-[#eadfd6] bg-[linear-gradient(145deg,#fff8f2_0%,#fce8d8_100%)] p-5 shadow-[0_20px_45px_rgba(62,35,17,0.08)] sm:p-8" data-aos="fade-right" data-aos-duration="850">
+            <img
+              src="/images/about/about.png"
+              alt="Marutham thinner products and solutions"
+              className="relative z-10 block h-auto w-full object-contain object-center"
+              loading="lazy"
             />
-
-            <div className="relative overflow-hidden rounded-[24px] bg-white/10 p-3 sm:p-5">
-              <div className="relative mx-auto flex min-h-[550px] max-w-[620px] items-end justify-center">
-                <div className="absolute left-0 top-10 rotate-[-10deg] text-3xl font-bold italic text-[#fb5921] opacity-90 sm:text-4xl">
-                  <div>Colors</div>
-                  <div className="ml-5">Flow</div>
-                  <div className="ml-10">Possibilities</div>
-                  <div className="ml-16">Grow</div>
-                </div>
-
-                <div className="absolute left-6 top-20 h-36 w-36 rounded-full bg-[#f09d5a]/25 blur-3xl" />
-                <div className="absolute right-10 top-10 h-36 w-36 rounded-full bg-[#7a37db]/20 blur-3xl" />
-
-                <div className="relative z-10 flex w-full items-end justify-center">
-                  <div className="relative flex h-[360px] w-[300px] items-end justify-center sm:h-[420px] sm:w-[340px]">
-                    <div className="absolute bottom-0 left-1/2 h-[32px] w-[220px] -translate-x-1/2 rounded-full bg-[#d6c4b1]/70 blur-md" />
-
-                    
-
-                   
-                  </div>
-                </div>
-              </div>
-
-             
-            </div>
           </div>
 
           <div className="relative" data-aos="fade-left" data-aos-duration="850">
