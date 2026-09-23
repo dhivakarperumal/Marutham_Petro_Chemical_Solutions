@@ -36,6 +36,7 @@
 
 .support-item:hover {
   transform: scale(1.12);
+  filter: brightness(1.02);
 }
 
 /* Colors - Primary Orange Theme */
@@ -73,15 +74,15 @@
 }
 
 .support-item.call {
-  background: #ff6a00;
+  background: linear-gradient(135deg, #fb5921 0%, #d60e1e 100%);
   color: #ffffff;
-  box-shadow: 0 4px 18px rgba(255, 106, 0, 0.45);
+  box-shadow: 0 8px 22px rgba(214, 14, 30, 0.35);
 }
 
 .support-item.scroll-top {
-  background: #ff6a00;
+  background: linear-gradient(135deg, #fb5921 0%, #d60e1e 100%);
   color: #ffffff;
-  box-shadow: 0 4px 18px rgba(255, 106, 0, 0.45);
+  box-shadow: 0 8px 22px rgba(214, 14, 30, 0.35);
 }
 
 /* Tooltip appears to the left of the right-side buttons */

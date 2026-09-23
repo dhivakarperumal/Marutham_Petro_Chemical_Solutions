@@ -59,8 +59,8 @@ const FloatingSupport = () => {
     return null;
   }
 
-  const whatsappNumber = "919597293504"; // Company WhatsApp number (+91 95972 93504)
-  const phoneNumber = "+919597293504";   // Company Call line (+91 95972 93504)
+  const whatsappNumber = "+91 84380 18090"; // Company WhatsApp number (+91 95972 93504)
+  const phoneNumber = "++91 84380 18090";   // Company Call line (+91 95972 93504)
 
   const handleWhatsApp = () => {
     window.open(
@@ -82,10 +82,10 @@ const FloatingSupport = () => {
           <div
             className="support-item whatsapp"
             onClick={handleWhatsApp}
-            title="WhatsApp (+91 95972 93504)"
+            title="WhatsApp (+91 84380 18090)"
           >
             <FaWhatsapp size={26} />
-            <span className="tooltip">🟢 WhatsApp (+91 95972 93504)</span>
+            <span className="tooltip">🟢 WhatsApp (+91 84380 18090)</span>
           </div>
         )}
 
@@ -94,10 +94,10 @@ const FloatingSupport = () => {
           <div
             className="support-item call"
             onClick={handleCall}
-            title="Call Us (+91 95972 93504)"
+            title="Call Us (+91 84380 18090)"
           >
             <Phone size={22} />
-            <span className="tooltip">📞 Call (+91 95972 93504)</span>
+            <span className="tooltip">📞 Call (+91 84380 18090)</span>
           </div>
         )}
 
