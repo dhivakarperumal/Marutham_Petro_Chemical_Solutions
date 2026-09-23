@@ -123,7 +123,7 @@ const Gallery = () => {
   }, [selectedIndex, allGalleryImages.length]);
 
   return (
-    <div className="bg-[#fffaf6] text-[#1c1c1c]">
+    <div className="bg-[#fffaf6] text-[#1c1c1c] overflow-x-hidden">
       {/* Lightbox Modal with Next / Prev Navigation */}
       {currentImage && (
         <div
@@ -270,12 +270,12 @@ const Gallery = () => {
                 {/* Collage Container with Overlapping Center Title Badge */}
                 <div className="relative">
                   {/* Central Overlapping Floating Title Badge with Orange Theme */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[90%] sm:w-auto" data-aos="zoom-in" data-aos-delay="150">
-                    <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-6 py-3.5 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-4 ring-[#e96512]/15">
-                      <span className="block text-[0.55rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.3em] text-[#e96512]">
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-max max-w-[calc(100%-32px)] sm:max-w-none sm:w-auto" data-aos="zoom-in" data-aos-delay="150">
+                    <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-4 py-2 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-2 sm:ring-4 ring-[#e96512]/15">
+                      <span className="block text-[0.52rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[#e96512]">
                         Visual Collection
                       </span>
-                      <h3 className="mt-0.5 text-sm sm:text-lg lg:text-xl font-extrabold uppercase tracking-[0.22em] text-[#e96512] font-serif whitespace-nowrap">
+                      <h3 className="mt-0.5 text-xs sm:text-lg lg:text-xl font-extrabold uppercase tracking-[0.08em] sm:tracking-[0.22em] text-[#e96512] font-serif leading-tight">
                         {category} Gallery
                       </h3>
                     </div>
@@ -344,7 +344,7 @@ const Gallery = () => {
                         <div
                           key={p.product_id}
                           onClick={() => openViewer(p.product_id)}
-                          className="group relative h-[240px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          className="group relative h-[210px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-3 sm:p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
                           data-aos="zoom-in-up"
                           data-aos-delay={pIdx * 80}
                         >
