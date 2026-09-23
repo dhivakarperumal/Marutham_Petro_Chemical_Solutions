@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaUsers, FaRegClock, FaFileAlt, FaChevronDown, FaComments } from 'react-icons/fa';
 import { MdLocalShipping, MdSupportAgent, MdEnergySavingsLeaf, MdVerifiedUser } from 'react-icons/md';
 
 import PageHeader from '../../CommonComponents/PageHeader';
 
+const faqs = [
+  {
+    question: 'How can I get a quotation?',
+    answer: 'You can request a quotation by filling out our contact form, emailing us at info@maruthammarketing.com, or contacting us directly via WhatsApp with your required product name, volume, and quantity.',
+  },
+  {
+    question: 'Do you supply across India?',
+    answer: 'Yes! We supply and distribute our full range of thinner products and chemical solutions across Pan-India with scheduled, safe freight logistics.',
+  },
+  {
+    question: 'What industries do you serve?',
+    answer: 'We cater to painting contractors, automotive refinishing workshops, furniture and woodworking units, industrial manufacturing plants, and coating applications.',
+  },
+  {
+    question: 'How soon will I get a response?',
+    answer: 'Our dedicated customer support and sales team responds to all inquiries within 2 to 4 business hours during working days.',
+  },
+  {
+    question: 'Can I visit your office?',
+    answer: 'Yes, you are always welcome to visit our head office in Ambur, Tirupathur District, Tamil Nadu (Mon - Sat, 9:00 AM - 6:00 PM).',
+  },
+];
+
 const Contact = () => {
+  const [openFaq, setOpenFaq] = useState(0);
+
+  const toggleFaq = (idx) => {
+    setOpenFaq((prev) => (prev === idx ? null : idx));
+  };
+
   return (
     <div className="w-full font-sans text-gray-800">
       {/* 1. HERO SECTION */}
@@ -218,10 +247,10 @@ const Contact = () => {
 
       {/* 5. FAQ SECTION */}
       <section className="relative w-full overflow-hidden bg-white py-20" data-aos="fade-up" data-aos-delay="150">
-        <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+        <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
           
           {/* Left Image (Truck) */}
-          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px]">
+          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px] lg:h-[460px]">
             <img src="/images/hero/img1.png" alt="Marutham Marketing Transport" className="w-full h-full object-cover" />
           </div>
           
@@ -234,12 +263,46 @@ const Contact = () => {
             </div>
 
             <div className="space-y-3">
-              {['How can I get a quotation?', 'Do you supply across India?', 'What industries do you serve?', 'How soon will I get a response?', 'Can I visit your office?'].map((q, idx) => (
-                <div key={idx} className="flex justify-between items-center border border-gray-100 rounded-md p-4 cursor-pointer hover:border-[#fb5921] transition-all bg-white shadow-sm">
-                  <span className="text-sm font-semibold text-gray-700">{q}</span>
-                  <span className="text-[#e41a15] font-bold text-lg leading-none">+</span>
-                </div>
-              ))}
+              {faqs.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`rounded-lg border transition-all duration-200 overflow-hidden bg-white shadow-sm ${
+                      isOpen
+                        ? 'border-[#fb5921] ring-1 ring-[#fb5921]/20'
+                        : 'border-gray-200 hover:border-[#fb5921]/60'
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full flex justify-between items-center p-4 text-left cursor-pointer transition-colors"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="text-sm font-bold text-gray-800 pr-3">{faq.question}</span>
+                      <span
+                        className={`text-[#e41a15] font-extrabold text-xl leading-none transition-transform duration-300 shrink-0 ${
+                          isOpen ? 'rotate-45' : ''
+                        }`}
+                      >
+                        +
+                      </span>
+                    </button>
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-[#fffdfb]">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
