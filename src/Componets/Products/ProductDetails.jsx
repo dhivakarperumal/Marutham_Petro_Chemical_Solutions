@@ -37,7 +37,7 @@ const ProductDetails = () => {
         <div className="mx-auto max-w-[1380px]">
 
           <div className="grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-            <div>
+            <div data-aos="fade-right" data-aos-duration="850">
 
 
               {/* Main Image Container below thumbnails */}
@@ -79,7 +79,7 @@ const ProductDetails = () => {
             </div>
 
             {/* Product Details info */}
-            <div className="relative">
+            <div className="relative" data-aos="fade-left" data-aos-duration="850">
               <div className="mb-7 flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d94c16]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#d60e1e]" />
                 <span>{selectedProduct.brand}</span>
@@ -91,7 +91,7 @@ const ProductDetails = () => {
                 <p className="text-base leading-8 text-[#766e68] text-justify">{selectedProduct.description}</p>
               </div>
 
-              <div className="mt-9 grid max-w-[650px] grid-cols-2 border-y border-[#eadfd6] py-5">
+              <div className="mt-9 grid max-w-[650px] grid-cols-2 border-y border-[#eadfd6] py-5" data-aos="zoom-in" data-aos-delay="200">
                 <div className="border-r border-[#eadfd6] pr-4">
                   <div className="mb-3 flex items-center gap-2 text-[#d60e1e]">
                     <PackageCheck size={18} aria-hidden="true" />
@@ -114,6 +114,8 @@ const ProductDetails = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#d60e1e] px-6 py-3.5 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(214,14,30,0.2)] transition hover:bg-[#b90c19]"
+                data-aos="fade-up"
+                data-aos-delay="250"
               >
                 Order Now <ArrowRight size={17} aria-hidden="true" />
               </a>

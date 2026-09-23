@@ -12,7 +12,7 @@ const Reviews = () => {
       <div className="relative mx-auto max-w-[1380px]">
         {/* Header with Title and Nav Controls */}
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-          <div>
+          <div data-aos="fade-right">
             <div className="mb-4 flex items-center gap-3 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-10 bg-[#e96512]" /> Customer voice
             </div>
@@ -21,7 +21,7 @@ const Reviews = () => {
             </h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" data-aos="fade-left">
             <button
               type="button"
               className="reviews-swiper-prev flex h-9 w-9 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#766e68] shadow-sm transition hover:border-[#d60e1e] hover:text-[#d60e1e] cursor-pointer"
@@ -40,7 +40,7 @@ const Reviews = () => {
         </div>
 
         {/* Seamless Infinite Swiper (Continues continuously without rewinding) */}
-        <div className="overflow-hidden px-1 py-1" aria-label="Customer review swiper">
+        <div className="overflow-hidden px-1 py-1" aria-label="Customer review swiper" data-aos="fade-up" data-aos-delay="120">
           <Swiper
             modules={[Autoplay, Navigation]}
             loop={true}

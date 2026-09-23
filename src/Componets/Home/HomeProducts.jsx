@@ -34,7 +34,7 @@ const HomeProducts = () => {
       <div className="mx-auto max-w-[1380px]">
         {/* Header with Title and Navigation */}
         <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
-          <div className="max-w-[620px]">
+          <div className="max-w-[620px]" data-aos="fade-right">
             <div className="mb-3 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-9 bg-[#e96512]" /> Our product range
             </div>
@@ -43,7 +43,7 @@ const HomeProducts = () => {
             </h2>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4" data-aos="fade-left">
             <a href="/products" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#d60e1e] transition hover:text-[#b90c19]">
               View all products <ArrowRight size={17} aria-hidden="true" />
             </a>
@@ -67,7 +67,7 @@ const HomeProducts = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="mb-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Home product categories">
+        <div className="mb-9 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Home product categories" data-aos="fade-up" data-aos-delay="80">
           {categories.map((category) => {
             const isActive = activeCategory === category;
             return (
@@ -90,7 +90,7 @@ const HomeProducts = () => {
         </div>
 
         {/* Seamless Infinite Swiper (Continues from first product upon reaching end) */}
-        <div className="overflow-hidden px-1 py-1" aria-label="Automatic home product swiper">
+        <div className="overflow-hidden px-1 py-1" aria-label="Automatic home product swiper" data-aos="fade-up" data-aos-delay="150">
           <Swiper
             key={activeCategory}
             modules={[Autoplay, Navigation]}

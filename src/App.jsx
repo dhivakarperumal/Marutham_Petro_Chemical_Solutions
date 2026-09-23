@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./CommonComponents/Navbar";
 import TopHeader from "./CommonComponents/TopHeader";
@@ -14,6 +14,7 @@ import Loader from "./CommonComponents/Loader";
 
 function App() {
   const [loading] = useState(false);
+  const location = useLocation();
 
   if (loading) {
     return <Loader />;
@@ -41,7 +42,7 @@ function App() {
           },
         }}
       />
-      <Footer />
+      <Footer key={location.pathname} />
     </section>
   );
 }

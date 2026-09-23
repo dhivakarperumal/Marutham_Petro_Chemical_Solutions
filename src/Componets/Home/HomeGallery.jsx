@@ -53,7 +53,7 @@ const HomeGallery = () => {
       <div className="absolute -left-24 top-10 h-60 w-60 rounded-full bg-[#f8c99c30] blur-3xl pointer-events-none" />
       <div className="relative mx-auto max-w-[1380px]">
         {/* Gallery Section Header */}
-        <div className="mb-5 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
+        <div className="mb-5 flex flex-col justify-between gap-4 lg:flex-row lg:items-end" data-aos="fade-down">
           <div>
             <div className="mb-2 flex items-center gap-2.5 text-[0.68rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-8 bg-[#e96512]" /> Product Gallery Showcase
@@ -89,7 +89,7 @@ const HomeGallery = () => {
         {/* Gallery Content: Distinct Left Main Range Card + Right Swiper with Inset Flanking Arrows */}
         <div className="grid items-stretch gap-4 sm:gap-6 lg:grid-cols-[260px_1fr] xl:grid-cols-[280px_1fr]">
           {/* Left Main Image Card (Visually Distinct: Warm Ambient Gradient, Featured Badge & Solid Accent Badge) */}
-          <div className="relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col overflow-hidden rounded-lg border-2 border-[#e96512]/40 bg-[linear-gradient(150deg,#fff4eb_0%,#fcd9c0_55%,#f7bea0_100%)] p-3.5 shadow-[0_14px_32px_rgba(233,101,18,0.12)] ring-4 ring-[#e96512]/10">
+          <div className="relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col overflow-hidden rounded-lg border-2 border-[#e96512]/40 bg-[linear-gradient(150deg,#fff4eb_0%,#fcd9c0_55%,#f7bea0_100%)] p-3.5 shadow-[0_14px_32px_rgba(233,101,18,0.12)] ring-4 ring-[#e96512]/10" data-aos="fade-right" data-aos-delay="100">
             {/* Ambient Background Glow */}
             <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-[#e96512]/30 blur-2xl" />
 
@@ -115,7 +115,7 @@ const HomeGallery = () => {
           </div>
 
           {/* Right Product Swiper with Navigation Arrows in Marked Places */}
-          <div className="relative min-w-0">
+          <div className="relative min-w-0" data-aos="fade-left" data-aos-delay="150">
             {/* Left Arrow Mark (Marked Place: In gap between main card and swiper) */}
             <button
               type="button"

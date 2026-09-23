@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import AOS from "aos";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -24,6 +25,13 @@ const ScrollToTop = () => {
         el.scrollTo({ top: 0, behavior: "instant" });
       }
     });
+
+    // Refresh AOS animations for the newly navigated page
+    const timer = setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;

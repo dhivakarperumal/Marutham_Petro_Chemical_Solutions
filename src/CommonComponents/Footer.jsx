@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaAngleRight, FaMapMarkerAlt, FaClock, FaInstagram, FaWhatsapp, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
@@ -19,13 +18,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#111317] border-t border-gray-800 font-sans mt-auto text-white">
+    <footer className="bg-[#111317] border-t border-gray-800 mt-auto text-white">
       <div className="container mx-auto px-4 md:px-8 py-16">
         {/* We use a responsive grid that will naturally wrap items to the next row */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8 lg:gap-10">
           
           {/* 1. Logo & Info */}
-          <div className="space-y-6">
+          <div className="space-y-6" data-aos="fade-up" data-aos-delay="0">
             <div className="bg-white inline-block p-2 rounded-md">
               <img 
                 src="/images/logo.png" 
@@ -54,7 +53,7 @@ const Footer = () => {
           </div>
 
            {/* 3. Quick Links */}
-          <div>
+          <div data-aos="fade-up" data-aos-delay="100">
             <h3 className="text-[17px] font-bold text-white mb-6">Quick Links</h3>
             <ul className="space-y-4">
               {quickLinks.map((link, index) => (
@@ -72,7 +71,7 @@ const Footer = () => {
           </div>
 
           {/* 2. Our Products */}
-          <div>
+          <div data-aos="fade-up" data-aos-delay="200">
             <h3 className="text-[17px] font-bold text-white mb-6">Our Products</h3>
             <ul className="space-y-4">
               {ourProducts.map((item, index) => (
@@ -92,7 +91,7 @@ const Footer = () => {
          
 
           {/* 4. Contact Us */}
-          <div>
+          <div data-aos="fade-up" data-aos-delay="300">
             <h3 className="text-[17px] font-bold text-white mb-6">Contact Us</h3>
             <div className="space-y-5">
               <div className="flex items-center">
@@ -125,7 +124,7 @@ const Footer = () => {
 
          
           {/* 6. Newsletter Subscription */}
-          <div>
+          <div data-aos="fade-up" data-aos-delay="400">
             <h3 className="text-[17px] font-bold text-white mb-6">Newsletter</h3>
             <form className="flex w-full" onSubmit={(e) => e.preventDefault()}>
               <input 
@@ -160,7 +159,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Copyright Bar */}
-      <div className="border-t border-gray-800 py-6 text-center text-gray-500 text-sm">
+      <div className="border-t border-gray-800 py-6 text-center text-gray-500 text-sm" data-aos="fade-up" data-aos-delay="100">
         <p>&copy; {new Date().getFullYear()} Marutham Marketing. All rights reserved.</p>
       </div>
     </footer>

@@ -63,7 +63,7 @@ const BrandDetails = () => {
       <section className="relative overflow-hidden bg-[linear-gradient(118deg,#fffaf4_0%,#fff_52%,#fff1e6_100%)] px-[5%] py-16 sm:py-24">
         <div className="absolute -right-28 -top-36 h-[420px] w-[420px] rounded-full border border-[#e9651221]" />
         <div className="relative mx-auto grid max-w-[1380px] items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
-          <div>
+          <div data-aos="fade-right" data-aos-duration="850">
             <div className="mb-5 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-10 bg-[#e96512]" /> Brand details
             </div>
@@ -82,7 +82,7 @@ const BrandDetails = () => {
             </div>
           </div>
 
-          <div className="relative mx-auto flex min-h-[390px] w-full max-w-[500px] items-center justify-center">
+          <div className="relative mx-auto flex min-h-[390px] w-full max-w-[500px] items-center justify-center" data-aos="fade-left" data-aos-duration="850">
             <div className="absolute h-[78%] w-[78%] rounded-full bg-[#f8c99c]/60 blur-3xl" />
             <div className="absolute inset-x-[8%] inset-y-[5%] rotate-2 rounded-[4px] border-[10px] border-white bg-[#fdf0e6] shadow-[20px_22px_0_#f8d9be,0_24px_50px_rgba(55,36,22,0.16)]" />
             <img src={brand.image} alt={`${brand.name} product`} className="relative z-10 max-h-[360px] max-w-[82%] object-contain drop-shadow-[0_20px_15px_rgba(57,32,17,0.2)]" />
@@ -95,7 +95,7 @@ const BrandDetails = () => {
       <section id="available-sizes" className="border-t border-[#ebdcd0] bg-[#fffdfa] px-[5%] py-16 sm:py-20">
         <div className="mx-auto max-w-[1380px]">
           {/* Section Header */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between border-b border-[#ebdcd0] pb-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between border-b border-[#ebdcd0] pb-6" data-aos="fade-down">
             <div>
               <span className="text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
                 Product Specifications
@@ -144,10 +144,12 @@ const BrandDetails = () => {
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                {sizeSpecifications.map((spec) => (
+                {sizeSpecifications.map((spec, idx) => (
                   <div
                     key={spec.netSize}
                     className="group relative flex flex-col justify-between rounded-xl border border-[#ebdcd0] bg-white p-5 shadow-[0_4px_16px_rgba(62,35,17,0.04)] transition duration-300 hover:-translate-y-1.5 hover:border-[#e96512] hover:shadow-[0_12px_28px_rgba(233,101,18,0.12)]"
+                    data-aos="zoom-in-up"
+                    data-aos-delay={idx * 80}
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -183,7 +185,7 @@ const BrandDetails = () => {
             </div>
 
             {/* Elevated Specification Table Matrix */}
-            <div className="overflow-hidden rounded-2xl border border-[#ebdcd0] bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-[#ebdcd0] bg-white shadow-sm" data-aos="fade-up" data-aos-delay="120">
               <div className="border-b border-[#ebdcd0] bg-[#fff8f2] px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <h4 className="text-sm font-extrabold uppercase tracking-wider text-[#282321]">
@@ -280,7 +282,7 @@ const BrandDetails = () => {
       </section> */}
 
       {/* Safety and Handling */}
-      <section className="border-t border-[#ebdcd0] bg-white px-[5%] py-12 sm:py-16">
+      <section className="border-t border-[#ebdcd0] bg-white px-[5%] py-12 sm:py-16" data-aos="fade-up" data-aos-delay="100">
         <div className="mx-auto max-w-[1380px]">
           <div className="mb-6 flex items-center gap-3">
             <ShieldCheck size={22} className="text-[#e96512]" aria-hidden="true" />
@@ -304,14 +306,23 @@ const BrandDetails = () => {
       <section className="border-y border-[#eee3da] bg-white px-[5%] py-16 sm:py-20">
         <div className="mx-auto max-w-[1380px]">
           <div className="mb-8 flex items-end justify-between gap-5">
-            <div>
+            <div data-aos="fade-right">
               <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d94c16]">Available products</p>
               <h2 className="text-3xl font-extrabold tracking-[-0.03em] text-[#282321]">Choose your pack size</h2>
             </div>
-            <Link to="/products" className="hidden items-center gap-1 text-sm font-extrabold text-[#d60e1e] sm:flex">View all products <ChevronRight size={17} aria-hidden="true" /></Link>
+            <Link to="/products" className="hidden items-center gap-1 text-sm font-extrabold text-[#d60e1e] sm:flex" data-aos="fade-left">View all products <ChevronRight size={17} aria-hidden="true" /></Link>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {relatedProducts.map((product) => <ProductCard key={product.product_id} product={product} />)}
+            {relatedProducts.map((product, idx) => (
+              <div
+                key={product.product_id}
+                data-aos="zoom-in-up"
+                data-aos-delay={(idx % 4) * 80}
+                className="h-full"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
           </div>
         </div>
       </section>

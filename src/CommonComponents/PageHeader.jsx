@@ -23,15 +23,15 @@ const PageHeader = ({
       {/* Bottom Content */}
       <div className="relative z-10 w-full px-4 text-center">
         
-        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#fb5921] sm:mb-3">
+        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#fb5921] sm:mb-3" data-aos="fade-down" data-aos-delay="50">
           Marutham Marketing
         </p>
 
-        <h1 className="text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">
+        <h1 className="text-3xl font-black tracking-tight sm:text-4xl md:text-5xl" data-aos="zoom-in" data-aos-delay="120">
           {title}
         </h1>
 
-        <div className="mt-2 flex items-center justify-center gap-2 text-xs text-white/80 sm:mt-3 sm:text-sm">
+        <div className="mt-2 flex items-center justify-center gap-2 text-xs text-white/80 sm:mt-3 sm:text-sm" data-aos="fade-up" data-aos-delay="180">
           <Link
             to="/"
             className="transition hover:text-[#fb5921]"

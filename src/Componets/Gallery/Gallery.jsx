@@ -205,7 +205,7 @@ const Gallery = () => {
 
       <div className="mx-auto max-w-[1380px] px-4 py-12 md:px-6 lg:px-8 sm:py-16">
         {/* Category Navigation Filter Pills */}
-        <div className="mb-14 flex flex-wrap items-center justify-center gap-2.5">
+        <div className="mb-14 flex flex-wrap items-center justify-center gap-2.5" data-aos="fade-down">
           <button
             type="button"
             onClick={() => setActiveFilter("All")}
@@ -249,9 +249,9 @@ const Gallery = () => {
               <section key={category} className="border-b border-[#ebdcd0] pb-20 last:border-b-0 last:pb-0">
                 {/* Category Header */}
                 <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-                  <div>
+                  <div data-aos="fade-right">
                     <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
-                      Collection Showcase
+                       Collection Showcase
                     </span>
                     <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#282321]">
                       {category}
@@ -261,6 +261,7 @@ const Gallery = () => {
                   <Link
                     to={`/products?category=${encodeURIComponent(category)}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-[#d60e1e] hover:text-[#b90c19] transition self-start sm:self-auto"
+                    data-aos="fade-left"
                   >
                     View products <ArrowRight size={14} aria-hidden="true" />
                   </Link>
@@ -269,7 +270,7 @@ const Gallery = () => {
                 {/* Collage Container with Overlapping Center Title Badge */}
                 <div className="relative">
                   {/* Central Overlapping Floating Title Badge with Orange Theme */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[90%] sm:w-auto">
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[90%] sm:w-auto" data-aos="zoom-in" data-aos-delay="150">
                     <div className="border-2 border-[#e96512] bg-white/95 backdrop-blur-sm px-6 py-3.5 sm:px-11 sm:py-4 shadow-[0_12px_36px_rgba(233,101,18,0.2)] rounded-lg text-center ring-4 ring-[#e96512]/15">
                       <span className="block text-[0.55rem] sm:text-[0.65rem] font-extrabold uppercase tracking-[0.3em] text-[#e96512]">
                         Visual Collection
@@ -288,6 +289,8 @@ const Gallery = () => {
                       <div
                         onClick={() => openViewer(`${category}-hero`)}
                         className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(150deg,#fff5ec_0%,#fcdbc2_55%,#f7bea0_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.06)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                        data-aos="fade-right"
+                        data-aos-delay="80"
                       >
                         <div className="absolute -bottom-10 -right-10 h-44 w-44 rounded-full bg-[#e96512]/25 blur-2xl" />
                         <span className="absolute left-3.5 top-3.5 z-20 rounded-full bg-[#282321] px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
@@ -309,6 +312,8 @@ const Gallery = () => {
                         <div
                           onClick={() => openViewer(p4500.product_id)}
                           className="group relative h-[260px] sm:h-[340px] lg:h-[390px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff8f2_55%,#fdeedf_100%)] p-5 shadow-[0_6px_20px_rgba(62,35,17,0.05)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          data-aos="fade-left"
+                          data-aos-delay="80"
                         >
                           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-28 w-36 rounded-full bg-[#fcdbc3]/60 blur-xl" />
                           <span className="absolute left-3.5 top-3.5 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
@@ -335,11 +340,13 @@ const Gallery = () => {
                           : "grid-cols-1 sm:grid-cols-3"
                       }`}
                     >
-                      {bottomProducts.map((p) => (
+                      {bottomProducts.map((p, pIdx) => (
                         <div
                           key={p.product_id}
                           onClick={() => openViewer(p.product_id)}
                           className="group relative h-[240px] sm:h-[280px] lg:h-[330px] flex items-center justify-center overflow-hidden rounded-xl border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-4 shadow-[0_4px_16px_rgba(62,35,17,0.04)] cursor-pointer transition duration-300 hover:shadow-xl hover:border-[#f3b58e]"
+                          data-aos="zoom-in-up"
+                          data-aos-delay={pIdx * 80}
                         >
                           <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-20 w-28 rounded-full bg-[#fcdbc3]/60 blur-xl" />
                           <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">

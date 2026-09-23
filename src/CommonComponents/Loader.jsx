@@ -20,7 +20,7 @@ const Loader = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center h-screen bg-white text-gray-800 overflow-hidden font-sans">
+    <div className="relative flex flex-col items-center justify-center h-screen bg-white text-gray-800 overflow-hidden">
       
       {/* Floating background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
