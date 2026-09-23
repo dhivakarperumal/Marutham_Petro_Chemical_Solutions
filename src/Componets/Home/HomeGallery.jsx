@@ -83,45 +83,60 @@ const HomeGallery = () => {
             >
               View all <ArrowRight size={14} aria-hidden="true" />
             </Link>
-            <div className="ml-1 flex items-center gap-1">
-              <button
-                type="button"
-                onClick={() => swiperRef.current?.slidePrev()}
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#766e68] shadow-sm transition hover:border-[#d60e1e] hover:text-[#d60e1e] cursor-pointer"
-                aria-label="Previous product"
-              >
-                <ChevronLeft size={15} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => swiperRef.current?.slideNext()}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d60e1e] text-white shadow-sm transition hover:bg-[#b90c19] cursor-pointer"
-                aria-label="Next product"
-              >
-                <ChevronRight size={15} aria-hidden="true" />
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Gallery Content: Left Static Image with Small Gap + Right Sequential Swiper */}
-        <div className="grid items-stretch gap-3 sm:gap-4 lg:grid-cols-[250px_1fr] xl:grid-cols-[270px_1fr]">
-          {/* Left Static Category Image (Updates smoothly as the swiper moves across categories) */}
-          <div className="relative flex h-[255px] sm:h-[270px] lg:h-[280px] flex-col overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_12px_28px_rgba(62,35,17,0.06)]">
-            <div className="absolute -bottom-12 right-4 h-32 w-32 rounded-full bg-[#f5c59d80] blur-2xl" />
+        {/* Gallery Content: Distinct Left Main Range Card + Right Swiper with Inset Flanking Arrows */}
+        <div className="grid items-stretch gap-4 sm:gap-6 lg:grid-cols-[260px_1fr] xl:grid-cols-[280px_1fr]">
+          {/* Left Main Image Card (Visually Distinct: Warm Ambient Gradient, Featured Badge & Solid Accent Badge) */}
+          <div className="relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col overflow-hidden rounded-lg border-2 border-[#e96512]/40 bg-[linear-gradient(150deg,#fff4eb_0%,#fcd9c0_55%,#f7bea0_100%)] p-3.5 shadow-[0_14px_32px_rgba(233,101,18,0.12)] ring-4 ring-[#e96512]/10">
+            {/* Ambient Background Glow */}
+            <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-[#e96512]/30 blur-2xl" />
+
+            {/* Featured Tag indicating this is the Main Range */}
+            <div className="relative z-20 self-start">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#282321] px-2.5 py-0.5 text-[0.54rem] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#e96512] animate-pulse" /> Range
+              </span>
+            </div>
+
+            {/* Main Category Image */}
             <img
               key={activeCategory}
               src={categoryImages[activeCategory] || "/images/gallery/img_1.png"}
               alt={`${activeCategory} main range`}
-              className="relative z-10 h-full w-full object-contain drop-shadow-[0_12px_12px_rgba(57,32,17,0.18)] animate-hero-page-turn"
+              className="relative z-10 my-auto max-h-[78%] w-full object-contain drop-shadow-[0_14px_14px_rgba(57,32,17,0.22)] animate-hero-page-turn"
             />
-            <span className="absolute bottom-3 left-3 z-20 rounded-full bg-white/95 px-2.5 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.1em] text-[#d60e1e] shadow-sm">
+
+            {/* Prominent Red Category Badge */}
+            <span className="relative z-20 self-start rounded-full bg-[#d60e1e] px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.12em] text-white shadow-md">
               {activeCategory}
             </span>
           </div>
 
-          {/* Right Product Swiper (All categories sequentially; seamlessly continues from Enamel -> Paint -> Solvent -> NC -> Enamel) */}
-          <div className="min-w-0">
+          {/* Right Product Swiper with Navigation Arrows in Marked Places */}
+          <div className="relative min-w-0">
+            {/* Left Arrow Mark (Marked Place: In gap between main card and swiper) */}
+            <button
+              type="button"
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="absolute -left-3.5 sm:-left-4 top-1/2 z-30 flex h-8 w-8 sm:h-9 sm:w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#282321] shadow-[0_4px_14px_rgba(0,0,0,0.14)] transition duration-200 hover:border-[#d60e1e] hover:bg-[#d60e1e] hover:text-white cursor-pointer"
+              aria-label="Previous product"
+            >
+              <ChevronLeft size={18} aria-hidden="true" />
+            </button>
+
+            {/* Right Arrow Mark (Marked Place: On right edge of swiper) */}
+            <button
+              type="button"
+              onClick={() => swiperRef.current?.slideNext()}
+              className="absolute -right-3.5 sm:-right-4 top-1/2 z-30 flex h-8 w-8 sm:h-9 sm:w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#282321] shadow-[0_4px_14px_rgba(0,0,0,0.14)] transition duration-200 hover:border-[#d60e1e] hover:bg-[#d60e1e] hover:text-white cursor-pointer"
+              aria-label="Next product"
+            >
+              <ChevronRight size={18} aria-hidden="true" />
+            </button>
+
+            {/* 3-Card Swiper with Category Name on Top of Card */}
             <div className="overflow-hidden">
               <Swiper
                 onSwiper={(swiper) => {
@@ -150,16 +165,24 @@ const HomeGallery = () => {
                   <SwiperSlide key={`${product.product_id}-${index}`} className="h-auto">
                     <Link
                       to={`/products/${product.product_id}`}
-                      className="group relative flex h-[255px] sm:h-[270px] lg:h-[280px] flex-col items-center justify-center overflow-hidden rounded-md border border-[#eadfd6] bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 shadow-[0_8px_20px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_14px_26px_rgba(62,35,17,0.1)]"
+                      className="group relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#eadfd6] bg-white p-3 shadow-[0_4px_16px_rgba(62,35,17,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[#d60e1e] hover:shadow-[0_12px_26px_rgba(214,14,30,0.12)]"
                       aria-label={product.product_name}
                     >
-                      <span className="absolute left-3 top-3 z-20 rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-1 text-[0.55rem] font-extrabold uppercase tracking-[0.08em] text-[#d60e1e] shadow-sm">
-                        {product.quantity}
-                      </span>
+                      {/* Top Card Badges: Category Name (e.g. Paint Thinner) on Left, Quantity on Right */}
+                      <div className="absolute left-3 right-3 top-3 z-20 flex items-center justify-between gap-1.5 pointer-events-none">
+                        <span className="rounded-full border border-[#f3b58e] bg-[#fff6f0] px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.06em] text-[#d60e1e] shadow-sm">
+                          {product.category}
+                        </span>
+                        <span className="rounded-full border border-[#e5ded7] bg-[#faf6f2] px-2 py-0.5 text-[0.55rem] font-bold text-[#625953] shadow-sm">
+                          {product.quantity}
+                        </span>
+                      </div>
+
+                      {/* Product Image */}
                       <img
                         src={product.image}
                         alt={product.product_name}
-                        className="relative z-10 h-full w-full object-contain drop-shadow-[0_12px_10px_rgba(57,32,17,0.16)] transition duration-500 group-hover:scale-110"
+                        className="relative z-10 max-h-[80%] w-full object-contain pt-4 drop-shadow-[0_10px_8px_rgba(57,32,17,0.14)] transition duration-500 group-hover:scale-110"
                         loading="lazy"
                       />
                     </Link>
