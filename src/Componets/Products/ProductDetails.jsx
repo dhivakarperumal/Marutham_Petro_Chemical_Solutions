@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight, Boxes, PackageCheck } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
 import productData from "../../data/product.json";
+import Reviews from "../Home/Reviews";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -84,6 +85,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </section>
+      <Reviews />
     </main>
   );
 };
