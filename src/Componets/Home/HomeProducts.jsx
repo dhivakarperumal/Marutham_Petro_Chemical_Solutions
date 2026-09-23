@@ -106,10 +106,10 @@ const HomeProducts = () => {
               nextEl: ".home-products-next",
             }}
             spaceBetween={20}
-            slidesPerView={1.15}
+            slidesPerView={1}
             breakpoints={{
-              640: { slidesPerView: 2.15, spaceBetween: 20 },
-              1024: { slidesPerView: 3.15, spaceBetween: 24 },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 24 },
               1280: { slidesPerView: 4, spaceBetween: 24 },
             }}
             className="home-products-swiper !py-2"
