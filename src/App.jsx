@@ -7,7 +7,7 @@ import Footer from "./CommonComponents/Footer";
 
 
 import ScrollToTop from "./CommonComponents/ScrollToTop";
-// import FloatingSupport from "./CommonComponents/FloatingSupport";
+import FloatingSupport from "./CommonComponents/FloatingSupport";
 import Loader from "./CommonComponents/Loader";
 
 
@@ -30,6 +30,7 @@ function App() {
       </div>
    
       <Outlet />
+      <FloatingSupport />
       <Toaster
         position="top-right"
         reverseOrder={false}

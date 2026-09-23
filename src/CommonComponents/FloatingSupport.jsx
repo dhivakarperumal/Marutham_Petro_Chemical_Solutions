@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiArrowUp } from "react-icons/fi";
 import ChatBot from "./ChatBot";
-import { StoreContext } from "../PrivateRouter/StoreContext";
 import "./FloatingSupport.css";
 
 const FloatingSupport = () => {
-  const { isCartOpen } = useContext(StoreContext) || {};
-  const [chatOpen, setChatOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { pathname, hash } = useLocation();
   const currentRoute = hash?.startsWith("#") ? hash.slice(1) : pathname;
@@ -27,8 +24,8 @@ const FloatingSupport = () => {
   // 1. WhatsApp, Call, and ScrollNavigator are visible on all User UI pages (including Home, About, Services, Contact, Login, etc.)
   const showUserUIWidgets = isUserUIPage;
 
-  // 2. AI ChatBot is available on customer and admin pages, but not employee panels
-  const showChatBot = isUserUIPage || isAdmin;
+  // Chat is intentionally hidden for this site version.
+  const showChatBot = false;
 
   // Scroll detection for Scroll-to-Top button
   const checkScroll = useCallback(() => {
@@ -57,11 +54,6 @@ const FloatingSupport = () => {
     document.body.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // If cart sidebar is open, hide floating support so it never interferes
-  if (isCartOpen) {
-    return null;
-  }
-
   // If neither should show on this route, render nothing
   if (!showUserUIWidgets && !showChatBot) {
     return null;
@@ -83,9 +75,6 @@ const FloatingSupport = () => {
 
   return (
     <>
-      {/* Chatbot panel */}
-      {showChatBot && <ChatBot isOpen={chatOpen} onClose={() => setChatOpen(false)} />}
-
       {/* Floating button container – fixed to bottom right */}
       <div className="floating-support-container">
         {/* WhatsApp button - visible on all user UI pages */}
@@ -125,29 +114,6 @@ const FloatingSupport = () => {
           </div>
         )}
 
-        {/* Chat toggle button - visible on customer and admin pages */}
-        {showChatBot && (
-          <div
-            className={`support-item chatbot ${chatOpen ? "chatbot-active" : ""}`}
-            onClick={() => setChatOpen((prev) => !prev)}
-            title="AI Chat Assistant"
-          >
-            {chatOpen ? (
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                <line x1="9" y1="10" x2="15" y2="10" />
-                <line x1="9" y1="14" x2="13" y2="14" />
-              </svg>
-            )}
-            <span className="tooltip">{chatOpen ? "Close Chat" : "AI Assistant"}</span>
-            {!chatOpen && <span className="chat-ping" />}
-          </div>
-        )}
       </div>
     </>
   );
