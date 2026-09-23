@@ -137,7 +137,7 @@ const HomeGallery = () => {
             </button>
 
             {/* 3-Card Swiper with Category Name on Top of Card */}
-            <div className="overflow-hidden">
+            <div className="overflow-hidden -my-2.5 py-2.5 px-1">
               <Swiper
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
@@ -159,21 +159,24 @@ const HomeGallery = () => {
                   1024: { slidesPerView: 3, spaceBetween: 14 },
                   1280: { slidesPerView: 3, spaceBetween: 16 },
                 }}
-                className="home-gallery-swiper"
+                className="home-gallery-swiper !py-2.5"
               >
                 {productData.map((product, index) => (
                   <SwiperSlide key={`${product.product_id}-${index}`} className="h-auto">
                     <Link
                       to={`/products/${product.product_id}`}
-                      className="group relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#eadfd6] bg-white p-3 shadow-[0_4px_16px_rgba(62,35,17,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[#d60e1e] hover:shadow-[0_12px_26px_rgba(214,14,30,0.12)]"
+                      className="group relative flex h-[260px] sm:h-[275px] lg:h-[285px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#eadfd6] bg-[linear-gradient(160deg,#ffffff_0%,#fff7f1_55%,#fdeedf_100%)] p-3 shadow-[0_6px_20px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_14px_30px_rgba(62,35,17,0.1)]"
                       aria-label={product.product_name}
                     >
+                      {/* Subtle ambient light glow behind product */}
+                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-24 w-32 rounded-full bg-[#fcdbc3]/60 blur-xl transition duration-500 group-hover:scale-125" />
+
                       {/* Top Card Badges: Category Name (e.g. Paint Thinner) on Left, Quantity on Right */}
                       <div className="absolute left-3 right-3 top-3 z-20 flex items-center justify-between gap-1.5 pointer-events-none">
-                        <span className="rounded-full border border-[#f3b58e] bg-[#fff6f0] px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.06em] text-[#d60e1e] shadow-sm">
+                        <span className="rounded-full border border-[#f3b58e] bg-white/95 px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.06em] text-[#d60e1e] shadow-sm">
                           {product.category}
                         </span>
-                        <span className="rounded-full border border-[#e5ded7] bg-[#faf6f2] px-2 py-0.5 text-[0.55rem] font-bold text-[#625953] shadow-sm">
+                        <span className="rounded-full border border-[#e5ded7] bg-white/95 px-2 py-0.5 text-[0.55rem] font-bold text-[#625953] shadow-sm">
                           {product.quantity}
                         </span>
                       </div>
