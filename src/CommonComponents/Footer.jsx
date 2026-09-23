@@ -19,7 +19,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#111317] border-t border-gray-800 font-sans mt-auto text-white">
+    <footer className="bg-[#111317] border-t border-gray-800 mt-auto text-white">
       <div className="container mx-auto px-4 md:px-8 py-16">
         {/* We use a responsive grid that will naturally wrap items to the next row */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8 lg:gap-10">
