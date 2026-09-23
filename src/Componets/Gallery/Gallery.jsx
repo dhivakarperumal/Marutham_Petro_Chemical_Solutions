@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Eye, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHeader from "../../CommonComponents/PageHeader";
+import ModalPortal from "../../CommonComponents/ModalPortal";
 import productData from "../../data/product.json";
 
 const categoryImages = {
@@ -126,79 +127,81 @@ const Gallery = () => {
     <div className="bg-[#fffaf6] text-[#1c1c1c] overflow-x-hidden">
       {/* Lightbox Modal with Next / Prev Navigation */}
       {currentImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm transition-opacity"
-          onClick={() => setSelectedIndex(null)}
-        >
+        <ModalPortal>
           <div
-            className="relative flex max-h-[95vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-3 sm:p-6 backdrop-blur-sm transition-opacity"
+            onClick={() => setSelectedIndex(null)}
           >
-            {/* Top Modal Header */}
-            <div className="flex w-full items-center justify-between border-b border-[#f0e7df] pb-3">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="rounded-full bg-[#e96512]/10 px-3 py-1 text-xs font-extrabold text-[#e96512]">
-                  {currentImage.category}
-                </span>
-                {currentImage.badge && (
-                  <span className="rounded-full border border-[#f3b58e] bg-[#fff8f2] px-2.5 py-0.5 text-[0.68rem] font-bold text-[#d60e1e]">
-                    {currentImage.badge}
+            <div
+              className="relative flex max-h-[92vh] w-full max-w-5xl flex-col items-center justify-between overflow-hidden rounded-2xl bg-white p-4 sm:p-6 shadow-2xl animate-fadeIn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Top Modal Header */}
+              <div className="flex w-full items-center justify-between border-b border-[#f0e7df] pb-3">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="rounded-full bg-[#e96512]/10 px-3 py-1 text-xs font-extrabold text-[#e96512]">
+                    {currentImage.category}
                   </span>
-                )}
-                <span className="text-xs font-semibold text-[#8b827b]">
-                  {selectedIndex + 1} of {allGalleryImages.length}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedIndex(null)}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
-                aria-label="Close image preview"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Main Stage with Image & Next/Prev Controls */}
-            <div className="relative my-2 flex h-[62vh] sm:h-[70vh] w-full items-center justify-center">
-              {/* Previous Button */}
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="absolute left-1 sm:left-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={22} />
-              </button>
-
-              {/* Main Preview Image */}
-              <div className="flex h-full w-full items-center justify-center px-12 sm:px-16">
-                <img
-                  key={currentImage.id}
-                  src={currentImage.image}
-                  alt={currentImage.title}
-                  className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] transition-all duration-300"
-                />
+                  {currentImage.badge && (
+                    <span className="rounded-full border border-[#f3b58e] bg-[#fff8f2] px-2.5 py-0.5 text-[0.68rem] font-bold text-[#d60e1e]">
+                      {currentImage.badge}
+                    </span>
+                  )}
+                  <span className="text-xs font-semibold text-[#8b827b]">
+                    {selectedIndex + 1} of {allGalleryImages.length}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedIndex(null)}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 shadow-sm transition hover:bg-[#d60e1e] hover:text-white cursor-pointer"
+                  aria-label="Close image preview"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
-              {/* Next Button */}
-              <button
-                type="button"
-                onClick={handleNext}
-                className="absolute right-1 sm:right-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
-                aria-label="Next image"
-              >
-                <ChevronRight size={22} />
-              </button>
-            </div>
+              {/* Main Stage with Image & Next/Prev Controls */}
+              <div className="relative my-2 flex h-[58vh] sm:h-[68vh] w-full items-center justify-center">
+                {/* Previous Button */}
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="absolute left-1 sm:left-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={22} />
+                </button>
 
-            {/* Image Details */}
-            <div className="mt-2 text-center">
-              <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
-              <span className="text-xs font-semibold text-[#8b827b]">{currentImage.category}</span>
+                {/* Main Preview Image */}
+                <div className="flex h-full w-full items-center justify-center px-10 sm:px-16">
+                  <img
+                    key={currentImage.id}
+                    src={currentImage.image}
+                    alt={currentImage.title}
+                    className="max-h-full max-w-full object-contain drop-shadow-[0_12px_24px_rgba(40,35,33,0.18)] transition-all duration-300"
+                  />
+                </div>
+
+                {/* Next Button */}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="absolute right-1 sm:right-3 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 text-gray-800 shadow-xl border border-[#ebdcd0] transition hover:bg-[#e96512] hover:text-white hover:border-[#e96512] hover:scale-105 cursor-pointer"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={22} />
+                </button>
+              </div>
+
+              {/* Image Details */}
+              <div className="mt-2 text-center">
+                <h4 className="text-base sm:text-lg font-extrabold text-[#282321]">{currentImage.title}</h4>
+                <span className="text-xs font-semibold text-[#8b827b]">{currentImage.category}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </ModalPortal>
       )}
 
       <PageHeader title="Gallery" />

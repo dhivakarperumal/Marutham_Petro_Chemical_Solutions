@@ -1,14 +1,14 @@
 import { createPortal } from 'react-dom';
 
 /**
- * ModalPortal — renders children into #modal-root (body level).
+ * ModalPortal — renders children into #modal-root or document.body.
  * This ensures modals escape any CSS stacking context created by
- * the sidebar/layout (z-index, transform, filter, etc.) and always
- * render above everything on the page.
+ * layout transforms, will-change, or z-index and always render
+ * directly in the viewport.
  */
 const ModalPortal = ({ children }) => {
-  const el = document.getElementById('modal-root');
-  if (!el) return null;
+  if (typeof document === 'undefined') return null;
+  const el = document.getElementById('modal-root') || document.body;
   return createPortal(children, el);
 };
 
