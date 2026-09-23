@@ -10,7 +10,7 @@ const PageHeader = ({
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
-        backgroundPosition: "bottom",
+        backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
