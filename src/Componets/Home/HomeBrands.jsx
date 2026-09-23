@@ -25,22 +25,22 @@ const HomeBrands = () => {
           </p> */}
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
           {brands.map((brand, index) => (
             <Link
               key={brand.name}
               to={`/brands/${brand.slug}`}
-              className="group relative min-w-0 overflow-hidden rounded-md border border-[#eadfd6] bg-white shadow-[0_12px_30px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_20px_38px_rgba(62,35,17,0.12)]"
+              className="group relative min-w-0 overflow-hidden rounded-lg border border-[#eadfd6] bg-white shadow-[0_12px_30px_rgba(62,35,17,0.05)] transition duration-300 hover:-translate-y-1 hover:border-[#f3b58e] hover:shadow-[0_20px_38px_rgba(62,35,17,0.12)]"
               data-aos="zoom-in-up"
               data-aos-delay={index * 150}
             >
-              <div className="relative flex h-[270px] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-3 sm:h-[360px] sm:p-5">
+              <div className="relative flex h-[220px] sm:h-[280px] md:h-[340px] lg:h-[360px] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,#fffaf6_0%,#fce8d8_100%)] p-4 sm:p-5">
                 <div className="absolute -bottom-16 left-1/2 h-36 w-52 -translate-x-1/2 rounded-full bg-[#f5c59d80] blur-3xl transition duration-500 group-hover:scale-125" />
-                <img src={brand.image} alt={`${brand.name} products`} className="relative z-10 max-h-full max-w-[82%] scale-[1.15] object-contain drop-shadow-[0_16px_12px_rgba(57,32,17,0.16)] transition duration-500 group-hover:scale-[1.2]" loading="lazy" />
+                <img src={brand.image} alt={`${brand.name} products`} className="relative z-10 max-h-full max-w-[85%] scale-[1.1] sm:scale-[1.15] object-contain drop-shadow-[0_16px_12px_rgba(57,32,17,0.16)] transition duration-500 group-hover:scale-[1.2]" loading="lazy" />
               </div>
-              <div className="p-3 text-center sm:p-5">
-                <h3 className="truncate text-base font-extrabold text-[#282321] transition group-hover:text-[#d60e1e] sm:text-xl">{brand.name}</h3>
-                <p className="mt-1 truncate text-xs font-semibold text-[#766e68] sm:text-sm">{brand.category}</p>
+              <div className="p-4 text-center sm:p-5">
+                <h3 className="text-lg font-extrabold text-[#282321] transition group-hover:text-[#d60e1e] sm:text-xl">{brand.name}</h3>
+                <p className="mt-1 text-xs font-semibold text-[#766e68] sm:text-sm">{brand.category}</p>
               </div>
             </Link>
           ))}
