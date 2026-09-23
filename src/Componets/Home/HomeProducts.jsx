@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import productData from "../../data/product.json";
@@ -32,9 +33,10 @@ const HomeProducts = () => {
   return (
     <section id="products" className="relative overflow-hidden bg-[#fffaf6] px-[5%] py-20 sm:py-24" aria-labelledby="home-products-title">
       <div className="mx-auto max-w-[1380px]">
-        {/* Header with Title and Navigation */}
-        <div className="mb-10 flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
-          <div className="max-w-[620px]" data-aos="fade-right">
+        {/* Header with Heading on Left & Categories + Controls on Right (Desktop) */}
+        <div className="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          {/* Left: Heading Block */}
+          <div className="max-w-[520px]" data-aos="fade-right">
             <div className="mb-3 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
               <span className="h-0.5 w-9 bg-[#e96512]" /> Our product range
             </div>
@@ -43,50 +45,53 @@ const HomeProducts = () => {
             </h2>
           </div>
 
-          {/* <div className="flex items-center gap-4" data-aos="fade-left">
-            <a href="/products" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#d60e1e] transition hover:text-[#b90c19]">
-              View all products <ArrowRight size={17} aria-hidden="true" />
-            </a>
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                className="home-products-prev flex h-9 w-9 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#766e68] shadow-sm transition hover:border-[#d60e1e] hover:text-[#d60e1e] cursor-pointer"
-                aria-label="Previous products"
-              >
-                <ChevronLeft size={18} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="home-products-next flex h-9 w-9 items-center justify-center rounded-full bg-[#d60e1e] text-white shadow-sm transition hover:bg-[#b90c19] cursor-pointer"
-                aria-label="Next products"
-              >
-                <ChevronRight size={18} aria-hidden="true" />
-              </button>
-            </div>
-          </div> */}
-        </div>
+          {/* Right: Category Tabs & Controls (Right side of heading on desktop) */}
+          <div className="flex flex-col items-center gap-3.5 lg:items-end" data-aos="fade-left">
+            {/* <div className="flex items-center gap-4">
+              <Link to="/products" className="inline-flex items-center gap-2 text-sm font-extrabold text-[#d60e1e] transition hover:text-[#b90c19]">
+                View all products <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  className="home-products-prev flex h-8 w-8 items-center justify-center rounded-full border border-[#eadfd6] bg-white text-[#766e68] shadow-sm transition hover:border-[#d60e1e] hover:text-[#d60e1e] cursor-pointer"
+                  aria-label="Previous products"
+                >
+                  <ChevronLeft size={17} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  className="home-products-next flex h-8 w-8 items-center justify-center rounded-full bg-[#d60e1e] text-white shadow-sm transition hover:bg-[#b90c19] cursor-pointer"
+                  aria-label="Next products"
+                >
+                  <ChevronRight size={17} aria-hidden="true" />
+                </button>
+              </div>
+            </div> */}
 
-        {/* Category Tabs - Centered on responsive, wrapped naturally */}
-        <div className="mb-8 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5" role="tablist" aria-label="Home product categories" data-aos="fade-up" data-aos-delay="80">
-          {categories.map((category) => {
-            const isActive = activeCategory === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setActiveCategory(category)}
-                className={`rounded-full border px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-extrabold transition cursor-pointer ${
-                  isActive
-                    ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-[0_8px_18px_rgba(214,14,30,0.18)]"
-                    : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"
-                }`}
-              >
-                {category}
-              </button>
-            );
-          })}
+            {/* Category Tabs - Centralized on responsive, right-aligned beside heading on desktop */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 lg:justify-end" role="tablist" aria-label="Home product categories">
+              {categories.map((category) => {
+                const isActive = activeCategory === category;
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActiveCategory(category)}
+                    className={`rounded-full border px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-extrabold transition cursor-pointer ${
+                      isActive
+                        ? "border-[#d60e1e] bg-[#d60e1e] text-white shadow-[0_8px_18px_rgba(214,14,30,0.18)]"
+                        : "border-[#eadfd6] bg-white text-[#766e68] hover:border-[#e96512] hover:text-[#d60e1e]"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Seamless Infinite Swiper (Continues from first product upon reaching end) */}
