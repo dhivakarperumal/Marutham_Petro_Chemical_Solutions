@@ -349,7 +349,7 @@ const BrandDetails = () => {
         </div>
       </section>
 
-      <section id="applications" className="px-[5%] py-16 sm:py-20">
+      {/* <section id="applications" className="px-[5%] py-16 sm:py-20">
         <div className="mx-auto grid max-w-[1380px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>
             <div className="mb-3 flex items-center gap-3 text-[0.72rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
@@ -370,7 +370,7 @@ const BrandDetails = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="px-[5%] py-16">
         <div className="mx-auto max-w-[1380px]">
