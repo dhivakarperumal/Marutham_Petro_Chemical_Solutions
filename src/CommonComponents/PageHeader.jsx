@@ -6,7 +6,7 @@ const PageHeader = ({
 }) => {
   return (
     <div
-      className="relative flex h-[250px] w-full items-center justify-center overflow-hidden text-white sm:h-[350px] md:h-[400px]"
+      className="relative flex h-[180px] w-full items-center justify-center overflow-hidden text-white sm:h-[220px] md:h-[260px]"
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
