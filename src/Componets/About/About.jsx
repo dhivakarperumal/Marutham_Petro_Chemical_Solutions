@@ -140,7 +140,7 @@ const About = () => {
               </span>
             </h1>
 
-            <p className="mt-6 max-w-[700px] text-lg leading-8 text-[#4b5563]">
+            <p className="mt-6 max-w-[700px] text-lg leading-8 text-[#4b5563] text-justify">
               Marutham Marketing is a trusted name in the manufacture and supply of paint thinners,
               enamel thinners, solvents, coatings, and paint-related chemical products. We are committed
               to delivering high-quality solutions that help professionals and DIY enthusiasts achieve the
