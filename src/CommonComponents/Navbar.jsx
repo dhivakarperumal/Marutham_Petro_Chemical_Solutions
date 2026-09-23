@@ -9,6 +9,7 @@ const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isMobileBrandsOpen, setIsMobileBrandsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -25,9 +26,32 @@ const Navbar = () => {
     ].some((value) => value.toLowerCase().includes(query))).slice(0, 6);
   }, [searchTerm]);
 
+  const isLinkActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  const isBrandsActive = location.pathname.startsWith('/brands');
+
+  // Close menus on route change; open mobile brands dropdown if currently on a brand page
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsBrandsOpen(false);
+    if (location.pathname.startsWith('/brands')) {
+      setIsMobileBrandsOpen(true);
+    }
+  }, [location.pathname]);
+
+  // Close search/menu on Escape key
   useEffect(() => {
     const handleEscape = (event) => {
-      if (event.key === 'Escape') setIsSearchOpen(false);
+      if (event.key === 'Escape') {
+        setIsSearchOpen(false);
+        setIsBrandsOpen(false);
+        setIsMobileMenuOpen(false);
+      }
     };
 
     window.addEventListener('keydown', handleEscape);
@@ -56,7 +80,7 @@ const Navbar = () => {
           {/* Navigation Links (Desktop) */}
           <div className="hidden lg:flex items-center space-x-7 text-[15px] font-medium text-[#4a5568]" data-aos="fade-down" data-aos-delay="160">
             {navLinks.slice(0, 3).map((link) => {
-              const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
+              const isActive = isLinkActive(link.path);
               return (
                 <Link
                   key={link.name}
@@ -72,37 +96,56 @@ const Navbar = () => {
               );
             })}
             <div className="relative" onMouseEnter={() => setIsBrandsOpen(true)} onMouseLeave={() => setIsBrandsOpen(false)}>
-              <button type="button" onClick={() => setIsBrandsOpen((open) => !open)} className={`border-b-2 pb-1 transition-colors ${location.pathname.startsWith('/brands/') ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} aria-expanded={isBrandsOpen}>
-                Brands <span className="ml-1 text-xs">▾</span>
+              <button 
+                type="button" 
+                onClick={() => setIsBrandsOpen((open) => !open)} 
+                className={`flex items-center gap-1 border-b-2 pb-1 transition-colors ${isBrandsActive ? 'border-[#f0301a] text-[#f0301a]' : 'border-transparent hover:text-[#f0301a]'}`} 
+                aria-expanded={isBrandsOpen}
+              >
+                <span>Brands</span>
+                <span className={`text-[10px] transition-transform duration-200 inline-block ${isBrandsOpen ? 'rotate-180' : ''}`}>▾</span>
               </button>
               {isBrandsOpen && (
                 <div className="absolute right-0 top-full z-50 w-56 pt-3">
                   <div className="rounded-md border border-gray-100 bg-white p-2 shadow-xl">
-                    {brandData.map((brand) => (
-                      <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsBrandsOpen(false)} className="block rounded px-3 py-2.5 text-sm font-semibold text-[#4a5568] transition hover:bg-[#fff4eb] hover:text-[#f0301a]">
-                        {brand.name}
-                      </Link>
-                    ))}
+                    {brandData.map((brand) => {
+                      const brandSlug = slugify(brand.name);
+                      const isCurrentBrand = location.pathname === `/brands/${brandSlug}`;
+                      return (
+                        <Link 
+                          key={brand.product_id} 
+                          to={`/brands/${brandSlug}`} 
+                          onClick={() => setIsBrandsOpen(false)} 
+                          className={`block rounded px-3 py-2.5 text-sm font-semibold transition ${
+                            isCurrentBrand 
+                              ? 'bg-[#fff4eb] text-[#f0301a]' 
+                              : 'text-[#4a5568] hover:bg-[#fff4eb] hover:text-[#f0301a]'
+                          }`}
+                        >
+                          {brand.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               )}
             </div>
-          {navLinks.slice(3).map((link) => {
-            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
-            return (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`pb-1 border-b-2 transition-colors ${
-                  isActive 
-                    ? 'text-[#f0301a] border-[#f0301a]' 
-                    : 'border-transparent hover:text-[#f0301a]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
+            {navLinks.slice(3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`pb-1 border-b-2 transition-colors ${
+                    isActive 
+                      ? 'text-[#f0301a] border-[#f0301a]' 
+                      : 'border-transparent hover:text-[#f0301a]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Action Buttons & Mobile Menu Toggle */}
@@ -113,12 +156,15 @@ const Navbar = () => {
               </svg>
             </button>
             
-            <button className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md">
+            <Link 
+              to="/contact" 
+              className="hidden sm:flex bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-2.5 px-5 md:px-6 rounded-md items-center transition-all shadow-md"
+            >
               Get a Quote
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </button>
+            </Link>
 
             <button 
               className="lg:hidden p-2 text-black hover:opacity-70 transition-opacity"
@@ -176,43 +222,102 @@ const Navbar = () => {
           </div>
         )}
 
-      {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col py-4 px-6 space-y-4">
-          {navLinks.map((link) => {
-            const isActive = location.pathname === link.path || (link.path === '/' && location.pathname === '/');
-            return (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium transition-colors py-2 border-b border-gray-50 ${
-                  isActive ? 'text-[#f0301a]' : 'text-[#4a5568] hover:text-[#f0301a]'
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col py-4 px-6 max-h-[calc(100vh-80px)] overflow-y-auto z-50">
+            {navLinks.slice(0, 3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-lg font-medium transition-colors py-2.5 border-b border-gray-100 flex items-center justify-between ${
+                    isActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                </Link>
+              );
+            })}
+
+            {/* Brands Dropdown in Mobile Menu */}
+            <div className="border-b border-gray-100 py-2.5">
+              <button
+                type="button"
+                onClick={() => setIsMobileBrandsOpen((open) => !open)}
+                className={`flex w-full items-center justify-between py-1 text-lg font-medium transition-colors ${
+                  isBrandsActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
                 }`}
+                aria-expanded={isMobileBrandsOpen}
               >
-                {link.name}
-              </Link>
-            );
-          })}
-          <div className="border-b border-gray-50 pb-2">
-            <p className="py-2 text-lg font-medium text-[#4a5568]">Brands</p>
-            <div className="ml-3 flex flex-col gap-2 border-l-2 border-[#f0301a] pl-4">
-              {brandData.map((brand) => (
-                <Link key={brand.product_id} to={`/brands/${slugify(brand.name)}`} onClick={() => setIsMobileMenuOpen(false)} className="py-1 text-base font-medium text-[#4a5568] hover:text-[#f0301a]">{brand.name}</Link>
-              ))}
+                <span>Brands</span>
+                <span
+                  className={`text-xs transition-transform duration-200 inline-block ${
+                    isMobileBrandsOpen ? 'rotate-180 text-[#f0301a]' : 'text-gray-400'
+                  }`}
+                >
+                  ▾
+                </span>
+              </button>
+
+              {isMobileBrandsOpen && (
+                <div className="mt-2 space-y-1 rounded-lg border border-[#f5e6d8] bg-[#fffaf6] p-2 shadow-inner">
+                  {brandData.map((brand) => {
+                    const brandSlug = slugify(brand.name);
+                    const isCurrentBrand = location.pathname === `/brands/${brandSlug}`;
+                    return (
+                      <Link
+                        key={brand.product_id}
+                        to={`/brands/${brandSlug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-semibold transition ${
+                          isCurrentBrand
+                            ? 'bg-[#ffebe0] text-[#f0301a]'
+                            : 'text-[#4a5568] hover:bg-[#fff4eb] hover:text-[#f0301a]'
+                        }`}
+                      >
+                        <span>{brand.name}</span>
+                        {isCurrentBrand && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
+
+            {navLinks.slice(3).map((link) => {
+              const isActive = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-lg font-medium transition-colors py-2.5 border-b border-gray-100 flex items-center justify-between ${
+                    isActive ? 'text-[#f0301a] font-semibold' : 'text-[#4a5568] hover:text-[#f0301a]'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-[#f0301a]" />}
+                </Link>
+              );
+            })}
+
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4"
+            >
+              Get a Quote
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
           </div>
-          
-          <button className="bg-gradient-to-r from-[#fb5921] to-[#e41a15] hover:from-[#e41a15] hover:to-[#c61410] text-white font-medium py-3 px-6 rounded-md flex items-center justify-center transition-all shadow-md w-full mt-4">
-            Get a Quote
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
-      )}
-    </nav>
-  </header>
+        )}
+      </nav>
+    </header>
   );
 };
 
