@@ -1,13 +1,10 @@
 import { useState } from "react";
 import {
-  AlertTriangle,
   ArrowRight,
   CheckCircle2,
   ChevronRight,
   Droplets,
-  FileText,
   Flame,
-  HardHat,
   PackageCheck,
   ShieldCheck,
   Sparkles,
@@ -21,78 +18,13 @@ import ProductCard from "../Products/ProductCard";
 
 const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-const getPrecautionConfig = (title = "", index = 0) => {
+const getSafetyIcon = (title = "") => {
   const t = title.toLowerCase();
-  if (t.includes("fire") || t.includes("flammab")) {
-    return {
-      icon: Flame,
-      category: "Flammability Control",
-      themeColor: "#dc2626",
-      badgeColor: "bg-red-50 text-red-700 border-red-200/80",
-      iconWrapper: "bg-red-500/10 text-red-600 border border-red-200/60",
-      glowBorder: "hover:border-red-400 hover:shadow-[0_16px_36px_rgba(220,38,38,0.1)]",
-      topGradient: "from-red-500 via-orange-500 to-amber-500",
-      protocolId: "SEC-FIRE",
-    };
-  }
-  if (t.includes("ventil") || t.includes("odor") || t.includes("evaporat")) {
-    return {
-      icon: Wind,
-      category: "Vapor & Air Quality",
-      themeColor: "#0284c7",
-      badgeColor: "bg-sky-50 text-sky-700 border-sky-200/80",
-      iconWrapper: "bg-sky-500/10 text-sky-600 border border-sky-200/60",
-      glowBorder: "hover:border-sky-400 hover:shadow-[0_16px_36px_rgba(2,132,199,0.1)]",
-      topGradient: "from-sky-500 via-blue-500 to-cyan-500",
-      protocolId: "SEC-AIR",
-    };
-  }
-  if (t.includes("toxic") || t.includes("emission")) {
-    return {
-      icon: Droplets,
-      category: "Eco & Low Toxicity",
-      themeColor: "#059669",
-      badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200/80",
-      iconWrapper: "bg-emerald-500/10 text-emerald-600 border border-emerald-200/60",
-      glowBorder: "hover:border-emerald-400 hover:shadow-[0_16px_36px_rgba(5,150,105,0.1)]",
-      topGradient: "from-emerald-500 via-teal-500 to-green-500",
-      protocolId: "SEC-TOX",
-    };
-  }
-  if (t.includes("container") || t.includes("child") || t.includes("packag")) {
-    return {
-      icon: PackageCheck,
-      category: "Container Safety",
-      themeColor: "#d97706",
-      badgeColor: "bg-amber-50 text-amber-700 border-amber-200/80",
-      iconWrapper: "bg-amber-500/10 text-amber-600 border border-amber-200/60",
-      glowBorder: "hover:border-amber-400 hover:shadow-[0_16px_36px_rgba(217,119,6,0.1)]",
-      topGradient: "from-amber-500 via-yellow-500 to-orange-500",
-      protocolId: "SEC-PKG",
-    };
-  }
-  if (t.includes("guideline") || t.includes("usage") || t.includes("irritat")) {
-    return {
-      icon: HardHat,
-      category: "Personal Protection",
-      themeColor: "#e96512",
-      badgeColor: "bg-orange-50 text-[#d94c16] border-orange-200/80",
-      iconWrapper: "bg-orange-500/10 text-[#e96512] border border-[#e96512]/20",
-      glowBorder: "hover:border-[#e96512] hover:shadow-[0_16px_36px_rgba(233,101,18,0.12)]",
-      topGradient: "from-[#e96512] via-orange-500 to-amber-500",
-      protocolId: "SEC-PPE",
-    };
-  }
-  return {
-    icon: ShieldCheck,
-    category: "Standard Compliance",
-    themeColor: "#0d9488",
-    badgeColor: "bg-teal-50 text-teal-700 border-teal-200/80",
-    iconWrapper: "bg-teal-500/10 text-teal-600 border border-teal-200/60",
-    glowBorder: "hover:border-teal-400 hover:shadow-[0_16px_36px_rgba(13,148,136,0.1)]",
-    topGradient: "from-teal-500 via-emerald-500 to-cyan-500",
-    protocolId: `SEC-0${index + 1}`,
-  };
+  if (t.includes("fire") || t.includes("flammab")) return Flame;
+  if (t.includes("ventil") || t.includes("odor") || t.includes("evaporat")) return Wind;
+  if (t.includes("container") || t.includes("child") || t.includes("packag")) return PackageCheck;
+  if (t.includes("toxic") || t.includes("irritat") || t.includes("emission")) return Droplets;
+  return ShieldCheck;
 };
 
 const sizeSpecifications = [
@@ -367,174 +299,74 @@ const BrandDetails = () => {
       </section> */}
 
       {/* Safety and Handling */}
-      <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#fff8f2] via-[#faf5f0] to-white px-[5%] py-20 border-t border-[#eee3da]">
-        {/* Subtle background ambient glows */}
-        <div className="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-[#e96512]/5 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 left-0 h-96 w-96 rounded-full bg-[#d60e1e]/5 blur-3xl" />
-
-        <div className="relative mx-auto max-w-[1380px]">
+      <section className="border-t border-[#ebdcd0] bg-[#fffdfa] px-[5%] py-16 sm:py-20">
+        <div className="mx-auto max-w-[1380px]">
           {/* Section Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between border-b border-[#ebdcd0] pb-6 mb-10">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#fbd3b7] bg-white px-3.5 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16] shadow-sm">
+              <div className="flex items-center gap-2 text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-[#d94c16]">
                 <ShieldCheck size={14} className="text-[#e96512]" />
-                <span>Workplace Protection & Safe Usage</span>
+                <span>Handling & Precautions</span>
               </div>
-              <h2 className="mt-3.5 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#282321]">
-                Safety, Handling & <span className="text-[#e96512]">Precautions</span>
+              <h2 className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#282321]">
+                Safety and Handling
               </h2>
-              <p className="mt-3 max-w-[680px] text-sm sm:text-base leading-relaxed text-[#766e68]">
-                Every batch of {brand.name} is formulated under stringent quality parameters. Follow these essential safety protocols to ensure safe storage, worker well-being, and peak performance.
+              <p className="mt-2 text-sm text-[#766e68] max-w-[620px] leading-relaxed">
+                Essential safety precautions and guidelines to ensure secure storage, worker protection, and optimal performance with {brand.name}.
               </p>
             </div>
-
-            {/* Quick Compliance Badge */}
-            <div className="inline-flex items-center gap-3.5 rounded-2xl border border-[#ebdcd0] bg-white p-4 shadow-sm self-start lg:self-auto">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200">
-                <CheckCircle2 size={22} />
-              </div>
-              <div>
-                <div className="text-xs font-black uppercase tracking-wider text-[#282321]">
-                  Industrial Grade Quality
-                </div>
-                <div className="text-[0.72rem] font-bold text-[#8b827b]">
-                  Safe Handling & Storage Certified
-                </div>
-              </div>
-            </div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#f3b58e] bg-[#fff8f2] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#d94c16] self-start sm:self-auto shadow-sm">
+              <CheckCircle2 size={15} className="text-[#e96512]" /> Safety First
+            </span>
           </div>
 
-          {/* Precaution Cards Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Cards Grid */}
+          <div
+            className={`grid gap-6 ${
+              brand.safety_precautions.length === 4
+                ? "grid-cols-1 sm:grid-cols-2"
+                : brand.safety_precautions.length === 3
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            }`}
+          >
             {brand.safety_precautions.map((precaution, idx) => {
-              const config = getPrecautionConfig(precaution.title, idx);
-              const IconComponent = config.icon;
+              const Icon = getSafetyIcon(precaution.title);
 
               return (
                 <div
                   key={precaution.title}
-                  className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#ebdcd0] bg-white p-6 sm:p-7 shadow-[0_4px_20px_rgba(62,35,17,0.03)] transition-all duration-300 hover:-translate-y-1.5 ${config.glowBorder}`}
+                  className="group relative flex flex-col justify-between rounded-2xl border border-[#ebdcd0] bg-white p-6 sm:p-7 shadow-[0_4px_18px_rgba(62,35,17,0.03)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[#e96512] hover:shadow-[0_16px_36px_rgba(233,101,18,0.1)]"
                 >
-                  {/* Top Colored Accent Stripe */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${config.topGradient} opacity-70 transition-all duration-300 group-hover:h-1.5 group-hover:opacity-100`}
-                  />
-
                   <div>
-                    {/* Top Row: Icon + Protocol & Category */}
-                    <div className="flex items-center justify-between gap-3">
-                      <div
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110 shadow-sm ${config.iconWrapper}`}
-                      >
-                        <IconComponent size={22} />
+                    <div className="flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#fff2ee] text-[#e96512] transition-all duration-300 group-hover:bg-[#e96512] group-hover:text-white group-hover:shadow-md group-hover:shadow-[#e96512]/20">
+                        <Icon size={22} />
                       </div>
-
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="font-mono text-[0.68rem] font-black tracking-wider text-[#b5a99f]">
-                          {config.protocolId}
-                        </span>
-                        <span
-                          className={`rounded-full border px-2.5 py-0.5 text-[0.62rem] font-extrabold uppercase tracking-wider ${config.badgeColor}`}
-                        >
-                          {config.category}
-                        </span>
-                      </div>
+                      <span className="font-mono text-xs font-black tracking-wider text-[#c5b9ae] group-hover:text-[#e96512] transition-colors">
+                        0{idx + 1}
+                      </span>
                     </div>
 
-                    {/* Precaution Title */}
-                    <h3 className="mt-5 text-lg font-black text-[#282321] transition-colors duration-200 group-hover:text-[#e96512]">
+                    <h3 className="mt-5 text-lg font-bold text-[#282321] transition-colors group-hover:text-[#e96512]">
                       {precaution.title}
                     </h3>
-
-                    {/* Precaution Description */}
-                    <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#766e68]">
+                    <p className="mt-2 text-sm leading-relaxed text-[#766e68]">
                       {precaution.description}
                     </p>
                   </div>
 
-                  {/* Card Bottom Indicator */}
-                  <div className="mt-6 flex items-center justify-between border-t border-[#f0e7df] pt-3.5 text-[0.7rem]">
+                  <div className="mt-6 flex items-center justify-between border-t border-[#f5ece4] pt-3.5 text-xs">
                     <span className="flex items-center gap-1.5 font-bold text-[#8b827b]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Recommended Protocol
+                      <CheckCircle2 size={13} className="text-[#e96512]" /> Recommended Practice
                     </span>
-                    <span className="font-extrabold uppercase tracking-wider text-[#282321] group-hover:text-[#e96512] transition-colors">
-                      Safety Priority
+                    <span className="font-bold text-[0.68rem] uppercase tracking-wider text-[#e96512]">
+                      Safe Use
                     </span>
                   </div>
                 </div>
               );
             })}
-          </div>
-
-          {/* Bottom Essential Chemical Handling Protocol Bar */}
-          <div className="mt-10 overflow-hidden rounded-2xl border border-[#ebdcd0] bg-white shadow-sm">
-            <div className="border-b border-[#ebdcd0] bg-[#fff8f2] px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#e96512]/15 text-[#e96512]">
-                  <AlertTriangle size={15} />
-                </span>
-                <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#282321]">
-                  Standard Chemical Safety Checklist
-                </span>
-              </div>
-              <span className="text-[0.72rem] font-bold text-[#8b827b]">
-                Mandatory for all application & storage environments
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#f0e7df] p-2 sm:p-4">
-              <div className="p-4 flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-600 border border-sky-100">
-                  <Wind size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#282321]">Active Airflow</h4>
-                  <p className="mt-1 text-[0.72rem] leading-relaxed text-[#766e68]">
-                    Operate in cross-ventilated booths or outdoor setups to avoid vapor concentration.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-[#e96512] border border-orange-100">
-                  <HardHat size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#282321]">Mandatory PPE</h4>
-                  <p className="mt-1 text-[0.72rem] leading-relaxed text-[#766e68]">
-                    Wear chemical-resistant nitrile gloves, safety eye goggles, and protective masks.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-600 border border-red-100">
-                  <Flame size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#282321]">Heat & Spark Isolation</h4>
-                  <p className="mt-1 text-[0.72rem] leading-relaxed text-[#766e68]">
-                    Store upright in cool, shaded spaces far from electric motors, welding sparks, or flames.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100">
-                  <FileText size={18} />
-                </div>
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#282321]">MSDS & Technical Help</h4>
-                  <p className="mt-1 text-[0.72rem] leading-relaxed text-[#766e68]">
-                    Need Material Safety Data Sheets (MSDS) or bulk documentation?{" "}
-                    <Link to="/contact" className="font-extrabold text-[#d60e1e] hover:underline">
-                      Contact support
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
