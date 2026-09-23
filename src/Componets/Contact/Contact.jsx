@@ -248,10 +248,10 @@ const Contact = () => {
 
       {/* 5. FAQ SECTION */}
       <section className="relative w-full overflow-hidden bg-white py-20" data-aos="fade-up" data-aos-delay="150">
-        <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+        <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
           
           {/* Left Image (Truck) */}
-          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px]">
+          <div className="w-full lg:w-5/12 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px] lg:h-[460px]">
             <img src="/images/hero/img1.png" alt="Marutham Marketing Transport" className="w-full h-full object-cover" />
           </div>
           
@@ -290,11 +290,17 @@ const Contact = () => {
                         +
                       </span>
                     </button>
-                    {isOpen && (
-                      <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-[#fffdfb]">
-                        {faq.answer}
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-[#fffdfb]">
+                          {faq.answer}
+                        </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
